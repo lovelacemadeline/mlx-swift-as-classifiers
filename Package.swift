@@ -41,13 +41,13 @@ let package = Package(
                 .product(name: "Jinja", package: "swift-jinja"),
             ],
             // Models/ holds the vendored Gemma 4 text model (ADR-0004); its upstream licence ships beside it.
-            exclude: ["Models/LICENSE-mlx-swift-lm"]
+            exclude: ["Models/LICENSE-mlx-swift-lm", "Models/LICENSE-mlx-vlm"]
         ),
         .testTarget(
             name: "MLXClassifiersTests",
             dependencies: ["MLXClassifiers"],
             // Golden decide and delta references, read by path (scripts/golden_*_reference.py write them).
-            exclude: ["GoldenDecide", "GoldenDelta"]
+            exclude: ["GoldenDecide", "GoldenDelta", "GoldenVision"]
         ),
     ]
 )

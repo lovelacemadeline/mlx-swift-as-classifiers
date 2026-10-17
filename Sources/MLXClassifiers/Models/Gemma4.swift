@@ -11,6 +11,9 @@
 //   - dropped `@_spi(GemmaEncoder)` on `languageModel` (plain public)
 //   - conforms to MLXLMCommon `BaseLanguageModel` instead of MLXLLM `LLMModel`, so MLXLMCommon `loadWeights` loads it
 //   - LoRA and chat-convention extensions removed
+//   - story 4.1: decodes `vision_config`; holds `vision_tower` and `embed_vision` (Gemma4Vision.swift)
+//     and `sanitize` keeps their weights (rotary_emb dropped, clip bounds kept only with
+//     `use_clipped_linears`) instead of skipping them; audio and gemma4_unified weights still dropped
 //
 
 //
@@ -33,17 +36,20 @@ public struct Gemma4Configuration: Codable, Sendable {
     var modelType: String = "gemma4"
     var textConfig: Gemma4TextConfiguration
     var vocabSize: Int = 262144
+    var visionConfig: Gemma4VisionConfiguration?
 
     enum CodingKeys: String, CodingKey {
         case modelType = "model_type"
         case textConfig = "text_config"
         case vocabSize = "vocab_size"
+        case visionConfig = "vision_config"
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.modelType = try container.decodeIfPresent(String.self, forKey: .modelType) ?? "gemma4"
         self.vocabSize = try container.decodeIfPresent(Int.self, forKey: .vocabSize) ?? 262144
+        self.visionConfig = try? container.decodeIfPresent(Gemma4VisionConfiguration.self, forKey: .visionConfig)
 
         // If text_config is present, decode from it; otherwise treat entire config as text config
         if let textConfig = try container.decodeIfPresent(
@@ -70,9 +76,26 @@ public class Gemma4Model: Module, BaseLanguageModel, KVCacheDimensionProvider {
     /// encoder-style client tap cannot reach `Gemma4TextModel` without it — exposing only
     /// the inner types is not sufficient for a real load path.
     @ModuleInfo(key: "language_model") public var languageModel: Gemma4TextModel
+    /// MLXClassifiers (story 4.1): the vision tower and `embed_vision`, nil without a `vision_config`.
+    @ModuleInfo(key: "vision_tower") public var visionTower: Gemma4VisionModel?
+    @ModuleInfo(key: "embed_vision") public var embedVision: Gemma4MultimodalEmbedder?
+    public let visionConfig: Gemma4VisionConfiguration?
 
     public init(_ config: Gemma4Configuration) {
         self._languageModel.wrappedValue = Gemma4TextModel(config.textConfig)
+        self.visionConfig = config.visionConfig
+        if let vc = config.visionConfig {
+            self._visionTower.wrappedValue = Gemma4VisionModel(config: vc)
+            self._embedVision.wrappedValue = Gemma4MultimodalEmbedder(
+                embeddingDim: vc.hiddenSize, textHiddenSize: config.textConfig.hiddenSize, eps: vc.rmsNormEps)
+        }
+    }
+
+    /// `[1, N, text hidden]` soft tokens for `[1, 3, H, W]` pixels (mlx-vlm `encode_image`:
+    /// `embed_vision(vision_tower(pixels))`).
+    public func encodeImage(_ pixelValues: MLXArray) -> MLXArray? {
+        guard let visionTower, let embedVision else { return nil }
+        return embedVision(visionTower(pixelValues))
     }
 
     public func callAsFunction(_ inputs: MLXArray, cache: [KVCache]?) -> MLXArray {
@@ -81,8 +104,18 @@ public class Gemma4Model: Module, BaseLanguageModel, KVCacheDimensionProvider {
 
     public func sanitize(weights: [String: MLXArray]) -> [String: MLXArray] {
         var sanitized = [String: MLXArray]()
+        var vision = [String: MLXArray]()
+        let clipKeys = ["input_max", "input_min", "output_max", "output_min"]
         for (key, value) in weights {
             var k = key
+            // MLXClassifiers (story 4.1): keep the image path (golden `vision/tower.py::vision_weights`).
+            let bare = k.replacingOccurrences(of: "model.", with: "", options: .anchored)
+            if visionConfig != nil, bare.hasPrefix("vision_tower.") || bare.hasPrefix("embed_vision.") {
+                if bare.contains("rotary_emb") { continue }
+                if clipKeys.contains(where: { bare.contains($0) }), visionConfig?.useClippedLinears != true { continue }
+                vision[bare] = value
+                continue
+            }
 
             // Strip "model." prefix
             let startsWithModel = k.hasPrefix("model.")
@@ -113,7 +146,7 @@ public class Gemma4Model: Module, BaseLanguageModel, KVCacheDimensionProvider {
             sanitized[k] = value
         }
 
-        return languageModel.sanitize(weights: sanitized)
+        return languageModel.sanitize(weights: sanitized).merging(vision) { a, _ in a }
     }
 
     public func newCache(parameters: GenerateParameters?) throws -> [any KVCache] {
