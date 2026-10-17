@@ -142,20 +142,20 @@ final class FirstTokenReadoutTests: XCTestCase {
         let fx = try FixtureRun.load("choice-first-token-multi-token-label-error")
         let want = try XCTUnwrap(fx.expected.error)
         XCTAssertThrowsError(try FixtureRun.score(fx, runner: UnreachableRunner())) { error in
-            guard let e = error as? LabelTokenizationError else { return XCTFail("\(error)") }
-            XCTAssertEqual(LabelTokenizationError.typeName, want.type)
+            guard let e = error as? ClassifierError else { return XCTFail("\(error)") }
+            XCTAssertEqual(e.type, want.type)
             XCTAssertEqual(e.message, want.message)
         }
     }
 
     func testSharedFirstTokenIsAnError() {
-        XCTAssertThrowsError(try bindLabels(labels: ["ab", "ac"], sequences: [[1, 2], [1, 3]])) { error in
+        XCTAssertThrowsError(try bindLabelSequences(labels: ["ab", "ac"], sequences: [[1, 2], [1, 3]])) { error in
             XCTAssertEqual(
-                (error as? LabelTokenizationError)?.message,
+                (error as? ClassifierError)?.message,
                 "labels 'ab' and 'ac' share a first token; they first differ at depth 2, which first-token mode cannot read; "
-                    + LabelHint.sequence)
+                    + BindingHint.sequence)
         }
-        let tree = PrefixTree.build(labels: ["a", "b"], sequences: [[1], [1]])
+        let tree = PrefixTree(labels: ["a", "b"], sequences: [[1], [1]])
         XCTAssertNil(tree.depth)
         XCTAssertEqual(tree.collisions, [["a", "b"]])
     }

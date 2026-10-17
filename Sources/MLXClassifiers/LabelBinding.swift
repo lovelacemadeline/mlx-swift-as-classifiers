@@ -96,21 +96,7 @@ public func bindLabels(_ labels: [String], context: String, tokenize: Tokenize, 
     }
     let base = contextTokens ?? tokenize(context)
     let seqs = try labels.map { try labelTokenIds(context: context, label: $0, tokenize: tokenize, contextTokens: base, hint: hint) }
-    let tree = PrefixTree(labels: labels, sequences: seqs)
-    if !tree.collisions.isEmpty {
-        let names = tree.collisions.map { $0.map(pyRepr).joined(separator: " and ") }.joined(separator: "; ")
-        let whereText = tree.depth.map { "depth \($0)" } ?? "no depth (identical token ids)"
-        throw ClassifierError(.labelTokenization,
-            "labels \(names) share a first token; they first differ at \(whereText), "
-            + "which first-token mode cannot read; \(hint)")
-    }
-    let multi = zip(labels, seqs).filter { $0.1.count != 1 }
-    if !multi.isEmpty {
-        let detail = multi.map { "\(pyRepr($0.0)) -> \($0.1.count) tokens [\($0.1.map(String.init).joined(separator: ", "))]" }
-            .joined(separator: ", ")
-        throw ClassifierError(.labelTokenization, "labels are not single tokens: \(detail); \(hint)")
-    }
-    return (seqs.map { $0[0] }, tree)
+    return try bindLabelSequences(labels: labels, sequences: seqs, hint: hint)
 }
 
 /// Golden `bind_options`: bind `prompt`'s options to mask ids at its readout position.
