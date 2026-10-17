@@ -21,3 +21,13 @@ Enforced by `docloom check` (pre-commit + CI):
 - To record finished or discussed work as docs, use the `docloom` skill
   (`.claude/skills/docloom/SKILL.md`).
 - Run `docloom check` before committing doc changes.
+
+## Swift port rules
+
+- Definition of done is the vendored golden `fixtures/` (golden ADR-0002, stub
+  in `docs/adr/`). `schema/` and `fixtures/` are vendored, never edited; re-vendor
+  from the golden repo and bump their `VENDORED.txt`.
+- `swift build` and `swift test` must pass before a commit. Decode wire JSON
+  with `SystemOneJSON`, not Foundation's JSONDecoder (it loses key order).
+- docloom's anchor resolver is Python-only in v1, so stories use
+  `anchor: none  # <reason>` and name their Swift anchors in the body.

@@ -1,14 +1,60 @@
 # Sprint tracker — the canonical execution-status source (`docloom check`
 # enforces bijection between these rows and docs/stories/*.md files).
-#
-# epics:
-#   - epic: 1
-#     title: Example epic
-#     status: in-progress          # canonical execution statuses only
-#     story_home: docs/stories/    # where its stories live
-#     stories_count: 1
-#     stories:
-#       - id: "1.1"
-#         title: Example story
-#         status: ready-for-dev
-epics: []
+epics:
+  - epic: 1
+    title: Schema, prompt compilation and label binding
+    status: in-progress
+    story_home: docs/stories/
+    stories_count: 2
+    stories:
+      - id: "1.1"
+        title: Scaffold — package, docloom, vendored schema and fixtures
+        status: completed
+      - id: "1.2"
+        title: Tokenizer and chat-template parity with the fixture token ids
+        status: pending
+  - epic: 2
+    title: Runner — split prefill, readout and calibration
+    status: pending
+    story_home: docs/stories/
+    stories_count: 1
+    stories:
+      - id: "2.1"
+        title: Vendored Gemma 4 text backbone and the first green text fixture
+        status: pending
+  - epic: 3
+    title: Delta prefix cache
+    status: pending
+    story_home: docs/stories/
+    stories_count: 1
+    stories:
+      - id: "3.1"
+        title: Exact KV rewind and the longest-prefix store
+        status: pending
+  - epic: 4
+    title: Vision path
+    status: pending
+    story_home: docs/stories/
+    stories_count: 1
+    stories:
+      - id: "4.1"
+        title: Vendored vision tower, PIL-exact preprocessing and the image fixtures
+        status: pending
+  - epic: 5
+    title: INT8 kernels and MoE on A19
+    status: pending
+    story_home: docs/stories/
+    stories_count: 1
+    stories:
+      - id: "5.1"
+        title: Compile the golden INT8 kernels on A19 and measure
+        status: pending
+  - epic: 6
+    title: EV3 demo app
+    status: pending
+    story_home: docs/stories/
+    stories_count: 1
+    stories:
+      - id: "6.1"
+        title: On-device load, memory budget and one decision from a camera frame
+        status: pending
