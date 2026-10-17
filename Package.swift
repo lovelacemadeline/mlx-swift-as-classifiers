@@ -9,6 +9,10 @@
 //   mlx-swift-lm 3.32.3       — MLXLMCommon (KVCache, model protocols); the LLM/VLM
 //                               libraries moved here out of mlx-swift-examples
 //   swift-transformers 1.3.5  — Tokenizers (tokenizer.json loading)
+//   swift-jinja 2.5.1         — Jinja, the engine swift-transformers renders chat
+//                               templates with (already resolved through it; used
+//                               directly because applyChatTemplate returns ids only
+//                               and prompt compilation needs the rendered text)
 import PackageDescription
 
 let package = Package(
@@ -24,6 +28,7 @@ let package = Package(
         .package(url: "https://github.com/ml-explore/mlx-swift", exact: "0.32.3"),
         .package(url: "https://github.com/ml-explore/mlx-swift-lm", exact: "3.32.3"),
         .package(url: "https://github.com/huggingface/swift-transformers", exact: "1.3.5"),
+        .package(url: "https://github.com/huggingface/swift-jinja.git", exact: "2.5.1"),
     ],
     targets: [
         .target(
@@ -32,6 +37,7 @@ let package = Package(
                 .product(name: "MLX", package: "mlx-swift"),
                 .product(name: "MLXLMCommon", package: "mlx-swift-lm"),
                 .product(name: "Tokenizers", package: "swift-transformers"),
+                .product(name: "Jinja", package: "swift-jinja"),
             ]
         ),
         .testTarget(
