@@ -148,6 +148,13 @@ intermediates on all four fixture image/budget dumps:
    golden on 0.32.2 with the fixtures regenerated); that is a pin decision for
    ADR-0004 or golden ADR-0002, not taken here. Alternatively, fixtures whose
    answers are not near-tied. The tolerance stays 1e-3.
+6. **Cross-check (2026-10-18, low-power mode on).** The golden checker was run
+   in a scratch venv of the golden package with `mlx==0.32.2` (same core as
+   mlx-swift 0.32.3) via `mlx-classifiers fixtures check fixtures --runner mlx`:
+   11/13 pass; `image-gridworld` fails at max|dp| 0.0757 (max|dlogit| 0.375)
+   and `image-gridworld-vt140` at 0.021 (0.25); `vt70` happens to pass at 0.
+   Golden Python on the Swift side's MLX core reproduces the Swift misses, so
+   the divergence is the MLX core version, not the port.
 
 **Encode time per image** (`testEncodeTiming`: memo cleared, median of 3 after
 a warm-up, low-power mode on, Debug build; preprocessing is the Swift-side
