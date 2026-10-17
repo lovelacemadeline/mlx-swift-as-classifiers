@@ -51,27 +51,12 @@ final class EndToEndFixtureTests: XCTestCase {
         ])
     }
 
-    /// The image fixtures need the vision tower: they skip, never fail. The MLX
-    /// runner has no vision path yet, so compiling one is golden's PromptError.
-    func testImageFixtures() async throws {
-        let images = try Fixtures.load(directory: fixturesDir).filter { $0.request.hasImages }
-        XCTAssertEqual(images.count, 5)
-        if let runner = try? await GPU.runner() {
-            for fx in images {
-                XCTAssertThrowsError(try runCase(fx, runner: runner), fx.id) { error in
-                    XCTAssertEqual((error as? ClassifierError)?.kind, .prompt, fx.id)
-                }
-            }
-        }
-        throw XCTSkip("vision path is Epic 4: \(images.map(\.id).joined(separator: ", "))")
-    }
-
     /// The tokenizer stub is gone: the runner tokenizes like golden `MLXRunner.tokenize`.
     func testRunnerTokenizes() async throws {
         let runner = try await GPU.runner()
         let fx = try FixtureRun.load("noul-first-token")
         XCTAssertEqual(runner.tokenize("Yes"), fx.expected.optionTokenIds["yes"])
-        XCTAssertNil(runner.imageTokens, "no vision path before epic 4")
+        XCTAssertEqual(runner.imageTokens?.imageTokenId, 258_880, "the vision path (story 4.1)")
     }
 }
 

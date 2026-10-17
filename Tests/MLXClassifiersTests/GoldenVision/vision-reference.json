@@ -1,0 +1,186 @@
+{
+  "format": "mlx-classifiers-swift-vision-reference/1",
+  "script": "scripts/golden_vision_reference.py",
+  "images": [
+    {
+      "sha256": "347abe4c19db8c9f58a1ed67787108b09f7e53cf909eae80db2c285154dca620",
+      "max_soft_tokens": 280,
+      "resized": [
+        768,
+        768,
+        3
+      ],
+      "resized_sha256": "75bab90ab7e73e221c3af180ade4861f9e89870f847319050547c91849363661",
+      "tower_shape": [
+        256,
+        768
+      ],
+      "tower_bf16_sha256": "b65470c47785fa8367652ae1b3e4dc81e8b821f4022a69758383109d7434f374",
+      "soft_tokens_shape": [
+        256,
+        1536
+      ],
+      "soft_tokens_bf16_sha256": "4bdf1a5307d77f038f8eb02cac807b003115312839f054660f8f869800c935a9",
+      "soft_tokens_row0": [
+        0.7734375,
+        0.2255859375,
+        1.2421875,
+        1.1171875,
+        -0.68359375,
+        0.373046875,
+        0.65625,
+        -0.2021484375
+      ]
+    },
+    {
+      "sha256": "347abe4c19db8c9f58a1ed67787108b09f7e53cf909eae80db2c285154dca620",
+      "max_soft_tokens": 140,
+      "resized": [
+        528,
+        528,
+        3
+      ],
+      "resized_sha256": "9c8cc3039837cf6b0640fafc55e58f5cfef899a597483387fd92dca176983f2e",
+      "tower_shape": [
+        121,
+        768
+      ],
+      "tower_bf16_sha256": "6cf94dfcd66c4d999661038978c2bc36d15815b3794ff60fa4b10bd8b0e345ae",
+      "soft_tokens_shape": [
+        121,
+        1536
+      ],
+      "soft_tokens_bf16_sha256": "bb860e1db33fa66a1fb990f324909ab3e78811dd19534d6fd8290324b4028e30",
+      "soft_tokens_row0": [
+        0.59375,
+        0.271484375,
+        1.125,
+        0.921875,
+        -0.796875,
+        -0.04296875,
+        0.408203125,
+        -0.02783203125
+      ]
+    },
+    {
+      "sha256": "347abe4c19db8c9f58a1ed67787108b09f7e53cf909eae80db2c285154dca620",
+      "max_soft_tokens": 70,
+      "resized": [
+        384,
+        384,
+        3
+      ],
+      "resized_sha256": "df5ac9af8510c4787d0da98aac35bc2a9bcf06605772c94e1f29d180782e99e6",
+      "tower_shape": [
+        64,
+        768
+      ],
+      "tower_bf16_sha256": "f65c8308b3edc3ec04586526d150e3a310efcc1491ee410d43859457a642c249",
+      "soft_tokens_shape": [
+        64,
+        1536
+      ],
+      "soft_tokens_bf16_sha256": "3156bb92a7718378f421aeb1271c2166c15237f3985ea5c164f89987326cc6ac",
+      "soft_tokens_row0": [
+        0.384765625,
+        0.28125,
+        1.265625,
+        0.62890625,
+        -1.0859375,
+        0.0947265625,
+        0.65234375,
+        -0.5703125
+      ]
+    },
+    {
+      "sha256": "9e34f3a858739053635b0fc0355316f707130966d16833eba6652e6a99ac3e6d",
+      "max_soft_tokens": 280,
+      "resized": [
+        864,
+        720,
+        3
+      ],
+      "resized_sha256": "50b178001b98500a29befbe96946e8396c7b51b28717d73c31284b1dba753c35",
+      "tower_shape": [
+        270,
+        768
+      ],
+      "tower_bf16_sha256": "edb73609fd449ecdc7f2dc562eecac57565a462c21ab23c1fe71d1e24b194df2",
+      "soft_tokens_shape": [
+        270,
+        1536
+      ],
+      "soft_tokens_bf16_sha256": "8b2cf677a21041c66c25139e97d660fb4e84756c606b0ceb95b68c4c131afdb6",
+      "soft_tokens_row0": [
+        -0.1630859375,
+        0.62109375,
+        0.515625,
+        0.451171875,
+        -0.44140625,
+        -1.046875,
+        0.6953125,
+        0.291015625
+      ]
+    },
+    {
+      "sha256": "9e34f3a858739053635b0fc0355316f707130966d16833eba6652e6a99ac3e6d",
+      "max_soft_tokens": 140,
+      "resized": [
+        576,
+        480,
+        3
+      ],
+      "resized_sha256": "59a47c206b60840f8e3bd19edd13095b0d31c8fdbdb145e943405a9084fc9506",
+      "tower_shape": [
+        120,
+        768
+      ],
+      "tower_bf16_sha256": "1028634a34d0c7eabc9a25f7b9c78a75b5582ca094cb13a71240e2df513a3c49",
+      "soft_tokens_shape": [
+        120,
+        1536
+      ],
+      "soft_tokens_bf16_sha256": "1de1331a2fa8e45b07363ffa021d35da4d4422a1292a7335e7411809eb681dac",
+      "soft_tokens_row0": [
+        -0.24609375,
+        0.4296875,
+        0.4375,
+        0.017578125,
+        -0.2109375,
+        -1.015625,
+        0.62890625,
+        0.4375
+      ]
+    },
+    {
+      "sha256": "9e34f3a858739053635b0fc0355316f707130966d16833eba6652e6a99ac3e6d",
+      "max_soft_tokens": 70,
+      "resized": [
+        432,
+        336,
+        3
+      ],
+      "resized_sha256": "a0d384e190da0dba4282b91d3226ef5f348909f2149e56709dfcc0f59dc7052e",
+      "tower_shape": [
+        63,
+        768
+      ],
+      "tower_bf16_sha256": "2be97e4680f98cebb14750762e0189e2ccf1dbdd854ac6680296d50ba5b8867b",
+      "soft_tokens_shape": [
+        63,
+        1536
+      ],
+      "soft_tokens_bf16_sha256": "406d321c26f757129c3c8c378fffc24be4a63d25ce299eb3253f0019266d5165",
+      "soft_tokens_row0": [
+        0.0078125,
+        0.46484375,
+        0.27734375,
+        -0.220703125,
+        -0.5859375,
+        -0.5625,
+        0.6484375,
+        0.5390625
+      ]
+    }
+  ]
+}
