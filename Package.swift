@@ -35,10 +35,13 @@ let package = Package(
             name: "MLXClassifiers",
             dependencies: [
                 .product(name: "MLX", package: "mlx-swift"),
+                .product(name: "MLXNN", package: "mlx-swift"),
                 .product(name: "MLXLMCommon", package: "mlx-swift-lm"),
                 .product(name: "Tokenizers", package: "swift-transformers"),
                 .product(name: "Jinja", package: "swift-jinja"),
-            ]
+            ],
+            // Models/ holds the vendored Gemma 4 text model (ADR-0004); its upstream licence ships beside it.
+            exclude: ["Models/LICENSE-mlx-swift-lm"]
         ),
         .testTarget(
             name: "MLXClassifiersTests",
