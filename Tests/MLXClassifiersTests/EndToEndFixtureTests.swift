@@ -18,7 +18,7 @@ final class EndToEndFixtureTests: XCTestCase {
             let t0 = Date()
             let got = try runCase(fx, runner: runner)
             let ms = Date().timeIntervalSince(t0) * 1e3
-            let rep = compareCase(expected: fx.expected, result: got, caseId: fx.id)
+            let rep = compareCase(fx, result: got)
             XCTAssertTrue(rep.ok, "\(fx.id): \(rep.failures.joined(separator: "; "))")
             XCTAssertTrue(rep.tokenIdsEqual, fx.id)
             if let want = fx.expected.error {
@@ -41,7 +41,7 @@ final class EndToEndFixtureTests: XCTestCase {
         ])
     }
 
-    /// Story 2.3: every text fixture, first-token and sequence (all but the five image fixtures).
+    /// Story 2.3: every text fixture, first-token and sequence (all but the image fixtures).
     func testAllTextFixtures() async throws {
         let seen = try await runFixtures { !$0.request.hasImages }
         XCTAssertEqual(seen.map(\.0), [

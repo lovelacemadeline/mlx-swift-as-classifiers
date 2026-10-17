@@ -13,6 +13,16 @@ public enum FixtureFormat {
     public static let defaultProbabilityTolerance = 1e-3
 }
 
+/// Golden `GATES` (golden story 4.3): how a fixture's result is judged. A fixture
+/// without a `gate` key is `full`.
+public enum FixtureGate {
+    /// Ids, images, answer exact; raw probabilities within the tolerance.
+    public static let full = "full"
+    /// The same exact checks; max |dp| and max |dlogit| reported, never gated (near-tied cases).
+    public static let answerAndIds = "answer-and-ids"
+    public static let all = [full, answerAndIds]
+}
+
 /// Gemma 4 image placeholder ids as they appear in `expected.tokens`.
 public enum Gemma4ImageTokens {
     public static let beginOfImage = 255_999
@@ -36,6 +46,9 @@ public struct GoldenFixture: Codable, Sendable, Equatable {
     public var readout: Readout
     public var labelStyle: LabelStyle
     public var prefixCached: Bool
+    /// Golden story 4.3: `"answer-and-ids"` or absent (= `"full"`); see `FixtureGate`.
+    /// Kept as the raw string so an unknown value fails the case, as golden's checker does.
+    public var gate: String?
     /// Name of the request's single question.
     public var question: String
     public var request: SystemOneRequest
@@ -47,8 +60,12 @@ public struct GoldenFixture: Codable, Sendable, Equatable {
         case format, id, description, model, path, readout
         case labelStyle = "label_style"
         case prefixCached = "prefix_cached"
+        case gate
         case question, request, expected, generator
     }
+
+    /// The gate this fixture is checked under (`gate`, absent = `full`).
+    public var resolvedGate: String { gate ?? FixtureGate.full }
 
     public struct Model: Codable, Sendable, Equatable {
         public var repo: String

@@ -1,11 +1,14 @@
-Vendored from https://github.com/lovelacemadeline/mlx-lm-as-classifiers/tree/9b64a14/fixtures at golden commit 9b64a14 (2026-10-16T23:47:15+01:00; fixtures last changed in 1b7dcd3, story 6.7 vision soft-token budget) on 2026-10-17. Do not edit; re-vendor from the golden repo and bump this note. Nothing is extended locally.
+Vendored from https://github.com/lovelacemadeline/mlx-lm-as-classifiers/tree/4968020/fixtures at golden commit 4968020 (2026-10-17T12:45:35+01:00; fixtures last changed in 4968020, golden story 4.3 per-fixture gate and clear-winner gridworld fixtures) on 2026-10-17. Do not edit; re-vendor from the golden repo and bump this note. Nothing is extended locally.
 
 sha256:
 fade4b6bf47341226cac99a8c487a4e847f1fdc42005a5f7df3060f7022c11d2  choice-first-token-cached-list-state.json
 c8f5461b0a5ca8a69efd127ea9ebc76a7e72483a01f62ae67dca8d99ed2cbe5b  choice-first-token-image-colour.json
-a1e755c7cf532d914c51a2dcfeb4b6d64346020c53eefc3a28e0960ddd05ff66  choice-first-token-image-gridworld-vt140.json
-e745d9929e6c1acbb6e73dae7367cfc09c48cd605234139dfc43f04a183ff04c  choice-first-token-image-gridworld-vt70.json
-832d36c02e71c93d92307f25fd6fbb15644d89ac55699552ddc405db281bcaff  choice-first-token-image-gridworld.json
+d930669da0521cd13004587caec84c58e105c7ab1e32679c3b74304d155f46f0  choice-first-token-image-gridworld-vt140.json
+2d2bcce6a88df9fc56b32fc7f17800ef7eacaf1435c413906ce6c7ed5296ac2c  choice-first-token-image-gridworld-vt70.json
+c5c6c57fd7f8d208274d1c831d4b08df27be8a7e2682aa20790f7f691efc9057  choice-first-token-image-gridworld-you-vt140.json
+5d51a6a2196eaea7befda979a088c0d962ac582f006ce41fad64941b1fd87830  choice-first-token-image-gridworld-you-vt70.json
+5be4730da7090ff19666f6299ef61197835766bfd1f5a493de99c6af8bb4f834  choice-first-token-image-gridworld-you.json
+ed5da4bfd25a92a0c7a176190712ad7b6cdbc04d1e356f38c5e13412bcfcbc0f  choice-first-token-image-gridworld.json
 9bd90f670d68c8066f648094e9157fa6d6ed7399b652c4552c4e17c32b34b8b6  choice-first-token-multi-token-label-error.json
 b2aa249acebf11e3096f736775265e79eb0159f02ea25339502ee6d831c4ac48  choice-first-token-object-state.json
 9758687070e7ad995d2e8934b0cefc93738cdc09f1090873f920983c96620402  choice-sequence-multi-token-options.json

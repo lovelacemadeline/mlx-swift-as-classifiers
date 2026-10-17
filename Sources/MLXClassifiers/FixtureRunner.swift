@@ -68,6 +68,8 @@ public func runCase(_ fx: GoldenFixture, runner: Runner) throws -> GoldenFixture
 /// Golden `CaseReport`: the failures of one case and its distances.
 public struct CaseReport: Sendable {
     public let caseId: String
+    /// The fixture's gate (golden story 4.3); `answer-and-ids` reports the distances ungated.
+    public var gate: String = FixtureGate.full
     public var failures: [String] = []
     public var tokenIdsEqual = true
     public var maxProbDistance: Double?
@@ -108,11 +110,18 @@ func maxDistance(_ where_: String, _ want: OrderedObject<Double>, _ got: Ordered
 /// `labels`, `option_token_ids`, `images`, `answer` and `error.type`; within
 /// `probTol` (max absolute difference) on `raw_probabilities`. `raw_logits`
 /// distance is reported, and fails only when `logitTol` is given.
+///
+/// `gate` is the fixture's (golden story 4.3): `answer-and-ids` keeps every exact check
+/// and reports both distances but gates neither; an unknown gate fails the case.
 public func compareCase(expected e: GoldenFixture.Expected, result r: GoldenFixture.Expected, caseId: String = "?",
                         probTol: Double = FixtureFormat.defaultProbabilityTolerance,
-                        logitTol: Double? = nil) -> CaseReport {
-    var rep = CaseReport(caseId: caseId)
+                        logitTol: Double? = nil, gate: String = FixtureGate.full) -> CaseReport {
+    var rep = CaseReport(caseId: caseId, gate: gate)
     var f: [String] = []
+    if !FixtureGate.all.contains(gate) {
+        f.append("gate: unknown gate '\(gate)', expected one of \(FixtureGate.all)")
+    }
+    let gated = gate == FixtureGate.full
     if e.images != nil, r.images == nil { f.append("missing field 'images'") }
     if e.rawLogits != nil, r.rawLogits == nil { f.append("missing field 'raw_logits'") }
     if e.rawProbabilities != nil, r.rawProbabilities == nil { f.append("missing field 'raw_probabilities'") }
@@ -149,13 +158,21 @@ public func compareCase(expected e: GoldenFixture.Expected, result r: GoldenFixt
     }
     if let want = e.rawProbabilities, let got = r.rawProbabilities, let (d, o) = maxDistance("raw_probabilities", want, got, &f) {
         rep.maxProbDistance = d
-        if !(d <= probTol) { f.append("raw_probabilities: max distance \(d) at '\(o)' exceeds \(probTol)") }
+        if gated, !(d <= probTol) { f.append("raw_probabilities: max distance \(d) at '\(o)' exceeds \(probTol)") }
     }
     if let want = e.rawLogits, let got = r.rawLogits, let (d, o) = maxDistance("raw_logits", want, got, &f) {
         rep.maxLogitDistance = d
-        if let logitTol, !(d <= logitTol) { f.append("raw_logits: max distance \(d) at '\(o)' exceeds \(logitTol)") }
+        if gated, let logitTol, !(d <= logitTol) { f.append("raw_logits: max distance \(d) at '\(o)' exceeds \(logitTol)") }
     }
     if let want = e.answer, let got = r.answer, got != want { f.append("answer: expected '\(want)', got '\(got)'") }
     rep.failures = f
     return rep
+}
+
+/// Golden `check` for one fixture: `compareCase` under the fixture's own id and gate.
+public func compareCase(_ fx: GoldenFixture, result r: GoldenFixture.Expected,
+                        probTol: Double = FixtureFormat.defaultProbabilityTolerance,
+                        logitTol: Double? = nil) -> CaseReport {
+    compareCase(expected: fx.expected, result: r, caseId: fx.id, probTol: probTol, logitTol: logitTol,
+                gate: fx.resolvedGate)
 }

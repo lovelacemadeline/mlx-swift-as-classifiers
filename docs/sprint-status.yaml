@@ -39,13 +39,16 @@ epics:
         status: completed
   - epic: 4
     title: Vision path
-    status: in-progress
+    status: completed
     story_home: docs/stories/
-    stories_count: 1
+    stories_count: 2
     stories:
       - id: "4.1"
         title: Vendored vision tower, PIL-exact preprocessing and the image fixtures
-        status: in-progress
+        status: completed
+      - id: "4.2"
+        title: Per-fixture gate from golden — gridworld action cases on answer and ids, clear-winner image fixtures pass
+        status: completed
   - epic: 5
     title: INT8 kernels and MoE on A19
     status: pending

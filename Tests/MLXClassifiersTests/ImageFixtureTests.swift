@@ -114,7 +114,7 @@ final class ImagePreprocessTests: XCTestCase {
     }
 }
 
-// MARK: - GPU: tower parity, the five image fixtures, encode timing
+// MARK: - GPU: tower parity, the eight image fixtures, encode timing
 
 final class ImageFixtureTests: XCTestCase {
     var runner: MLXRunner!
@@ -169,41 +169,37 @@ final class ImageFixtureTests: XCTestCase {
         XCTAssertEqual(a.rawLogits, b.rawLogits)
     }
 
-    /// The gridworld cases miss the 1e-3 gate (story 4.1 in-progress, see its results): their
-    /// logits are near-tied (21.375 vs 20.875 ...), so one bf16 step on a logit is ~0.03 in
-    /// probability, and the Swift path is 1-3 steps from golden even on golden's own soft tokens.
-    static let knownMisses: Set<String> = [
+    /// The near-tied gridworld action cases (story 4.1 results): golden marks them
+    /// `gate: "answer-and-ids"` (golden story 4.3), so their max |dp| is reported, not gated.
+    static let answerAndIds: Set<String> = [
         "choice-first-token-image-gridworld", "choice-first-token-image-gridworld-vt140",
         "choice-first-token-image-gridworld-vt70",
     ]
 
-    /// Story 4.1 gate: the five image fixtures from their `request` through `runCase`,
-    /// golden `compare` semantics (ids and image runs exact, raw probabilities within 1e-3).
-    /// The tolerance is not loosened: the three known misses are strict expected failures,
-    /// so this test fails the day one of them passes.
+    /// Stories 4.1 / 4.2: the eight image fixtures from their `request` through `runCase`,
+    /// golden `compare` semantics under each fixture's gate: ids and image runs exact,
+    /// answer exact, and raw probabilities within 1e-3 on every full-gate fixture
+    /// (the colour, sequence and three clear-winner gridworld cases at 280 / 140 / 70).
     func testImageFixtures() throws {
         let images = try Fixtures.load(directory: fixturesDir).filter { $0.request.hasImages }
         XCTAssertEqual(images.map(\.id), [
             "choice-first-token-image-colour", "choice-first-token-image-gridworld-vt140",
-            "choice-first-token-image-gridworld-vt70", "choice-first-token-image-gridworld",
-            "noul-sequence-image",
+            "choice-first-token-image-gridworld-vt70", "choice-first-token-image-gridworld-you-vt140",
+            "choice-first-token-image-gridworld-you-vt70", "choice-first-token-image-gridworld-you",
+            "choice-first-token-image-gridworld", "noul-sequence-image",
         ])
+        XCTAssertEqual(Set(images.filter { $0.gate != nil }.map(\.id)), Self.answerAndIds)
         for fx in images {
             let t0 = Date()
             let got = try runCase(fx, runner: runner)
             let ms = Date().timeIntervalSince(t0) * 1e3
-            let rep = compareCase(expected: fx.expected, result: got, caseId: fx.id)
+            let rep = compareCase(fx, result: got)
             XCTAssertTrue(rep.tokenIdsEqual, fx.id)
             XCTAssertEqual(got.answer, fx.expected.answer, fx.id)
-            if Self.knownMisses.contains(fx.id) {
-                XCTExpectFailure("story 4.1 in-progress: \(fx.id) misses 1e-3 (bf16 noise on near-tied logits)", strict: true) {
-                    XCTAssertTrue(rep.ok, "\(fx.id): \(rep.failures.joined(separator: "; "))")
-                }
-            } else {
-                XCTAssertTrue(rep.ok, "\(fx.id): \(rep.failures.joined(separator: "; "))")
-            }
+            XCTAssertEqual(rep.gate, Self.answerAndIds.contains(fx.id) ? FixtureGate.answerAndIds : FixtureGate.full, fx.id)
+            XCTAssertTrue(rep.ok, "\(fx.id): \(rep.failures.joined(separator: "; "))")
             let logitDeltas = got.rawLogits.map { r in r.entries.map { $0.value - fx.expected.rawLogits![$0.key]! } } ?? []
-            print("IMAGE \(fx.id): max|dp| = \(rep.maxProbDistance.map { "\($0)" } ?? "n/a") answer=\(got.answer ?? "?") "
+            print("IMAGE \(fx.id) [gate \(rep.gate)]: max|dp| = \(rep.maxProbDistance.map { "\($0)" } ?? "n/a") answer=\(got.answer ?? "?") "
                   + "images=\(got.images?.map { "\($0.start)+\($0.length)" } ?? []) logit deltas=\(logitDeltas) "
                   + String(format: "%.1f ms", ms))
         }
@@ -387,7 +383,7 @@ final class GoldenSoftTokenTests: XCTestCase {
                 }
             }
             let got = try runCase(fx, runner: runner)
-            let rep = compareCase(expected: fx.expected, result: got, caseId: fx.id)
+            let rep = compareCase(fx, result: got)
             let logitDeltas = got.rawLogits.map { r in r.entries.map { $0.value - fx.expected.rawLogits![$0.key]! } } ?? []
             print("GOLDENSOFT \(fx.id): max|dp| = \(rep.maxProbDistance ?? -1) ok=\(rep.ok) logit deltas=\(logitDeltas)")
         }
