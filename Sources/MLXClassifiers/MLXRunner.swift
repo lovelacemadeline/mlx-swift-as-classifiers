@@ -32,7 +32,10 @@
 // unchanged. Rows without an image take the token-id path. The delta store keys on
 // `keyedTokens` (image rows carry the image's hash and budget), and a hit is never
 // left inside an image run.
-// Not yet ported: INT8/MoE (epic 5), the bidirectional image-block mask (26B only).
+// Gemma 4 26B-A4B (story 7.1): `use_bidirectional_attention: "vision"` makes each
+// image block attend to itself both ways (golden `vision/merge.py`): image rows pass
+// `blocks` to the backbone, and cache-only chunk bounds are moved off image runs.
+// Not yet ported: the INT8 kernels on the MoE experts and golden's MoE gather kernel.
 
 import Foundation
 import MLX
@@ -60,12 +63,15 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
     public let imageTokens: ImageTokens?
     /// The vision tower's encoder with its soft-token memo (nil: no vision path).
     public let vision: VisionEncoder?
+    /// Image blocks attend bidirectionally (text config `use_bidirectional_attention: "vision"`, the 26B).
+    public let visionBidirectional: Bool
 
     var text: Gemma4TextModel { model.languageModel }
     var backbone: Gemma4TextModelInner { model.languageModel.model }
 
     public init(model: Gemma4Model, modelId: String, modelDirectory: URL, tokenizer: ModelTokenizer,
-                imageTokens: ImageTokens? = nil) {
+                imageTokens: ImageTokens? = nil, visionBidirectional: Bool = false) {
+        self.visionBidirectional = visionBidirectional
         self.model = model
         self.modelId = modelId
         self.modelDirectory = modelDirectory
@@ -120,8 +126,9 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         var config = try decoder.decode(Gemma4Configuration.self, from: data)
         if !includeVision { config.visionConfig = nil }
         let base = try decoder.decode(BaseConfiguration.self, from: data)
+        var bidirectional = false
         if case .string("vision") = try JSONValue.parse(data)["text_config"]?["use_bidirectional_attention"] {
-            throw RunnerError.notImplemented("bidirectional image-block attention (Gemma 4 26B-A4B) is not ported")
+            bidirectional = true
         }
         let model = Gemma4Model(config)
         try await loadWeights(
@@ -129,7 +136,8 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
             perLayerQuantization: base.perLayerQuantization)
         let tokenizer = try await ModelTokenizer.load(directory: directory, expectedTokenizerSha256: expectedTokenizerSha256)
         return MLXRunner(model: model, modelId: modelId, modelDirectory: directory, tokenizer: tokenizer,
-                         imageTokens: try ImageTokens.fromConfig(modelDirectory: directory))
+                         imageTokens: try ImageTokens.fromConfig(modelDirectory: directory),
+                         visionBidirectional: bidirectional)
     }
 
     // MARK: - Runner
@@ -254,6 +262,9 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         var bounds = [0]
         bounds.append(contentsOf: stride(from: first, to: n, by: step))
         bounds.append(n)
+        if visionBidirectional && !slots.isEmpty {
+            bounds = boundsOffRuns(bounds, slots.map { ($0.start - base, $0.end - base) })
+        }
         let all = Array(tokens), lo = tokens.startIndex
         let local = slots.filter { $0.end > base && $0.start < base + n }
         for (start, end) in zip(bounds, bounds.dropFirst()) {
@@ -317,8 +328,28 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         }
         if at < text.dim(1) { parts.append(text[0..., at...]) }
         let h = concatenated(parts, axis: 1)
-        return backbone(MLXArray(plIds)[.newAxis, 0...], cache: cache, inputEmbeddings: h)
+        var blocks: MLXArray? = nil
+        if visionBidirectional {
+            var b = [Int32](repeating: -1, count: segment.count)
+            for (k, p) in pieces.enumerated() { for i in p.off ..< (p.off + p.n) { b[i] = Int32(k) } }
+            blocks = MLXArray(b)
+        }
+        return backbone(MLXArray(plIds)[.newAxis, 0...], cache: cache, inputEmbeddings: h, blocks: blocks)
     }
+}
+
+/// Golden `_bounds_off_runs`: chunk boundaries with any that fall strictly inside a run
+/// moved to its start (or its end, when the start is the previous boundary); duplicates dropped.
+func boundsOffRuns(_ bounds: [Int], _ runs: [(Int, Int)]) -> [Int] {
+    var out: [Int] = []
+    for var b in bounds {
+        for (a, e) in runs where a < b && b < e {
+            b = (out.isEmpty || a > out.last!) ? a : e
+            break
+        }
+        if out.isEmpty || b > out.last! { out.append(b) }
+    }
+    return out
 }
 
 /// The user's home directory (macOS), or the app container's home on iOS, where

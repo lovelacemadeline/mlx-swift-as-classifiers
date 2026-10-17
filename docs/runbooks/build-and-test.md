@@ -23,6 +23,10 @@ Xcode 26.6 (17F113), Swift 6.3.3, Metal toolchain 17.6.109.
   `42f62737af7a9fd8c1d55d79666c1a217be4e2e2` in the local Hugging Face cache
   (`~/.cache/huggingface/hub`, or `$HF_HUB_CACHE` / `$HF_HOME/hub`). Tests never
   download. `MLXCLASSIFIERS_MODEL_DIR=/path/to/snapshot` overrides the lookup.
+- Optional, for `Gemma26BFixtureTests` (story 7.1): `mlx-community/gemma-4-26B-A4B-it-qat-4bit`
+  at revision `0e3cbab38ce568cf6e23543010d08d03b731910c` (about 16 GB of GPU memory);
+  skipped when absent. `MLXCLASSIFIERS_26B_DIR` overrides the lookup. It prints
+  `FIX26B`, `LOAD26B`, `TIME26B` and `MEM26B` lines.
 
 ## Full suite, GPU included (the definition-of-done run)
 

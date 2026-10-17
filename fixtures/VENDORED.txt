@@ -1,4 +1,4 @@
-Vendored from https://github.com/lovelacemadeline/mlx-lm-as-classifiers/tree/4968020/fixtures at golden commit 4968020 (2026-10-17T12:45:35+01:00; fixtures last changed in 4968020, golden story 4.3 per-fixture gate and clear-winner gridworld fixtures) on 2026-10-17. Do not edit; re-vendor from the golden repo and bump this note. Nothing is extended locally.
+Vendored from https://github.com/lovelacemadeline/mlx-lm-as-classifiers/tree/8b39076/fixtures at golden commit 8b39076 (2026-10-17T14:05:58+01:00; fixtures last changed in 8b39076, golden story 4.4 26B fixture subset in fixtures/26b; the flat E2B set is unchanged since 4968020, golden story 4.3) on 2026-10-17. Do not edit; re-vendor from the golden repo and bump this note. Nothing is extended locally.
 
 sha256:
 fade4b6bf47341226cac99a8c487a4e847f1fdc42005a5f7df3060f7022c11d2  choice-first-token-cached-list-state.json
@@ -17,3 +17,8 @@ b2aa249acebf11e3096f736775265e79eb0159f02ea25339502ee6d831c4ac48  choice-first-t
 7f641a31db7148ee2fe5821c90dff6ba8df2b8fd69706ddcb63a334ed8935b8e  noul-sequence.json
 625cfee00fe53511d308df949a5eb4a22e70b1e9dd3bd8f4d4cfa561f99e9b70  score-first-token-no-prefix.json
 f69548f39b800b00cbec1f6e713907b8241b8cb37300b4813d8053382a561b64  score-sequence-object-state.json
+a2c9104db3982c2b4a0866d623344a474edc1932f82c92dec0e77d139df9254f  26b/choice-first-token-image-gridworld-vt140.json
+48d3c3efb6d638ab3ff0c2557225192c18699a815b52966c31e81841d1314fd5  26b/choice-first-token-image-gridworld-you-vt140.json
+edefde0999e62637d56c60cb49b2266a60353fbcfa1b5e25b5bc5eb423114335  26b/choice-sequence-multi-token-options.json
+c3432cc1b1f65066df1439bbe8b93246c5a7fedcb09a4c90fde74400ca71a5d9  26b/noul-first-token.json
+a18618159700c50b282c55968d5aa09268e9ac93c4603646639540abf735b020  26b/noul-sequence.json

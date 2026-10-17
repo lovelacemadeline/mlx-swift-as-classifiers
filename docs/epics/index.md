@@ -19,3 +19,4 @@ are unique forever — never reuse one, even for abandoned epics.
 | 4 | [Vision path](epic-4.md) | completed |
 | 5 | [INT8 kernels and MoE on A19](epic-5.md) | in-progress |
 | 6 | [EV3 demo app](epic-6.md) | in-progress |
+| 7 | [26B on Swift](epic-7.md) | in-progress |

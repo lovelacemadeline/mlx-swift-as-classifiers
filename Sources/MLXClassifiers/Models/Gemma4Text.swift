@@ -767,10 +767,14 @@ public class Gemma4TextModelInner: Module {
     /// (before the vocab projection). `inputs` always drive the per-layer inputs
     /// (PLE); `inputEmbeddings`, when given, replaces `embedTokens(inputs) * embedScale`
     /// (MLXClassifiers: the image path's merged embeddings, golden story 6.3).
+    /// `blocks` (`[L]` int32, image k's rows hold k, text rows -1; MLXClassifiers story
+    /// 7.1, golden `vision/merge.py` `_make_masks`) switches on the bidirectional
+    /// image-block overlay for `use_bidirectional_attention: "vision"` (the 26B-A4B).
     public func callAsFunction(
         _ inputs: MLXArray,
         cache: [KVCache]? = nil,
-        inputEmbeddings: MLXArray? = nil
+        inputEmbeddings: MLXArray? = nil,
+        blocks: MLXArray? = nil
     ) -> MLXArray {
         var h = inputEmbeddings ?? (embedTokens(inputs) * embedScale)
 
@@ -821,15 +825,20 @@ public class Gemma4TextModelInner: Module {
 
         // Build masks: one per attention type
         var maskByType = [String: MLXFast.ScaledDotProductAttentionMaskMode]()
+        let asArray = blocks != nil && h.dim(1) > 1
         for (i, layer) in layers.enumerated() {
             let lt = layer.layerType
             if maskByType[lt] == nil {
-                if lt == "sliding_attention" {
-                    maskByType[lt] = createAttentionMask(
-                        h: h, cache: fullCache[i], windowSize: config.slidingWindow)
-                } else {
-                    maskByType[lt] = createAttentionMask(h: h, cache: fullCache[i])
+                let window = lt == "sliding_attention" ? config.slidingWindow : nil
+                var m = createAttentionMask(
+                    h: h, cache: fullCache[i], windowSize: window, returnArray: asArray)
+                if asArray, let blocks {
+                    guard case .array(let arr) = m else {
+                        fatalError("bidirectional image mask needs an array attention mask")
+                    }
+                    m = .array(Self.overlayImageBlocks(arr, blocks: blocks))
                 }
+                maskByType[lt] = m
             }
         }
 
@@ -856,6 +865,17 @@ public class Gemma4TextModelInner: Module {
         }
 
         return norm(h)
+    }
+
+    /// Golden `_overlay`: `mask` (bool `[N, K]`, the last N columns are this segment)
+    /// with every pair of rows in the same image block allowed to attend both ways.
+    static func overlayImageBlocks(_ mask: MLXArray, blocks: MLXArray) -> MLXArray {
+        let n = blocks.dim(0)
+        let col = blocks[0..., .newAxis], row = blocks[.newAxis, 0...]
+        let same = (col .!= MLXArray(Int32(-1))) .&& (col .== row)
+        let k = mask.dim(-1)
+        if k == n { return mask .|| same }
+        return concatenated([mask[.ellipsis, 0 ..< (k - n)], mask[.ellipsis, (k - n)...] .|| same], axis: -1)
     }
 }
 

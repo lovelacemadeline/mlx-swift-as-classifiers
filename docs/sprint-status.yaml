@@ -67,3 +67,12 @@ epics:
       - id: "6.1"
         title: On-device load, memory budget and one decision from a camera frame
         status: in-progress
+  - epic: 7
+    title: 26B on Swift
+    status: in-progress
+    story_home: docs/stories/
+    stories_count: 1
+    stories:
+      - id: "7.1"
+        title: 26B through MLXRunner — bidirectional image blocks, the five 26B fixtures pass
+        status: completed
