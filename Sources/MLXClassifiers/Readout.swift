@@ -1,5 +1,5 @@
-// First-token readout (golden ADR-0003, `readout.py` + `calibrate.py` + the
-// first-token half of `decide.py`): option labels bound to single token ids,
+// First-token readout (golden ADR-0003, `readout.py` + the first-token half of
+// `decide.py`; the softmax is Calibrate.swift): option labels bound to single token ids,
 // the logits gathered at the readout position, a masked softmax over them.
 //
 // The in-context label ids come from the tokenizer (golden `label_token_ids`,
@@ -37,41 +37,6 @@ public func bindLabelSequences(labels: [String], sequences: [[Int]], hint: Strin
         throw ClassifierError(.labelTokenization, "labels are not single tokens: \(detail); \(hint)")
     }
     return (sequences.map { $0[0] }, tree)
-}
-
-// MARK: - calibrate.py (the parts first-token mode needs)
-
-/// The logits of `tokenIds` from a vocab row (the option mask).
-public func gather(_ row: LogitRow, _ tokenIds: [Int]) -> [Double] {
-    tokenIds.map { row[$0] }
-}
-
-/// Numerically stable softmax of `logits / temperature` (golden `softmax`).
-public func softmax(_ logits: [Double], temperature: Double = 1.0) -> [Double] {
-    precondition(temperature > 0, "temperature must be positive")
-    let scaled = logits.map { $0 / temperature }
-    let m = scaled.max()!
-    let exps = scaled.map { Foundation.exp($0 - m) }
-    let total = exactSum(exps)
-    return exps.map { $0 / total }
-}
-
-/// Index of the first maximum (Python `max(range(n), key=...)`).
-public func argmax(_ xs: [Double]) -> Int {
-    var best = 0
-    for i in xs.indices where xs[i] > xs[best] { best = i }
-    return best
-}
-
-/// Neumaier-compensated sum, standing in for Python's `math.fsum` on a handful of terms.
-func exactSum(_ xs: [Double]) -> Double {
-    var sum = 0.0, c = 0.0
-    for x in xs {
-        let t = sum + x
-        c += abs(sum) >= abs(x) ? (sum - t) + x : (x - t) + sum
-        sum = t
-    }
-    return sum + c
 }
 
 // MARK: - decide.py, first-token scoring of one compiled prompt
