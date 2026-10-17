@@ -15,7 +15,7 @@ epics:
         status: completed
   - epic: 2
     title: Runner — split prefill, readout and calibration
-    status: in-progress
+    status: completed
     story_home: docs/stories/
     stories_count: 3
     stories:
@@ -27,7 +27,7 @@ epics:
         status: completed
       - id: "2.3"
         title: Sequence readout, noul and calibration
-        status: in-progress
+        status: completed
   - epic: 3
     title: Delta prefix cache
     status: pending

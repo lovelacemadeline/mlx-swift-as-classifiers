@@ -14,11 +14,13 @@ updated: 2026-10-17
 declared option set, on MLX Swift, for iPhone and Mac. Its definition of done is
 reproducing the golden fixtures, which are vendored under `fixtures/`.
 
-Status: the wire schema types, the fixture loader, the vendored Gemma 4 text
-model, the split-prefill `MLXRunner` and first-token readout are real; the four
-first-token text fixtures reproduce within 1e-3 from their token ids (story 2.1).
-Tokenizer and prompt compilation, sequence readout, calibration, the delta cache
-and vision are not ported yet (see [`docs/epics/index.md`](docs/epics/index.md)).
+Status: a wire request goes in and a full response comes out (`decide`):
+tokenizer and chat template, prompt compilation, label binding, the vendored
+Gemma 4 text model on the split-prefill `MLXRunner`, first-token and sequence
+readout, permutations and temperature calibration. All eight text fixtures
+reproduce within 1e-3 end to end from their request (stories 2.2 and 2.3). The
+delta prefix cache, vision and the INT8 kernels are not ported yet (see
+[`docs/epics/index.md`](docs/epics/index.md)).
 
 ## Build and test
 
