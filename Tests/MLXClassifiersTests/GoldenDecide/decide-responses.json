@@ -1,0 +1,892 @@
+{
+  "format": "mlx-classifiers-swift-decide-reference/1",
+  "generator": {
+    "mlx_classifiers": "0.0.1",
+    "golden_commit": "9b64a14",
+    "script": "scripts/golden_decide_reference.py"
+  },
+  "cases": [
+    {
+      "id": "noul-first-token",
+      "request": {
+        "state": "URGENT: none of our payouts have arrived for three days and our whole business is blocked. Every payment to our merchants is failing and we are losing money every hour.",
+        "questions": {
+          "q": {
+            "type": "noul",
+            "instructions": "Is the ticket about payments?"
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "noul",
+            "noul": 0.9964063974185798,
+            "raw_noul": 0.9964063974185798,
+            "debug": {
+              "readout_position": 81,
+              "option_token_ids": {
+                "yes": [
+                  10784
+                ],
+                "no": [
+                  3771
+                ]
+              },
+              "raw_logits": {
+                "yes": 25.125,
+                "no": 19.5
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 62,
+          "output_tokens": 0,
+          "cached_tokens": 20
+        }
+      },
+      "prefills": {
+        "9d810f8ee57ae0788f3b7d68bea86643c0162a4cc4cabbe86c98a866a9338af8": {
+          "10784": 25.125,
+          "3771": 19.5
+        }
+      }
+    },
+    {
+      "id": "choice-first-token-object-state",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "Which team should handle this ticket?",
+            "criteria": {
+              "billing": "Payments, refunds, invoices, payouts",
+              "technical": "Bugs, crashes, outages",
+              "sales": "Pricing questions and new contracts"
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "billing",
+            "probabilities": {
+              "billing": 0.9994974182726641,
+              "technical": 0.00048784993577282056,
+              "sales": 1.4731791563085317e-05
+            },
+            "raw_probabilities": {
+              "billing": 0.9994974182726641,
+              "technical": 0.00048784993577282056,
+              "sales": 1.4731791563085317e-05
+            },
+            "confidence": 0.9994974182726641,
+            "debug": {
+              "readout_position": 134,
+              "option_token_ids": {
+                "billing": [
+                  236776
+                ],
+                "technical": [
+                  236799
+                ],
+                "sales": [
+                  236780
+                ]
+              },
+              "raw_logits": {
+                "billing": 27.125,
+                "technical": 19.5,
+                "sales": 16.0
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 115,
+          "output_tokens": 0,
+          "cached_tokens": 20
+        }
+      },
+      "prefills": {
+        "6039c008a41652aea62d7a11b397b320dcbcd21e97256307d66fbd56cc6bdcf4": {
+          "236776": 27.125,
+          "236799": 19.5,
+          "236780": 16.0
+        }
+      }
+    },
+    {
+      "id": "choice-first-token-cached-list-state",
+      "request": {
+        "state": [
+          "Customer: the app crashes every time I open the payouts tab.",
+          "Agent: which version are you on?",
+          "Customer: the latest one, and it started after the update yesterday."
+        ],
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "Which team should handle this ticket?",
+            "criteria": {
+              "billing": "Payments, refunds, invoices, payouts",
+              "technical": "Bugs, crashes, outages",
+              "sales": "Pricing questions and new contracts"
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "technical",
+            "probabilities": {
+              "billing": 0.0011693005507586126,
+              "technical": 0.9986513814020481,
+              "sales": 0.00017931804719334361
+            },
+            "raw_probabilities": {
+              "billing": 0.0011693005507586126,
+              "technical": 0.9986513814020481,
+              "sales": 0.00017931804719334361
+            },
+            "confidence": 0.9986513814020481,
+            "debug": {
+              "readout_position": 131,
+              "option_token_ids": {
+                "billing": [
+                  236776
+                ],
+                "technical": [
+                  236799
+                ],
+                "sales": [
+                  236780
+                ]
+              },
+              "raw_logits": {
+                "billing": 18.875,
+                "technical": 25.625,
+                "sales": 17.0
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 112,
+          "output_tokens": 0,
+          "cached_tokens": 20
+        }
+      },
+      "prefills": {
+        "d0d157f456c474806faad070f25f851851dcd1846fff966cab21536e76a289ea": {
+          "236776": 18.875,
+          "236799": 25.625,
+          "236780": 17.0
+        }
+      }
+    },
+    {
+      "id": "score-first-token-no-prefix",
+      "request": {
+        "state": "URGENT: none of our payouts have arrived for three days and our whole business is blocked. Every payment to our merchants is failing and we are losing money every hour.",
+        "questions": {
+          "q": {
+            "type": "score",
+            "instructions": "How severe is the customer impact?",
+            "criteria": [
+              "trivial",
+              "minor",
+              "major",
+              "critical"
+            ]
+          }
+        },
+        "options": {
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "score",
+            "score": 3,
+            "expected_score": 2.9952035928814857,
+            "legend": {
+              "0": "trivial",
+              "1": "minor",
+              "2": "major",
+              "3": "critical"
+            },
+            "probabilities": {
+              "0": 0.0005515445973016098,
+              "1": 0.0009093433093109006,
+              "2": 0.0013230867079878639,
+              "3": 0.9972160253853997
+            },
+            "raw_probabilities": {
+              "0": 0.0005515445973016098,
+              "1": 0.0009093433093109006,
+              "2": 0.0013230867079878639,
+              "3": 0.9972160253853997
+            },
+            "confidence": 0.9972160253853997,
+            "debug": {
+              "readout_position": 89,
+              "option_token_ids": {
+                "0": [
+                  236776
+                ],
+                "1": [
+                  236799
+                ],
+                "2": [
+                  236780
+                ],
+                "3": [
+                  236796
+                ]
+              },
+              "raw_logits": {
+                "0": 20.375,
+                "1": 20.875,
+                "2": 21.25,
+                "3": 27.875
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 90,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "prefills": {
+        "cc8a58c1f1480c0e98f74a0a12be629a79f587b6b289b1f359bedb9d5c6c3b8b": {
+          "236776": 20.375,
+          "236799": 20.875,
+          "236780": 21.25,
+          "236796": 27.875
+        }
+      }
+    },
+    {
+      "id": "choice-first-token-multi-token-label-error",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "What kind of payment issue is this?",
+            "criteria": {
+              "refund": null,
+              "chargeback": null,
+              "fraud": null
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "label_style": "option-text",
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "error": {
+        "type": "LabelTokenizationError",
+        "message": "labels are not single tokens: 'chargeback' -> 2 tokens [10690, 1942]; use options.readout = \"sequence\", or options.label_style = \"letters\" (or option names that are single tokens)"
+      },
+      "prefills": {}
+    },
+    {
+      "id": "object-state-perm3-T1.7",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "Which team should handle this ticket?",
+            "criteria": {
+              "billing": "Payments, refunds, invoices, payouts",
+              "technical": "Bugs, crashes, outages",
+              "sales": "Pricing questions and new contracts"
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true,
+          "permutations": 3
+        }
+      },
+      "temperature": 1.7,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "billing",
+            "probabilities": {
+              "billing": 0.9905945964824964,
+              "technical": 0.005668200420009141,
+              "sales": 0.0037372030974946284
+            },
+            "raw_probabilities": {
+              "billing": 0.9997025930044924,
+              "technical": 0.00019625864199730638,
+              "sales": 0.0001011483535102585
+            },
+            "confidence": 0.9905945964824964,
+            "debug": {
+              "readout_position": 134,
+              "option_token_ids": {
+                "billing": [
+                  236776,
+                  236780,
+                  236799
+                ],
+                "technical": [
+                  236799,
+                  236776,
+                  236780
+                ],
+                "sales": [
+                  236780,
+                  236799,
+                  236776
+                ]
+              },
+              "raw_logits": {
+                "billing": 26.541666666666668,
+                "technical": 17.395833333333332,
+                "sales": 16.583333333333332
+              },
+              "temperature": 1.7,
+              "permutation_spread": {
+                "billing": 0.007272896809797258,
+                "technical": 0.008472396370320602,
+                "sales": 0.006303840291327609
+              }
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 345,
+          "output_tokens": 0,
+          "cached_tokens": 60
+        }
+      },
+      "prefills": {
+        "6039c008a41652aea62d7a11b397b320dcbcd21e97256307d66fbd56cc6bdcf4": {
+          "236776": 27.125,
+          "236799": 19.5,
+          "236780": 16.0
+        },
+        "d82072a1628b0549d346c6822d6f35add382e4d5e009c1023088de176171b564": {
+          "236780": 26.5,
+          "236776": 16.75,
+          "236799": 16.0
+        },
+        "2f51022f6c969e1e4a28183f78735eb191883f77026d3d758beeeaff70a30a1b": {
+          "236799": 26.0,
+          "236780": 15.9375,
+          "236776": 17.75
+        }
+      }
+    },
+    {
+      "id": "cached-list-perm5-T0.8",
+      "request": {
+        "state": [
+          "Customer: the app crashes every time I open the payouts tab.",
+          "Agent: which version are you on?",
+          "Customer: the latest one, and it started after the update yesterday."
+        ],
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "Which team should handle this ticket?",
+            "criteria": {
+              "billing": "Payments, refunds, invoices, payouts",
+              "technical": "Bugs, crashes, outages",
+              "sales": "Pricing questions and new contracts"
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true,
+          "permutations": 5
+        }
+      },
+      "temperature": 0.8,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "technical",
+            "probabilities": {
+              "billing": 0.10781388200868854,
+              "technical": 0.8919835583394373,
+              "sales": 0.00020255965187418508
+            },
+            "raw_probabilities": {
+              "billing": 0.10655253418666641,
+              "technical": 0.8926292360939595,
+              "sales": 0.0008182297193741453
+            },
+            "confidence": 0.8919835583394373,
+            "debug": {
+              "readout_position": 131,
+              "option_token_ids": {
+                "billing": [
+                  236776,
+                  236780,
+                  236799,
+                  236776,
+                  236776
+                ],
+                "technical": [
+                  236799,
+                  236776,
+                  236780,
+                  236780,
+                  236799
+                ],
+                "sales": [
+                  236780,
+                  236799,
+                  236776,
+                  236799,
+                  236780
+                ]
+              },
+              "raw_logits": {
+                "billing": 20.325,
+                "technical": 26.125,
+                "sales": 18.3
+              },
+              "temperature": 0.8,
+              "permutation_spread": {
+                "billing": 0.5384707555847227,
+                "technical": 0.5392873947788515,
+                "sales": 0.000879665094915002
+              }
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 560,
+          "output_tokens": 0,
+          "cached_tokens": 100
+        }
+      },
+      "prefills": {
+        "d0d157f456c474806faad070f25f851851dcd1846fff966cab21536e76a289ea": {
+          "236776": 18.875,
+          "236799": 25.625,
+          "236780": 17.0
+        },
+        "6c3e0571b3e0083255d0344676800f8d277a406abd99eaa362227f64021fed5f": {
+          "236780": 26.625,
+          "236776": 26.5,
+          "236799": 21.5
+        },
+        "8a8904e794a5ec43b993fd575ed9e3154d4b1ce7d8818bc52b215f6394a9d466": {
+          "236799": 18.125,
+          "236780": 26.375,
+          "236776": 18.75
+        },
+        "255552bfa6370fbbd54bd202a00f5d377d6fa9c03df2ff637e18e54b2bf739bc": {
+          "236776": 19.125,
+          "236780": 26.5,
+          "236799": 17.25
+        }
+      }
+    },
+    {
+      "id": "noul-uncalibrated-T2",
+      "request": {
+        "state": "URGENT: none of our payouts have arrived for three days and our whole business is blocked. Every payment to our merchants is failing and we are losing money every hour.",
+        "questions": {
+          "q": {
+            "type": "noul",
+            "instructions": "Is the ticket about payments?"
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true,
+          "calibrated": false
+        }
+      },
+      "temperature": 2.0,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "noul",
+            "noul": 0.9964063974185798,
+            "raw_noul": 0.9964063974185798,
+            "debug": {
+              "readout_position": 81,
+              "option_token_ids": {
+                "yes": [
+                  10784
+                ],
+                "no": [
+                  3771
+                ]
+              },
+              "raw_logits": {
+                "yes": 25.125,
+                "no": 19.5
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 62,
+          "output_tokens": 0,
+          "cached_tokens": 20
+        }
+      },
+      "prefills": {
+        "9d810f8ee57ae0788f3b7d68bea86643c0162a4cc4cabbe86c98a866a9338af8": {
+          "10784": 25.125,
+          "3771": 19.5
+        }
+      }
+    },
+    {
+      "id": "score-calibrated-T1.3",
+      "request": {
+        "state": "URGENT: none of our payouts have arrived for three days and our whole business is blocked. Every payment to our merchants is failing and we are losing money every hour.",
+        "questions": {
+          "q": {
+            "type": "score",
+            "instructions": "How severe is the customer impact?",
+            "criteria": [
+              "trivial",
+              "minor",
+              "major",
+              "critical"
+            ]
+          }
+        },
+        "options": {
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": 1.3,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "score",
+            "score": 3,
+            "expected_score": 2.975676446871924,
+            "legend": {
+              "0": "trivial",
+              "1": "minor",
+              "2": "major",
+              "3": "critical"
+            },
+            "probabilities": {
+              "0": 0.003079570856101238,
+              "1": 0.004524041083556443,
+              "2": 0.0060367583926594715,
+              "3": 0.9863596296676828
+            },
+            "raw_probabilities": {
+              "0": 0.0005515445973016098,
+              "1": 0.0009093433093109006,
+              "2": 0.0013230867079878639,
+              "3": 0.9972160253853997
+            },
+            "confidence": 0.9863596296676828,
+            "debug": {
+              "readout_position": 89,
+              "option_token_ids": {
+                "0": [
+                  236776
+                ],
+                "1": [
+                  236799
+                ],
+                "2": [
+                  236780
+                ],
+                "3": [
+                  236796
+                ]
+              },
+              "raw_logits": {
+                "0": 20.375,
+                "1": 20.875,
+                "2": 21.25,
+                "3": 27.875
+              },
+              "temperature": 1.3
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 90,
+          "output_tokens": 0,
+          "cached_tokens": 0
+        }
+      },
+      "prefills": {
+        "cc8a58c1f1480c0e98f74a0a12be629a79f587b6b289b1f359bedb9d5c6c3b8b": {
+          "236776": 20.375,
+          "236799": 20.875,
+          "236780": 21.25,
+          "236796": 27.875
+        }
+      }
+    },
+    {
+      "id": "multi-question-perm2",
+      "request": {
+        "state": [
+          "Customer: the app crashes every time I open the payouts tab.",
+          "Agent: which version are you on?",
+          "Customer: the latest one, and it started after the update yesterday."
+        ],
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "Which team should handle this ticket?",
+            "criteria": {
+              "billing": "Payments, refunds, invoices, payouts",
+              "technical": "Bugs, crashes, outages",
+              "sales": "Pricing questions and new contracts"
+            }
+          },
+          "escalate": {
+            "type": "noul",
+            "instructions": "Should this ticket be escalated to a human agent?"
+          },
+          "urgency": {
+            "type": "score",
+            "instructions": "How urgent is this ticket?",
+            "criteria": [
+              "not urgent",
+              "somewhat urgent",
+              "urgent",
+              "critical"
+            ]
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "delta_cache": false,
+          "debug": true,
+          "permutations": 2
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "technical",
+            "probabilities": {
+              "billing": 0.2653530167250945,
+              "technical": 0.7329829539952808,
+              "sales": 0.0016640292796247318
+            },
+            "raw_probabilities": {
+              "billing": 0.2653530167250945,
+              "technical": 0.7329829539952808,
+              "sales": 0.0016640292796247318
+            },
+            "confidence": 0.7329829539952808,
+            "debug": {
+              "readout_position": 131,
+              "option_token_ids": {
+                "billing": [
+                  236776,
+                  236780
+                ],
+                "technical": [
+                  236799,
+                  236776
+                ],
+                "sales": [
+                  236780,
+                  236799
+                ]
+              },
+              "raw_logits": {
+                "billing": 22.75,
+                "technical": 26.0625,
+                "sales": 19.25
+              },
+              "temperature": 1.0,
+              "permutation_spread": {
+                "billing": 0.5283674323486718,
+                "technical": 0.5313368548135347,
+                "sales": 0.002969422464862776
+              }
+            }
+          },
+          "escalate": {
+            "type": "noul",
+            "noul": 0.10669059394565118,
+            "raw_noul": 0.10669059394565118,
+            "debug": {
+              "readout_position": 96,
+              "option_token_ids": {
+                "yes": [
+                  10784
+                ],
+                "no": [
+                  3771
+                ]
+              },
+              "raw_logits": {
+                "yes": 24.625,
+                "no": 26.75
+              },
+              "temperature": 1.0
+            }
+          },
+          "urgency": {
+            "type": "score",
+            "score": 2,
+            "expected_score": 1.8834216972658986,
+            "legend": {
+              "0": "not urgent",
+              "1": "somewhat urgent",
+              "2": "urgent",
+              "3": "critical"
+            },
+            "probabilities": {
+              "0": 0.023755774136082052,
+              "1": 0.1755327477650361,
+              "2": 0.6942454847957833,
+              "3": 0.10646599330309864
+            },
+            "raw_probabilities": {
+              "0": 0.023755774136082052,
+              "1": 0.1755327477650361,
+              "2": 0.6942454847957833,
+              "3": 0.10646599330309864
+            },
+            "confidence": 0.6942454847957833,
+            "debug": {
+              "readout_position": 120,
+              "option_token_ids": {
+                "0": [
+                  236776
+                ],
+                "1": [
+                  236799
+                ],
+                "2": [
+                  236780
+                ],
+                "3": [
+                  236796
+                ]
+              },
+              "raw_logits": {
+                "0": 23.875,
+                "1": 25.875,
+                "2": 27.25,
+                "3": 25.375
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 402,
+          "output_tokens": 0,
+          "cached_tokens": 80
+        }
+      },
+      "prefills": {
+        "d0d157f456c474806faad070f25f851851dcd1846fff966cab21536e76a289ea": {
+          "236776": 18.875,
+          "236799": 25.625,
+          "236780": 17.0
+        },
+        "6c3e0571b3e0083255d0344676800f8d277a406abd99eaa362227f64021fed5f": {
+          "236780": 26.625,
+          "236776": 26.5,
+          "236799": 21.5
+        },
+        "2d7ff8dd006a21d8a79a7228b67eaa3f0c504e0f1b7e562842db991095855918": {
+          "10784": 24.625,
+          "3771": 26.75
+        },
+        "da2aa855eb7e1b74770dbd0cb1c4eb8b688416bc8e2be646bee3d2b1dbe94ef3": {
+          "236776": 23.875,
+          "236799": 25.875,
+          "236780": 27.25,
+          "236796": 25.375
+        }
+      }
+    }
+  ]
+}

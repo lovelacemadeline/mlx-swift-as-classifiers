@@ -14,7 +14,10 @@ final class TokenParityTests: XCTestCase {
     /// Loaded once for the suite (parsing tokenizer.json takes seconds).
     nonisolated(unsafe) static var shared: Task<ModelTokenizer, Error>?
 
-    func loadTokenizer() async throws -> ModelTokenizer {
+    func loadTokenizer() async throws -> ModelTokenizer { try await Self.sharedTokenizer() }
+
+    /// The checkpoint's tokenizer and chat template (no weights), loaded once.
+    static func sharedTokenizer() async throws -> ModelTokenizer {
         guard let dir = ModelTokenizer.cachedSnapshot(repo: Self.repo, revision: Self.revision) else {
             throw XCTSkip("no local HF snapshot of \(Self.repo)@\(Self.revision) (tokenizer files only are needed)")
         }
