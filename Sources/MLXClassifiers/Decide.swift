@@ -11,8 +11,9 @@
 //
 // Delta prefix caching (golden story 3.4, here epic 3) is not ported: no runner has
 // a prompt-cache store yet, so `options.delta_cache` changes nothing, as golden's
-// `without_delta` is a no-op on a runner without a store. Sequence readout is
-// story 2.3.
+// `without_delta` is a no-op on a runner without a store. Sequence mode
+// (Sequence.swift): each prompt caches itself and scores every option with one
+// small pass.
 
 import Foundation
 
@@ -41,7 +42,9 @@ struct Scored {
 /// Golden `decide._score`.
 func scorePrompt(_ prompt: CompiledPrompt, runner: Runner, cache: PrefixCache?, readout: Readout) throws -> Scored {
     if readout == .sequence {
-        throw RunnerError.notImplemented("sequence readout is story 2.3")
+        let s = try scoreSequences(prompt, runner: runner)
+        return Scored(prompt: prompt, logits: s.scores, tokenIds: s.optionTokenIds,
+                      inputTokens: s.inputTokens, cachedTokens: s.cachedTokens)
     }
     let binding = try bindOptions(prompt, tokenize: runner.tokenize)
     let r = try runner.prefill(prompt.tokens, prefixCache: cache, readoutPositions: [prompt.readoutPosition])

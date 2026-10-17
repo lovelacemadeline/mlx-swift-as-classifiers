@@ -41,6 +41,31 @@ final class EndToEndFixtureTests: XCTestCase {
         ])
     }
 
+    /// Story 2.3: every text fixture, first-token and sequence (all but the five image fixtures).
+    func testAllTextFixtures() async throws {
+        let seen = try await runFixtures { !$0.request.hasImages }
+        XCTAssertEqual(seen.map(\.0), [
+            "choice-first-token-cached-list-state", "choice-first-token-multi-token-label-error",
+            "choice-first-token-object-state", "choice-sequence-multi-token-options", "noul-first-token",
+            "noul-sequence", "score-first-token-no-prefix", "score-sequence-object-state",
+        ])
+    }
+
+    /// The image fixtures need the vision tower: they skip, never fail. The MLX
+    /// runner has no vision path yet, so compiling one is golden's PromptError.
+    func testImageFixtures() async throws {
+        let images = try Fixtures.load(directory: fixturesDir).filter { $0.request.hasImages }
+        XCTAssertEqual(images.count, 5)
+        if let runner = try? await GPU.runner() {
+            for fx in images {
+                XCTAssertThrowsError(try runCase(fx, runner: runner), fx.id) { error in
+                    XCTAssertEqual((error as? ClassifierError)?.kind, .prompt, fx.id)
+                }
+            }
+        }
+        throw XCTSkip("vision path is Epic 4: \(images.map(\.id).joined(separator: ", "))")
+    }
+
     /// The tokenizer stub is gone: the runner tokenizes like golden `MLXRunner.tokenize`.
     func testRunnerTokenizes() async throws {
         let runner = try await GPU.runner()
@@ -61,8 +86,15 @@ struct DecideReference: Decodable {
         var temperature: Double?
         var response: SystemOneResponse?
         var error: GoldenFixture.ExpectedError?
-        /// sha256 of "id,id,..." of each prefill golden made -> {token id: logit} it gathered.
-        var prefills: OrderedObject<OrderedObject<Double>>
+        /// sha256 of "id,id,..." of each prefill golden made -> readout position -> what golden read.
+        var prefills: OrderedObject<OrderedObject<Row>>
+    }
+
+    struct Row: Codable, Sendable {
+        /// {token id: logit}.
+        var logits: OrderedObject<Double>
+        /// The full-vocab logsumexp (sequence mode only).
+        var lse: Double?
     }
 
     var format: String
@@ -109,10 +141,10 @@ struct AnswerView {
 /// with no model in the loop.
 final class ReplayRunner: Runner, @unchecked Sendable {
     let front: ModelTokenizer
-    let prefills: OrderedObject<OrderedObject<Double>>
+    let prefills: OrderedObject<OrderedObject<DecideReference.Row>>
     var missing: [String] = []
 
-    init(front: ModelTokenizer, prefills: OrderedObject<OrderedObject<Double>>) {
+    init(front: ModelTokenizer, prefills: OrderedObject<OrderedObject<DecideReference.Row>>) {
         self.front = front
         self.prefills = prefills
     }
@@ -131,10 +163,11 @@ final class ReplayRunner: Runner, @unchecked Sendable {
     func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout {
         let (nCached, positions) = try checkPrefillArgs(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions)
         let k = Self.key(tokens)
-        let row = prefills[k]
-        if row == nil { missing.append(k) }
-        let lookup: @Sendable (Int) -> Double = { row?[String($0)] ?? .nan }
-        let logits = positions.map { _ in LogitRow(count: 262_144, lookup: lookup, logsumexp: { .nan }) }
+        if prefills[k] == nil { missing.append(k) }
+        let logits = positions.map { p in
+            let row = prefills[k]?[String(p)]
+            return LogitRow(count: 262_144, lookup: { row?.logits[String($0)] ?? .nan }, logsumexp: { row?.lse ?? .nan })
+        }
         return PrefillReadout(positions: positions, logits: logits, inputTokens: positions.max()! + 1 - nCached,
                               cachedTokens: nCached)
     }
@@ -225,7 +258,7 @@ final class DecideTests: XCTestCase {
         let runner = try await GPU.runner()
         let ref = try DecideReference.load()
         XCTAssertEqual(ref.format, "mlx-classifiers-swift-decide-reference/1")
-        XCTAssertEqual(ref.cases.count, 10)
+        XCTAssertEqual(ref.cases.count, 15)
         for c in ref.cases {
             if let want = c.error {
                 XCTAssertThrowsError(try decide(c.request, runner: runner, temperature: c.temperature), c.id) { error in
@@ -266,6 +299,35 @@ final class DecideLogicTests: XCTestCase {
         XCTAssertEqual(permutationOrders(n: 5, count: 8, seed: "x"),
                        [[0, 1, 2, 3, 4], [1, 2, 3, 4, 0], [2, 3, 4, 0, 1], [3, 4, 0, 1, 2], [4, 0, 1, 2, 3],
                         [3, 1, 4, 2, 0], [3, 4, 1, 0, 2], [3, 1, 4, 2, 0]])
+    }
+
+    /// Golden `calibrate.py` on a fixed synthetic set (values from the golden venv).
+    func testTemperatureScalerMatchesGolden() throws {
+        var rows: [[Double]] = [], labels: [Int] = []
+        for i in 0 ..< 40 {
+            var base = (0 ..< 3).map { Foundation.sin(Double(i) * 1.7 + Double($0)) * 4 }
+            base[(i * 7) % 3] += 6.0
+            rows.append(base)
+            labels.append(i % 3)
+        }
+        var ts = TemperatureScaler()
+        let r = try ts.fit(rows, labels)
+        XCTAssertEqual(r.temperature, 0.6895193805365192, accuracy: 1e-12)
+        XCTAssertEqual(r.nllBefore, 0.1893393287728386, accuracy: 1e-12)
+        XCTAssertEqual(r.nllAfter, 0.1769201193584206, accuracy: 1e-12)
+        XCTAssertEqual(r.eceBefore, 0.08976968308676084, accuracy: 1e-12)
+        XCTAssertEqual(r.eceAfter, 0.06843086115083778, accuracy: 1e-12)
+        XCTAssertEqual(ts.temperature, r.temperature)
+        XCTAssertEqual(try nll(Array(rows[..<5]), Array(labels[..<5]), temperature: 2.5), 0.40895760893720745, accuracy: 1e-12)
+        XCTAssertEqual(try expectedCalibrationError(rows[..<7].map { softmax($0) }, Array(labels[..<7]), nBins: 5),
+                       0.21341657974335376, accuracy: 1e-12)
+        XCTAssertThrowsError(try nll([], []))
+        XCTAssertEqual(ts.apply([0, 0]), [0.5, 0.5])
+    }
+
+    func testTokenLogprob() {
+        let row = LogitRow.fromList([0, Foundation.log(3)])
+        XCTAssertEqual(tokenLogprob(row, 1), Foundation.log(0.75), accuracy: 1e-15)
     }
 
     func testShapeAnswer() {

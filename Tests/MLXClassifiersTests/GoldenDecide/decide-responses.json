@@ -56,8 +56,12 @@
       },
       "prefills": {
         "9d810f8ee57ae0788f3b7d68bea86643c0162a4cc4cabbe86c98a866a9338af8": {
-          "10784": 25.125,
-          "3771": 19.5
+          "81": {
+            "logits": {
+              "10784": 25.125,
+              "3771": 19.5
+            }
+          }
         }
       }
     },
@@ -135,9 +139,13 @@
       },
       "prefills": {
         "6039c008a41652aea62d7a11b397b320dcbcd21e97256307d66fbd56cc6bdcf4": {
-          "236776": 27.125,
-          "236799": 19.5,
-          "236780": 16.0
+          "134": {
+            "logits": {
+              "236776": 27.125,
+              "236799": 19.5,
+              "236780": 16.0
+            }
+          }
         }
       }
     },
@@ -214,9 +222,13 @@
       },
       "prefills": {
         "d0d157f456c474806faad070f25f851851dcd1846fff966cab21536e76a289ea": {
-          "236776": 18.875,
-          "236799": 25.625,
-          "236780": 17.0
+          "131": {
+            "logits": {
+              "236776": 18.875,
+              "236799": 25.625,
+              "236780": 17.0
+            }
+          }
         }
       }
     },
@@ -302,10 +314,14 @@
       },
       "prefills": {
         "cc8a58c1f1480c0e98f74a0a12be629a79f587b6b289b1f359bedb9d5c6c3b8b": {
-          "236776": 20.375,
-          "236799": 20.875,
-          "236780": 21.25,
-          "236796": 27.875
+          "89": {
+            "logits": {
+              "236776": 20.375,
+              "236799": 20.875,
+              "236780": 21.25,
+              "236796": 27.875
+            }
+          }
         }
       }
     },
@@ -429,19 +445,31 @@
       },
       "prefills": {
         "6039c008a41652aea62d7a11b397b320dcbcd21e97256307d66fbd56cc6bdcf4": {
-          "236776": 27.125,
-          "236799": 19.5,
-          "236780": 16.0
+          "134": {
+            "logits": {
+              "236776": 27.125,
+              "236799": 19.5,
+              "236780": 16.0
+            }
+          }
         },
         "d82072a1628b0549d346c6822d6f35add382e4d5e009c1023088de176171b564": {
-          "236780": 26.5,
-          "236776": 16.75,
-          "236799": 16.0
+          "134": {
+            "logits": {
+              "236780": 26.5,
+              "236776": 16.75,
+              "236799": 16.0
+            }
+          }
         },
         "2f51022f6c969e1e4a28183f78735eb191883f77026d3d758beeeaff70a30a1b": {
-          "236799": 26.0,
-          "236780": 15.9375,
-          "236776": 17.75
+          "134": {
+            "logits": {
+              "236799": 26.0,
+              "236780": 15.9375,
+              "236776": 17.75
+            }
+          }
         }
       }
     },
@@ -536,24 +564,40 @@
       },
       "prefills": {
         "d0d157f456c474806faad070f25f851851dcd1846fff966cab21536e76a289ea": {
-          "236776": 18.875,
-          "236799": 25.625,
-          "236780": 17.0
+          "131": {
+            "logits": {
+              "236776": 18.875,
+              "236799": 25.625,
+              "236780": 17.0
+            }
+          }
         },
         "6c3e0571b3e0083255d0344676800f8d277a406abd99eaa362227f64021fed5f": {
-          "236780": 26.625,
-          "236776": 26.5,
-          "236799": 21.5
+          "131": {
+            "logits": {
+              "236780": 26.625,
+              "236776": 26.5,
+              "236799": 21.5
+            }
+          }
         },
         "8a8904e794a5ec43b993fd575ed9e3154d4b1ce7d8818bc52b215f6394a9d466": {
-          "236799": 18.125,
-          "236780": 26.375,
-          "236776": 18.75
+          "131": {
+            "logits": {
+              "236799": 18.125,
+              "236780": 26.375,
+              "236776": 18.75
+            }
+          }
         },
         "255552bfa6370fbbd54bd202a00f5d377d6fa9c03df2ff637e18e54b2bf739bc": {
-          "236776": 19.125,
-          "236780": 26.5,
-          "236799": 17.25
+          "131": {
+            "logits": {
+              "236776": 19.125,
+              "236780": 26.5,
+              "236799": 17.25
+            }
+          }
         }
       }
     },
@@ -608,8 +652,12 @@
       },
       "prefills": {
         "9d810f8ee57ae0788f3b7d68bea86643c0162a4cc4cabbe86c98a866a9338af8": {
-          "10784": 25.125,
-          "3771": 19.5
+          "81": {
+            "logits": {
+              "10784": 25.125,
+              "3771": 19.5
+            }
+          }
         }
       }
     },
@@ -695,10 +743,14 @@
       },
       "prefills": {
         "cc8a58c1f1480c0e98f74a0a12be629a79f587b6b289b1f359bedb9d5c6c3b8b": {
-          "236776": 20.375,
-          "236799": 20.875,
-          "236780": 21.25,
-          "236796": 27.875
+          "89": {
+            "logits": {
+              "236776": 20.375,
+              "236799": 20.875,
+              "236780": 21.25,
+              "236796": 27.875
+            }
+          }
         }
       }
     },
@@ -867,24 +919,632 @@
       },
       "prefills": {
         "d0d157f456c474806faad070f25f851851dcd1846fff966cab21536e76a289ea": {
-          "236776": 18.875,
-          "236799": 25.625,
-          "236780": 17.0
+          "131": {
+            "logits": {
+              "236776": 18.875,
+              "236799": 25.625,
+              "236780": 17.0
+            }
+          }
         },
         "6c3e0571b3e0083255d0344676800f8d277a406abd99eaa362227f64021fed5f": {
-          "236780": 26.625,
-          "236776": 26.5,
-          "236799": 21.5
+          "131": {
+            "logits": {
+              "236780": 26.625,
+              "236776": 26.5,
+              "236799": 21.5
+            }
+          }
         },
         "2d7ff8dd006a21d8a79a7228b67eaa3f0c504e0f1b7e562842db991095855918": {
-          "10784": 24.625,
-          "3771": 26.75
+          "96": {
+            "logits": {
+              "10784": 24.625,
+              "3771": 26.75
+            }
+          }
         },
         "da2aa855eb7e1b74770dbd0cb1c4eb8b688416bc8e2be646bee3d2b1dbe94ef3": {
-          "236776": 23.875,
-          "236799": 25.875,
-          "236780": 27.25,
-          "236796": 25.375
+          "120": {
+            "logits": {
+              "236776": 23.875,
+              "236799": 25.875,
+              "236780": 27.25,
+              "236796": 25.375
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "noul-sequence",
+      "request": {
+        "state": "The office plants need watering on Fridays.",
+        "questions": {
+          "q": {
+            "type": "noul",
+            "instructions": "Is the ticket about payments?"
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "readout": "sequence",
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "noul",
+            "noul": 0.0031726828424851893,
+            "raw_noul": 0.0031726828424851893,
+            "debug": {
+              "readout_position": 54,
+              "option_token_ids": {
+                "yes": [
+                  10784
+                ],
+                "no": [
+                  3771
+                ]
+              },
+              "raw_logits": {
+                "yes": -5.754186630249023,
+                "no": -0.0041866302490234375
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 2,
+          "output_tokens": 0,
+          "cached_tokens": 108
+        }
+      },
+      "prefills": {
+        "dfb933bc35f149f3a625743c46960d861f029a93fb5f5ae19f5684a1fa5be918": {
+          "54": {
+            "logits": {
+              "10784": 19.125
+            },
+            "lse": 24.879186630249023
+          }
+        },
+        "aff6fc5c5d8cfddc40d862d206172822df722495f72f976bbfbaf2dad86b7343": {
+          "54": {
+            "logits": {
+              "3771": 24.875
+            },
+            "lse": 24.879186630249023
+          }
+        }
+      }
+    },
+    {
+      "id": "choice-sequence-multi-token-options",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "What kind of payment issue is this?",
+            "criteria": {
+              "refund": null,
+              "chargeback": null,
+              "fraud": null
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "readout": "sequence",
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "refund",
+            "probabilities": {
+              "refund": 0.9668872790867195,
+              "chargeback": 0.0331059891494102,
+              "fraud": 6.731763870265875e-06
+            },
+            "raw_probabilities": {
+              "refund": 0.9668872790867195,
+              "chargeback": 0.0331059891494102,
+              "fraud": 6.731763870265875e-06
+            },
+            "confidence": 0.9668872790867195,
+            "debug": {
+              "readout_position": 112,
+              "option_token_ids": {
+                "refund": [
+                  91315
+                ],
+                "chargeback": [
+                  10690,
+                  1942
+                ],
+                "fraud": [
+                  209421
+                ]
+              },
+              "raw_logits": {
+                "refund": -0.0026073455810546875,
+                "chargeback": -3.3769750595092773,
+                "fraud": -11.877607345581055
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 4,
+          "output_tokens": 0,
+          "cached_tokens": 336
+        }
+      },
+      "prefills": {
+        "6dfdff3f161923888151f3db12c2f0fbeb464386172096a5378f1398fc894913": {
+          "112": {
+            "logits": {
+              "91315": 24.5
+            },
+            "lse": 24.502607345581055
+          }
+        },
+        "4b7fc81c2ecc3d467c73e4f8471fe6e9d846567c31d9fe0cc3c3f3babb360843": {
+          "112": {
+            "logits": {
+              "10690": 17.75
+            },
+            "lse": 24.502687454223633
+          },
+          "113": {
+            "logits": {
+              "1942": 22.375
+            },
+            "lse": 22.376262664794922
+          }
+        },
+        "0cd8710e842e082e9b3b84c8231892df1e271a9c68bddeb1f46a3126d75f4088": {
+          "112": {
+            "logits": {
+              "209421": 12.625
+            },
+            "lse": 24.502607345581055
+          }
+        }
+      }
+    },
+    {
+      "id": "score-sequence-object-state",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "score",
+            "instructions": "How severe is the customer impact?",
+            "criteria": [
+              "trivial",
+              "minor",
+              "major",
+              "critical"
+            ]
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "readout": "sequence",
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": null,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "score",
+            "score": 1,
+            "expected_score": 1.0232515067894552,
+            "legend": {
+              "0": "trivial",
+              "1": "minor",
+              "2": "major",
+              "3": "critical"
+            },
+            "probabilities": {
+              "0": 0.003962176660185809,
+              "1": 0.969512662953061,
+              "2": 0.025836637323865333,
+              "3": 0.0006885230628878024
+            },
+            "raw_probabilities": {
+              "0": 0.003962176660185809,
+              "1": 0.969512662953061,
+              "2": 0.025836637323865333,
+              "3": 0.0006885230628878024
+            },
+            "confidence": 0.969512662953061,
+            "debug": {
+              "readout_position": 117,
+              "option_token_ids": {
+                "0": [
+                  65744
+                ],
+                "1": [
+                  54875
+                ],
+                "2": [
+                  36344
+                ],
+                "3": [
+                  39633
+                ]
+              },
+              "raw_logits": {
+                "0": -5.541263580322266,
+                "1": -0.041263580322265625,
+                "2": -3.6662635803222656,
+                "3": -7.291263580322266
+              },
+              "temperature": 1.0
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 4,
+          "output_tokens": 0,
+          "cached_tokens": 468
+        }
+      },
+      "prefills": {
+        "ff97650d9ce025a74bc89bdd51e73d6e2408cd98e4734178ed12869d956f9945": {
+          "117": {
+            "logits": {
+              "65744": 17.75
+            },
+            "lse": 23.291263580322266
+          }
+        },
+        "c9d331096a7f760f10cf4dd71de35cc0041b25a67b00dffb4a7fb90dc08ee077": {
+          "117": {
+            "logits": {
+              "54875": 23.25
+            },
+            "lse": 23.291263580322266
+          }
+        },
+        "0d2ad1d4591d4403342bc106cf70ae0523c12f7582d60b33f445630214face11": {
+          "117": {
+            "logits": {
+              "36344": 19.625
+            },
+            "lse": 23.291263580322266
+          }
+        },
+        "0ed1ce09b06a3378bf9cd6508cd6098b6c3dc932b9e4c1b72adffde54fe6aaf9": {
+          "117": {
+            "logits": {
+              "39633": 16.0
+            },
+            "lse": 23.291263580322266
+          }
+        }
+      }
+    },
+    {
+      "id": "choice-sequence-perm3-T1.5",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "choice",
+            "instructions": "What kind of payment issue is this?",
+            "criteria": {
+              "refund": null,
+              "chargeback": null,
+              "fraud": null
+            }
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "readout": "sequence",
+          "delta_cache": false,
+          "debug": true,
+          "permutations": 3
+        }
+      },
+      "temperature": 1.5,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "choice",
+            "choice": "refund",
+            "probabilities": {
+              "refund": 0.8940401536604109,
+              "chargeback": 0.10428258455437896,
+              "fraud": 0.0016772617852101543
+            },
+            "raw_probabilities": {
+              "refund": 0.9614777040778176,
+              "chargeback": 0.03843300572260446,
+              "fraud": 8.929019957786054e-05
+            },
+            "confidence": 0.8940401536604109,
+            "debug": {
+              "readout_position": 112,
+              "option_token_ids": {
+                "refund": [
+                  91315
+                ],
+                "chargeback": [
+                  10690,
+                  1942
+                ],
+                "fraud": [
+                  209421
+                ]
+              },
+              "raw_logits": {
+                "refund": -0.0041968027750651045,
+                "chargeback": -3.231483777364095,
+                "fraud": -9.900030136108398
+              },
+              "temperature": 1.5,
+              "permutation_spread": {
+                "refund": 0.021308454103713403,
+                "chargeback": 0.01944942525533723,
+                "fraud": 0.002183573221119996
+              }
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 12,
+          "output_tokens": 0,
+          "cached_tokens": 1008
+        }
+      },
+      "prefills": {
+        "6dfdff3f161923888151f3db12c2f0fbeb464386172096a5378f1398fc894913": {
+          "112": {
+            "logits": {
+              "91315": 24.5
+            },
+            "lse": 24.502607345581055
+          }
+        },
+        "4b7fc81c2ecc3d467c73e4f8471fe6e9d846567c31d9fe0cc3c3f3babb360843": {
+          "112": {
+            "logits": {
+              "10690": 17.75
+            },
+            "lse": 24.502687454223633
+          },
+          "113": {
+            "logits": {
+              "1942": 22.375
+            },
+            "lse": 22.376262664794922
+          }
+        },
+        "0cd8710e842e082e9b3b84c8231892df1e271a9c68bddeb1f46a3126d75f4088": {
+          "112": {
+            "logits": {
+              "209421": 12.625
+            },
+            "lse": 24.502607345581055
+          }
+        },
+        "5c0485b05cd32690e85fc6dca79716fff34be192e6f9b6dace50d5e72b44e545": {
+          "112": {
+            "logits": {
+              "91315": 23.5
+            },
+            "lse": 23.505239486694336
+          }
+        },
+        "f6d455113937d4889c0879066062d601fe104ed918e3e0a5254260602ce94555": {
+          "112": {
+            "logits": {
+              "10690": 17.0
+            },
+            "lse": 23.504987716674805
+          },
+          "113": {
+            "logits": {
+              "1942": 21.0
+            },
+            "lse": 21.000150680541992
+          }
+        },
+        "38028f2dd6dd71e5024db0e77e0f572c78a2a37bcb4e550bd0ef81a439580688": {
+          "112": {
+            "logits": {
+              "209421": 14.6875
+            },
+            "lse": 23.505239486694336
+          }
+        },
+        "72f036c608efad6c60ea8c2aa2b46f585aacc1f4638dc6bf227055ffb4a03ea4": {
+          "112": {
+            "logits": {
+              "91315": 23.875
+            },
+            "lse": 23.879743576049805
+          }
+        },
+        "be71041e865bb806871c9818e570006fb09957c0723b260ea244ba4088c65428": {
+          "112": {
+            "logits": {
+              "10690": 17.75
+            },
+            "lse": 23.879716873168945
+          },
+          "113": {
+            "logits": {
+              "1942": 17.875
+            },
+            "lse": 17.875097274780273
+          }
+        },
+        "20b95462574803acf15dec771678e0539be3fedfe0b50c7f09f0d208afe10ea0": {
+          "112": {
+            "logits": {
+              "209421": 14.875
+            },
+            "lse": 23.879743576049805
+          }
+        }
+      }
+    },
+    {
+      "id": "score-sequence-T0.7",
+      "request": {
+        "state": {
+          "channel": "email",
+          "customer": "Acme Ltd",
+          "plan": "enterprise",
+          "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+        },
+        "questions": {
+          "q": {
+            "type": "score",
+            "instructions": "How severe is the customer impact?",
+            "criteria": [
+              "trivial",
+              "minor",
+              "major",
+              "critical"
+            ]
+          }
+        },
+        "prefix": "You are the support triage router for a payments company. Answer precisely.",
+        "options": {
+          "readout": "sequence",
+          "delta_cache": false,
+          "debug": true
+        }
+      },
+      "temperature": 0.7,
+      "response": {
+        "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+        "answers": {
+          "q": {
+            "type": "score",
+            "score": 1,
+            "expected_score": 1.0052806312518845,
+            "legend": {
+              "0": "trivial",
+              "1": "minor",
+              "2": "major",
+              "3": "critical"
+            },
+            "probabilities": {
+              "0": 0.00038464897388392453,
+              "1": 0.9939816447108396,
+              "2": 0.0056021324047845645,
+              "3": 3.157391049194603e-05
+            },
+            "raw_probabilities": {
+              "0": 0.003962176660185809,
+              "1": 0.969512662953061,
+              "2": 0.025836637323865333,
+              "3": 0.0006885230628878024
+            },
+            "confidence": 0.9939816447108396,
+            "debug": {
+              "readout_position": 117,
+              "option_token_ids": {
+                "0": [
+                  65744
+                ],
+                "1": [
+                  54875
+                ],
+                "2": [
+                  36344
+                ],
+                "3": [
+                  39633
+                ]
+              },
+              "raw_logits": {
+                "0": -5.541263580322266,
+                "1": -0.041263580322265625,
+                "2": -3.6662635803222656,
+                "3": -7.291263580322266
+              },
+              "temperature": 0.7
+            }
+          }
+        },
+        "usage": {
+          "input_tokens": 4,
+          "output_tokens": 0,
+          "cached_tokens": 468
+        }
+      },
+      "prefills": {
+        "ff97650d9ce025a74bc89bdd51e73d6e2408cd98e4734178ed12869d956f9945": {
+          "117": {
+            "logits": {
+              "65744": 17.75
+            },
+            "lse": 23.291263580322266
+          }
+        },
+        "c9d331096a7f760f10cf4dd71de35cc0041b25a67b00dffb4a7fb90dc08ee077": {
+          "117": {
+            "logits": {
+              "54875": 23.25
+            },
+            "lse": 23.291263580322266
+          }
+        },
+        "0d2ad1d4591d4403342bc106cf70ae0523c12f7582d60b33f445630214face11": {
+          "117": {
+            "logits": {
+              "36344": 19.625
+            },
+            "lse": 23.291263580322266
+          }
+        },
+        "0ed1ce09b06a3378bf9cd6508cd6098b6c3dc932b9e4c1b72adffde54fe6aaf9": {
+          "117": {
+            "logits": {
+              "39633": 16.0
+            },
+            "lse": 23.291263580322266
+          }
         }
       }
     }

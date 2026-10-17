@@ -36,7 +36,9 @@ public func runCase(_ fx: GoldenFixture, runner: Runner) throws -> GoldenFixture
         optionTokenIds: OrderedObject(), rawLogits: nil, rawProbabilities: nil, answer: nil, error: nil)
     let logits: [Double]
     if readout == .sequence {
-        throw RunnerError.notImplemented("sequence readout is story 2.3")
+        let s = try scoreSequences(prompt, runner: runner)
+        out.optionTokenIds = s.optionTokenIds
+        logits = s.scores
     } else {
         let binding: OptionBinding
         do {

@@ -10,7 +10,8 @@ Each case is a wire request built from a vendored fixture's `request`, with
 `debug: true`, plus permutations / calibration variants. The output records the
 golden `to_wire()` response (timing dropped: wall clock) or the raised error,
 and `prefills`: every prefill decide made, keyed by the sha256 of its token ids
-("1,2,3"), with the logits golden gathered from it ({token id: logit}). Swift's
+("1,2,3"), then by readout position, with the logits golden read there
+(`logits`: {token id: logit}) and, in sequence mode, the row's `lse`. Swift's
 `ReplayRunner` serves those to check decide's own arithmetic without bf16 noise.
 """
 
@@ -78,6 +79,10 @@ def cases() -> list[tuple[str, dict, float | None]]:
         "criteria": ["not urgent", "somewhat urgent", "urgent", "critical"],
     }
     out.append(("multi-question-perm2", multi, None))
+    for name in ("noul-sequence", "choice-sequence-multi-token-options", "score-sequence-object-state"):
+        out.append((name, *req(name)))
+    out.append(("choice-sequence-perm3-T1.5", *req("choice-sequence-multi-token-options", 1.5, permutations=3)))
+    out.append(("score-sequence-T0.7", *req("score-sequence-object-state", 0.7)))
     return out
 
 
@@ -86,36 +91,49 @@ def token_key(tokens) -> str:
 
 
 class Recorder:
-    """Wraps a runner: remembers each prefill's tokens; `gather` (patched into
-    decide) then records the logits read from that prefill."""
+    """Wraps a runner: remembers which prefill and position each returned row
+    came from; the patched `gather` / `token_logprob` record what is read."""
 
     def __init__(self, runner):
-        self.runner, self.prefills, self.last = runner, {}, None
+        self.runner, self.prefills, self.rows = runner, {}, {}
 
     def __getattr__(self, name):
         return getattr(self.runner, name)
 
     def prefill(self, tokens, *args, **kw):
-        self.last = token_key(tokens)
-        return self.runner.prefill(tokens, *args, **kw)
+        r = self.runner.prefill(tokens, *args, **kw)
+        key = token_key(tokens)
+        for p, row in zip(r.positions, r.logits, strict=True):
+            self.rows[id(row)] = (key, str(p), row)
+        return r
+
+    def slot(self, row) -> dict:
+        key, p, _ = self.rows[id(row)]
+        return self.prefills.setdefault(key, {}).setdefault(p, {"logits": {}})
 
 
 def main() -> int:
     decide_mod = importlib.import_module("mlx_classifiers.decide")  # the package re-exports `decide`
     runner = Recorder(MLXRunner.load(fixture("noul-first-token")["model"]["repo"]))
-    real_gather = decide_mod.gather
+    sequence_mod = importlib.import_module("mlx_classifiers.sequence")
+    real_gather, real_logprob = decide_mod.gather, sequence_mod.token_logprob
 
     def gather(row, token_ids):
         values = real_gather(row, token_ids)
-        runner.prefills.setdefault(runner.last, {}).update(
-            {str(t): v for t, v in zip(token_ids, values, strict=True)}
-        )
+        runner.slot(row)["logits"].update({str(t): v for t, v in zip(token_ids, values, strict=True)})
         return values
 
+    def token_logprob(row, token_id):
+        slot = runner.slot(row)
+        slot["logits"][str(token_id)] = float(row[token_id])
+        slot["lse"] = float(row.logsumexp())
+        return real_logprob(row, token_id)
+
     decide_mod.gather = gather
+    sequence_mod.token_logprob = token_logprob
     results = []
     for cid, request, temperature in cases():
-        runner.prefills = {}
+        runner.prefills, runner.rows = {}, {}
         entry = {"id": cid, "request": request, "temperature": temperature}
         try:
             resp = decide(SystemOneRequest.model_validate(request), runner, temperature=temperature)
