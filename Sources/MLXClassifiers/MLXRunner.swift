@@ -13,20 +13,23 @@
 //    lm_head and the final soft-cap.
 //
 // First-token mode is therefore the cache-only prefill plus one L=1 pass.
-// Not yet ported: delta prefix cache (epic 3), images (epic 4), INT8/MoE (epic 5),
-// tokenize (story 1.2).
+// The text front end (tokenizer, chat template) is story 1.2's `ModelTokenizer`.
+// Not yet ported: delta prefix cache (epic 3), images (epic 4), INT8/MoE (epic 5).
 
 import Foundation
 import MLX
 import MLXLMCommon
 import MLXNN
 
-public final class MLXRunner: Runner {
+/// Not thread-safe: one decision at a time (the call records below are plain arrays).
+public final class MLXRunner: Runner, @unchecked Sendable {
     public static let defaultModel = "mlx-community/gemma-4-E2B-it-qat-4bit"
 
     public let model: Gemma4Model
     public let modelId: String
     public let modelDirectory: URL
+    /// The checkpoint's tokenizer and chat template (story 1.2).
+    public let tokenizer: ModelTokenizer
     /// Chunk size of the cache-only rows (golden default 2048).
     public var prefillStep: Int = 2048
     /// Shapes seen by the vocab projection `[rows..., hidden]`, for tests (golden `head_calls`).
@@ -37,10 +40,11 @@ public final class MLXRunner: Runner {
     var text: Gemma4TextModel { model.languageModel }
     var backbone: Gemma4TextModelInner { model.languageModel.model }
 
-    public init(model: Gemma4Model, modelId: String, modelDirectory: URL) {
+    public init(model: Gemma4Model, modelId: String, modelDirectory: URL, tokenizer: ModelTokenizer) {
         self.model = model
         self.modelId = modelId
         self.modelDirectory = modelDirectory
+        self.tokenizer = tokenizer
     }
 
     /// The snapshot directory of `repo` in the local Hugging Face cache
@@ -74,8 +78,10 @@ public final class MLXRunner: Runner {
 
     /// Load a Gemma 4 checkpoint from a local snapshot directory: config, the
     /// per-layer quantisation from `config.json`, and the safetensors weights
-    /// (audio and vision tensors are dropped by `sanitize`).
-    public static func load(directory: URL, modelId: String = defaultModel) throws -> MLXRunner {
+    /// (audio and vision tensors are dropped by `sanitize`), plus the tokenizer and
+    /// chat template. With `expectedTokenizerSha256`, `tokenizer.json` must match it.
+    public static func load(directory: URL, modelId: String = defaultModel,
+                            expectedTokenizerSha256: String? = nil) async throws -> MLXRunner {
         let configURL = directory.appendingPathComponent("config.json")
         guard let data = try? Data(contentsOf: configURL) else {
             throw RunnerError.load("no config.json in \(directory.path)")
@@ -84,17 +90,23 @@ public final class MLXRunner: Runner {
         let config = try decoder.decode(Gemma4Configuration.self, from: data)
         let base = try decoder.decode(BaseConfiguration.self, from: data)
         let model = Gemma4Model(config)
-        try loadWeights(
+        try await loadWeights(
             modelDirectory: directory, model: model,
             perLayerQuantization: base.perLayerQuantization)
-        return MLXRunner(model: model, modelId: modelId, modelDirectory: directory)
+        let tokenizer = try await ModelTokenizer.load(directory: directory, expectedTokenizerSha256: expectedTokenizerSha256)
+        return MLXRunner(model: model, modelId: modelId, modelDirectory: directory, tokenizer: tokenizer)
     }
 
     // MARK: - Runner
 
-    public func tokenize(_ text: String) throws -> [Int] {
-        throw RunnerError.notImplemented("tokenize is story 1.2 (swift-transformers Tokenizers)")
-    }
+    /// Golden `tokenizer.encode(text, add_special_tokens=False)`.
+    public func tokenize(_ text: String) -> [Int] { tokenizer.tokenize(text) }
+
+    public var chatTemplate: ChatTemplate { tokenizer.chatTemplate }
+
+    /// nil until the vision path lands (epic 4): a request with image blocks then
+    /// fails to compile with golden's "no vision path" `PromptError`.
+    public var imageTokens: ImageTokens? { nil }
 
     public func cachePrefix(_ tokens: [Int]) throws -> PrefixCache {
         let cache = try newCache()

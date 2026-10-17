@@ -6,9 +6,9 @@ import XCTest
 /// The comparison semantics of golden `fixtures.py` (`run_case` + the checker):
 /// raw probabilities within `defaultProbabilityTolerance` (1e-3) and the same answer.
 ///
-/// Prompt compilation and label binding by the tokenizer are story 1.2, so these
-/// tests feed `expected.tokens` and `expected.option_token_ids` (the in-context label
-/// ids) straight to `scoreFirstToken`; everything from the label rules onward is real.
+/// These story 2.1 tests feed `expected.tokens` and `expected.option_token_ids` (the
+/// in-context label ids) straight to `scoreFirstToken`, isolating the model from the
+/// front end; `EndToEndFixtureTests` runs the same fixtures from their `request`.
 enum FixtureRun {
     static func load(_ id: String) throws -> GoldenFixture {
         try Fixtures.load(file: fixturesDir.appendingPathComponent(id + ".json"))
@@ -26,12 +26,7 @@ enum FixtureRun {
 
 // MARK: - GPU: the vendored Gemma 4 E2B on the split path
 
-/// Needs the MLX Metal library (build with xcodebuild, see docs/runbooks/build-and-test.md)
-/// and the E2B snapshot in the local HF cache. Skipped when `MLXCLASSIFIERS_SKIP_GPU=1`
-/// (under xcodebuild: `TEST_RUNNER_MLXCLASSIFIERS_SKIP_GPU=1`), when the metallib is
-/// absent (plain `swift test`), or when the snapshot is missing. `MLXCLASSIFIERS_MODEL_DIR`
-/// overrides the snapshot directory.
-final class TextFixtureTests: XCTestCase {
+enum GPU {
     nonisolated(unsafe) static var shared: MLXRunner?
     nonisolated(unsafe) static var loadError: Error?
 
@@ -46,33 +41,45 @@ final class TextFixtureTests: XCTestCase {
         return walk.contains { ($0 as? String)?.hasSuffix(".metallib") == true }
     }
 
-    func runner() throws -> MLXRunner {
+    /// The model, tokenizer and chat template, loaded once per test run (the
+    /// tokenizer.json sha256 checked against the fixtures').
+    static func runner() async throws -> MLXRunner {
         let env = ProcessInfo.processInfo.environment
         if env["MLXCLASSIFIERS_SKIP_GPU"] == "1" { throw XCTSkip("MLXCLASSIFIERS_SKIP_GPU=1") }
-        guard Self.metallibAvailable() else {
+        guard metallibAvailable() else {
             throw XCTSkip("no MLX metallib beside the test bundle; run under xcodebuild (docs/runbooks/build-and-test.md)")
         }
-        if let r = Self.shared { return r }
-        if let e = Self.loadError { throw e }
+        if let r = shared { return r }
+        if let e = loadError { throw e }
         let dir = env["MLXCLASSIFIERS_MODEL_DIR"].map { URL(fileURLWithPath: $0) }
             ?? MLXRunner.cachedSnapshot(revision: "42f62737af7a9fd8c1d55d79666c1a217be4e2e2")
         guard let dir else { throw XCTSkip("\(MLXRunner.defaultModel) is not in the local HF cache") }
         do {
             let t0 = Date()
-            let r = try MLXRunner.load(directory: dir)
+            let sha = try FixtureRun.load("noul-first-token").model.tokenizerSha256
+            let r = try await MLXRunner.load(directory: dir, expectedTokenizerSha256: sha)
             print("MLXRunner.load: \(String(format: "%.2f", Date().timeIntervalSince(t0))) s from \(dir.path)")
-            Self.shared = r
+            shared = r
             return r
         } catch {
-            Self.loadError = error
+            loadError = error
             throw error
         }
     }
+}
+
+/// Needs the MLX Metal library (build with xcodebuild, see docs/runbooks/build-and-test.md)
+/// and the E2B snapshot in the local HF cache. Skipped when `MLXCLASSIFIERS_SKIP_GPU=1`
+/// (under xcodebuild: `TEST_RUNNER_MLXCLASSIFIERS_SKIP_GPU=1`), when the metallib is
+/// absent (plain `swift test`), or when the snapshot is missing. `MLXCLASSIFIERS_MODEL_DIR`
+/// overrides the snapshot directory.
+final class TextFixtureTests: XCTestCase {
+    func runner() async throws -> MLXRunner { try await GPU.runner() }
 
     /// Runs `id` and asserts it against its fixture; returns the max |Δp|.
     @discardableResult
-    func check(_ id: String) throws -> Double {
-        let r = try runner()
+    func check(_ id: String) async throws -> Double {
+        let r = try await runner()
         let fx = try FixtureRun.load(id)
         let t0 = Date()
         let s = try FixtureRun.score(fx, runner: r)
@@ -94,17 +101,17 @@ final class TextFixtureTests: XCTestCase {
         return maxDelta
     }
 
-    func testNoulFirstToken() throws { try check("noul-first-token") }
+    func testNoulFirstToken() async throws { try await check("noul-first-token") }
 
-    func testChoiceFirstTokenObjectState() throws { try check("choice-first-token-object-state") }
+    func testChoiceFirstTokenObjectState() async throws { try await check("choice-first-token-object-state") }
 
-    func testChoiceFirstTokenCachedListState() throws { try check("choice-first-token-cached-list-state") }
+    func testChoiceFirstTokenCachedListState() async throws { try await check("choice-first-token-cached-list-state") }
 
-    func testScoreFirstTokenNoPrefix() throws { try check("score-first-token-no-prefix") }
+    func testScoreFirstTokenNoPrefix() async throws { try await check("score-first-token-no-prefix") }
 
     /// Story 2.1 AC 2: the same case twice is bit-identical.
-    func testNoulFirstTokenIsBitIdenticalTwice() throws {
-        let r = try runner()
+    func testNoulFirstTokenIsBitIdenticalTwice() async throws {
+        let r = try await runner()
         let fx = try FixtureRun.load("noul-first-token")
         let a = try FixtureRun.score(fx, runner: r)
         let b = try FixtureRun.score(fx, runner: r)
@@ -113,8 +120,8 @@ final class TextFixtureTests: XCTestCase {
     }
 
     /// Golden `head_calls`: the vocab projection sees only the readout row.
-    func testHeadProjectsOnlyTheReadoutRow() throws {
-        let r = try runner()
+    func testHeadProjectsOnlyTheReadoutRow() async throws {
+        let r = try await runner()
         let fx = try FixtureRun.load("noul-first-token")
         let before = r.headCalls.count
         _ = try r.prefill(fx.expected.tokens, prefixCache: nil, readoutPositions: [fx.expected.readoutPosition])
@@ -127,7 +134,14 @@ final class TextFixtureTests: XCTestCase {
 
 /// A Runner that must never be reached (the label rules fail first).
 struct UnreachableRunner: Runner {
-    func tokenize(_ text: String) throws -> [Int] { XCTFail("tokenize called"); return [] }
+    struct Template: ChatTemplate {
+        func render(system: String?, user: String) throws -> RenderedChat {
+            XCTFail("render called")
+            throw RunnerError.invalidArgument("unreachable")
+        }
+    }
+    var chatTemplate: ChatTemplate { Template() }
+    func tokenize(_ text: String) -> [Int] { XCTFail("tokenize called"); return [] }
     func cachePrefix(_ tokens: [Int]) throws -> PrefixCache { XCTFail("cachePrefix called"); return PrefixCache(tokens: tokens, state: nil) }
     func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout {
         XCTFail("prefill called")

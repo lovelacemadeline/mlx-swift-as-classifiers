@@ -1,7 +1,7 @@
 // The Runner seam (golden ADR-0002 §4), mirroring golden `runner.py` one-to-one:
-// `tokenize`, `cachePrefix`, `prefill` with logits only at the readout positions.
-// The chat template and the image extension are later stories (1.2, epic 4);
-// delta prefix caching is epic 3. Nothing here samples: the same tokens give
+// `tokenize`, `chatTemplate`, `cachePrefix`, `prefill` with logits only at the
+// readout positions. The image extension is epic 4 (`imageTokens` is nil until
+// then); delta prefix caching is epic 3. Nothing here samples: the same tokens give
 // the same logits.
 
 import Foundation
@@ -84,19 +84,29 @@ public enum RunnerError: Error, CustomStringConvertible, Equatable {
 
 /// The model seam (golden `runner.Runner`).
 ///
-/// - `tokenize(text)`: text to token ids, special-token markup parsed, nothing added (story 1.2).
+/// - `tokenize(text)`: text to token ids, special-token markup parsed, nothing added.
+/// - `chatTemplate`: the model's chat template (rendering is text only; `tokenize` makes the ids).
+/// - `imageTokens`: the image placeholder convention, nil without a vision path (golden's
+///   optional `image_tokens` attribute; default nil).
+/// - `modelId`: what a response reports as `model` when the request names none (default "default").
 /// - `cachePrefix(tokens)`: prefill `tokens` once and keep the KV state; no logits.
 /// - `prefill(tokens, prefixCache, readoutPositions)`: prefill the *full* sequence
 ///   (only the suffix after `prefixCache.tokens` is computed); logits only at
 ///   `readoutPositions` (absolute, default the last one), the hidden state sliced
 ///   before the vocab projection.
 public protocol Runner {
-    func tokenize(_ text: String) throws -> [Int]
+    func tokenize(_ text: String) -> [Int]
+    var chatTemplate: ChatTemplate { get }
+    var imageTokens: ImageTokens? { get }
+    var modelId: String { get }
     func cachePrefix(_ tokens: [Int]) throws -> PrefixCache
     func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout
 }
 
 extension Runner {
+    public var imageTokens: ImageTokens? { nil }
+    public var modelId: String { "default" }
+
     public func prefill(_ tokens: [Int], prefixCache: PrefixCache? = nil) throws -> PrefillReadout {
         try prefill(tokens, prefixCache: prefixCache, readoutPositions: nil)
     }
