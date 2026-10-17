@@ -40,6 +40,14 @@ xcodebuild test -scheme MLXClassifiers -destination 'platform=macOS' \
 - `TextFixtureTests` prints one `FIXTURE <id>: max|dp| = ...` line per case,
   `EndToEndFixtureTests` one `E2E <id>: ...` line, `DecideTests` `DECIDE` and
   `REPLAY` lines; grep for them.
+- `ImageFixtureTests` prints `IMAGE <id>` (the five image fixtures), `TOWER`
+  (soft-token parity with golden) and `ENCODE` (per-image encode time) lines;
+  `ImagePreprocessTests` `PREPROCESS` lines. The golden vision reference
+  (`Tests/MLXClassifiersTests/GoldenVision/`) is regenerated with
+  `scripts/golden_vision_reference.py [DUMP_DIR]` (golden venv). Diagnostics:
+  `TEST_RUNNER_MLXCLASSIFIERS_VISION_DUMP=<dir>` writes the tower's
+  intermediates, `TEST_RUNNER_MLXCLASSIFIERS_GOLDEN_SOFT=<safetensors>` runs
+  the image fixtures on injected soft tokens.
 - `PromptCacheTests` prints one `DELTA <scenario>[step]` line per delta-store
   step and a `TIMING` line (full vs delta prefill).
 - The golden decide reference (`Tests/MLXClassifiersTests/GoldenDecide/`) is

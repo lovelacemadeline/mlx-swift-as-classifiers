@@ -1,6 +1,6 @@
 ---
 type: epic
-status: pending
+status: in-progress
 title: Vision path
 epic: 4
 owner: maddie
@@ -14,7 +14,7 @@ Image blocks in a list state: PIL-exact bicubic resize and normalise, the vendor
 ## Stories
 | id | title | status |
 |---|---|---|
-| 4.1 | Vendored vision tower, PIL-exact preprocessing and the image fixtures | pending |
+| 4.1 | Vendored vision tower, PIL-exact preprocessing and the image fixtures | in-progress |
 
 ## Related
 - [PRD](../product/prd-swift-port.md), [recon](../research/swift-port-recon-2026-10.md), ADR-0004
