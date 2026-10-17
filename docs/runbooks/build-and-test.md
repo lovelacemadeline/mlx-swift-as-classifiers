@@ -37,7 +37,13 @@ xcodebuild test -scheme MLXClassifiers -destination 'platform=macOS' \
 - First build about 90 s on an M5 in low-power mode (MLX C++ plus the Metal
   shaders); incremental builds are seconds. Debug configuration.
 - Filter one class: `-only-testing:MLXClassifiersTests/TextFixtureTests`.
-- `TextFixtureTests` prints one `FIXTURE <id>: max|dp| = ...` line per case; grep for it.
+- `TextFixtureTests` prints one `FIXTURE <id>: max|dp| = ...` line per case,
+  `EndToEndFixtureTests` one `E2E <id>: ...` line, `DecideTests` `DECIDE` and
+  `REPLAY` lines; grep for them.
+- The golden decide reference (`Tests/MLXClassifiersTests/GoldenDecide/`) is
+  regenerated with the golden venv:
+  `../mlx-lm-as-classifiers/.venv/bin/python scripts/golden_decide_reference.py`
+  (loads the model from the local HF cache; set `HF_HUB_OFFLINE=1`).
 
 ## Without a GPU (CI, Linux-less sandboxes, quick loops)
 

@@ -24,7 +24,7 @@ epics:
         status: completed
       - id: "2.2"
         title: End-to-end decide from a wire request
-        status: in-progress
+        status: completed
   - epic: 3
     title: Delta prefix cache
     status: pending
