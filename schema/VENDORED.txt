@@ -1,0 +1,5 @@
+Vendored from https://github.com/lovelacemadeline/mlx-lm-as-classifiers/tree/9b64a14/schema at golden commit 9b64a14 (2026-10-16T23:47:15+01:00; schema last changed in 1b7dcd3, story 6.7 vision soft-token budget) on 2026-10-17. Do not edit; re-vendor from the golden repo and bump this note. Nothing is extended locally.
+
+sha256:
+00bb024a6a0e723596022321570a7f894f894db980d10cd82f70418dbe95dda9  systemone-request.schema.json
+5d0f32c0d47399bda33c023b047fb4165120229eaa1990a9068095c113ce9652  systemone-response.schema.json

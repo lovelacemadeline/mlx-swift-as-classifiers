@@ -1,0 +1,16 @@
+Vendored from https://github.com/lovelacemadeline/mlx-lm-as-classifiers/tree/9b64a14/fixtures at golden commit 9b64a14 (2026-10-16T23:47:15+01:00; fixtures last changed in 1b7dcd3, story 6.7 vision soft-token budget) on 2026-10-17. Do not edit; re-vendor from the golden repo and bump this note. Nothing is extended locally.
+
+sha256:
+fade4b6bf47341226cac99a8c487a4e847f1fdc42005a5f7df3060f7022c11d2  choice-first-token-cached-list-state.json
+c8f5461b0a5ca8a69efd127ea9ebc76a7e72483a01f62ae67dca8d99ed2cbe5b  choice-first-token-image-colour.json
+a1e755c7cf532d914c51a2dcfeb4b6d64346020c53eefc3a28e0960ddd05ff66  choice-first-token-image-gridworld-vt140.json
+e745d9929e6c1acbb6e73dae7367cfc09c48cd605234139dfc43f04a183ff04c  choice-first-token-image-gridworld-vt70.json
+832d36c02e71c93d92307f25fd6fbb15644d89ac55699552ddc405db281bcaff  choice-first-token-image-gridworld.json
+9bd90f670d68c8066f648094e9157fa6d6ed7399b652c4552c4e17c32b34b8b6  choice-first-token-multi-token-label-error.json
+b2aa249acebf11e3096f736775265e79eb0159f02ea25339502ee6d831c4ac48  choice-first-token-object-state.json
+9758687070e7ad995d2e8934b0cefc93738cdc09f1090873f920983c96620402  choice-sequence-multi-token-options.json
+9ae0dea58542e88a85238713a3b59048770baab1d170fe95172d9169b6510008  noul-first-token.json
+877822858efacd7b451e2be113dd427a897f13457b50fe7c1cec79ebe22c89a7  noul-sequence-image.json
+7f641a31db7148ee2fe5821c90dff6ba8df2b8fd69706ddcb63a334ed8935b8e  noul-sequence.json
+625cfee00fe53511d308df949a5eb4a22e70b1e9dd3bd8f4d4cfa561f99e9b70  score-first-token-no-prefix.json
+f69548f39b800b00cbec1f6e713907b8241b8cb37300b4813d8053382a561b64  score-sequence-object-state.json

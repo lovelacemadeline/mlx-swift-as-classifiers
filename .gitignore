@@ -1,0 +1,14 @@
+# SwiftPM
+.build/
+.swiftpm/
+/Packages
+Package.resolved.orig
+# Xcode
+xcuserdata/
+DerivedData/
+*.xcodeproj/project.xcworkspace/
+*.xcuserstate
+*.xcscmblueprint
+# local
+.claude/worktrees/
+.DS_Store

@@ -1,0 +1,14 @@
+# Sprint tracker — the canonical execution-status source (`docloom check`
+# enforces bijection between these rows and docs/stories/*.md files).
+#
+# epics:
+#   - epic: 1
+#     title: Example epic
+#     status: in-progress          # canonical execution statuses only
+#     story_home: docs/stories/    # where its stories live
+#     stories_count: 1
+#     stories:
+#       - id: "1.1"
+#         title: Example story
+#         status: ready-for-dev
+epics: []
