@@ -4,9 +4,10 @@
 // com.maddie.classifierprobe, streamed by scripts/deploy.sh) and to
 // Documents/probe-log.txt, which `scripts/deploy.sh --pull` copies back.
 //
-// Modes (launch arguments, `scripts/deploy.sh --run [--text-only]`):
-//   default        text + vision tower, all 13 fixtures (8 text, 5 image)
+// Modes (launch arguments, `scripts/deploy.sh --run [--text-only | --kernels]`):
+//   default        text + vision tower, all fixtures (8 text, 8 image)
 //   --text-only    vision tower not built (its weights dropped like audio's), 8 text fixtures
+//   --kernels      story 5.1: compile and run the golden INT8 Metal kernels (KernelProbe), no model
 
 import Foundation
 import MLX
@@ -84,9 +85,22 @@ struct ProbeRun: Sendable {
     func run(arguments: [String]) async {
         let textOnly = arguments.contains("--text-only")
         let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?"
-        log("LAUNCHED build=\(build) mode=\(textOnly ? "text-only" : "full") "
+        log("LAUNCHED build=\(build) mode=\(arguments.contains("--kernels") ? "kernels" : textOnly ? "text-only" : "full") "
             + "physical=\(gib(ProcessInfo.processInfo.physicalMemory))")
+        // MLX keeps freed buffers in a cache (0.57 GiB right after load: the dropped audio
+        // tensors); on an 8 GB phone that slack is what jetsam's vm-pageshortage takes.
+        let cacheMiB = arguments.firstIndex(of: "--cache-mib").flatMap { i in
+            i + 1 < arguments.count ? Int(arguments[i + 1]) : nil } ?? 256
+        Memory.cacheLimit = cacheMiB << 20
+        log("CACHE_LIMIT \(cacheMiB) MiB")
         _ = mem("launch")
+        if arguments.contains("--kernels") {
+            setStage("kernel probe")
+            KernelProbe.run(log: note)
+            setStage("done")
+            log("DONE")
+            return
+        }
         let dir = documents.appendingPathComponent(modelDirName)
         guard FileManager.default.fileExists(atPath: dir.appendingPathComponent("config.json").path) else {
             note("MODEL_MISSING \(dir.path) — run scripts/deploy.sh --push-model")
@@ -114,17 +128,19 @@ struct ProbeRun: Sendable {
             let loadS = Date().timeIntervalSince(t0)
             log(String(format: "LOAD %.2f s vision=%@", loadS, runner.vision == nil ? "no" : "yes"))
             _ = mem("after-load")
+            Memory.clearCache()
+            _ = mem("after-load-clear-cache")
 
             for fx in text + images {
                 setStage("fixture \(fx.id)")
                 let t = Date()
                 let got = try runCase(fx, runner: runner)
                 let ms = Date().timeIntervalSince(t) * 1e3
-                let rep = compareCase(expected: fx.expected, result: got, caseId: fx.id)
+                let rep = compareCase(fx, result: got)  // the fixture's own gate (story 4.2)
                 let kind = fx.request.hasImages ? "image/\(fx.readout.rawValue)" : "text/\(fx.readout.rawValue)"
                 let line = FixtureLine(id: fx.id, kind: kind, ok: rep.ok, maxDp: rep.maxProbDistance, ms: ms,
                                        answer: got.answer ?? got.error?.type ?? "?", failures: rep.failures)
-                log("FIXTURE \(fx.id) kind=\(kind) \(rep.ok ? "PASS" : "FAIL") "
+                log("FIXTURE \(fx.id) kind=\(kind) gate=\(fx.resolvedGate) \(rep.ok ? "PASS" : "FAIL") "
                     + "max|dp|=\(rep.maxProbDistance.map { String(format: "%.3g", $0) } ?? "n/a") "
                     + String(format: "ms=%.1f", ms) + " answer=\(line.answer)"
                     + (rep.ok ? "" : " failures=\(rep.failures.joined(separator: "; "))"))

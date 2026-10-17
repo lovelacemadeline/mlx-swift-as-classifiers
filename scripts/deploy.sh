@@ -7,7 +7,7 @@
 #   ./scripts/deploy.sh --build       build and install only
 #   ./scripts/deploy.sh --push-model  copy the E2B snapshot into the app's Documents/ (after a first install)
 #   ./scripts/deploy.sh --measure     build, install, push the model, run full then --text-only
-#   ./scripts/deploy.sh --run [ARGS]  launch the installed app (ARGS: --text-only), wait
+#   ./scripts/deploy.sh --run [ARGS]  launch the installed app (ARGS: --text-only | --kernels), wait
 #                                     for DONE in its log, copy the log back to .build/ClassifierProbe/
 #   ./scripts/deploy.sh --logs        stream logs from an already-running app
 #   ./scripts/deploy.sh --pull        copy Documents/probe-log.txt back
@@ -43,7 +43,7 @@ die()  { printf '\033[1;31mxxx\033[0m %s\n' "$*" >&2; exit 1; }
 preflight() {
   command -v xcodebuild >/dev/null || die "xcodebuild not found (install Xcode)."
   xcrun -f metal >/dev/null 2>&1 || die "no Metal toolchain: xcodebuild -downloadComponent MetalToolchain"
-  xcrun devicectl list devices 2>/dev/null | grep "$DEVICE_ID" | grep -q available \
+  xcrun devicectl list devices 2>/dev/null | grep "$DEVICE_ID" | grep -qE "available|connected" \
     || die "device $DEVICE_ID not available to devicectl — plugged in and unlocked?"
   security find-identity -v -p codesigning 2>/dev/null | grep -q 'Apple Development' \
     || die "no Apple Development identity: sign in to Xcode > Settings > Accounts (one-time, manual)."

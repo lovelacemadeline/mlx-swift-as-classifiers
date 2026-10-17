@@ -14,7 +14,7 @@ The first consumer: an iPhone 17 app that links `MLXClassifiers`, loads Gemma 4 
 ## Stories
 | id | title | status |
 |---|---|---|
-| 6.1 | On-device load, memory budget and one decision from a camera frame | blocked |
+| 6.1 | On-device load, memory budget and one decision from a camera frame | in-progress |
 
 ## Related
 - [iPhone deploy runbook](../runbooks/iphone-deploy.md)

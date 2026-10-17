@@ -51,13 +51,13 @@ epics:
         status: completed
   - epic: 5
     title: INT8 kernels and MoE on A19
-    status: pending
+    status: in-progress
     story_home: docs/stories/
     stories_count: 1
     stories:
       - id: "5.1"
         title: Compile the golden INT8 kernels on A19 and measure
-        status: pending
+        status: in-progress
   - epic: 6
     title: EV3 demo app
     status: in-progress
@@ -66,4 +66,4 @@ epics:
     stories:
       - id: "6.1"
         title: On-device load, memory budget and one decision from a camera frame
-        status: blocked
+        status: in-progress

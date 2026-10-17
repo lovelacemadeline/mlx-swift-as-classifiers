@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C6000000000000000000000F01 /* KernelProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6000000000000000000000F02 /* KernelProbe.swift */; };
+		C6000000000000000000000F03 /* int8-kernels.json in Resources */ = {isa = PBXBuildFile; fileRef = C6000000000000000000000F04 /* int8-kernels.json */; };
 		C60000000000000000000001 /* ClassifierProbeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60000000000000000000002 /* ClassifierProbeApp.swift */; };
 		C60000000000000000000003 /* ProbeRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60000000000000000000004 /* ProbeRun.swift */; };
 		C60000000000000000000005 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60000000000000000000006 /* Memory.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C6000000000000000000000F02 /* KernelProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelProbe.swift; sourceTree = "<group>"; };
+		C6000000000000000000000F04 /* int8-kernels.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "int8-kernels.json"; sourceTree = "<group>"; };
 		C60000000000000000000002 /* ClassifierProbeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassifierProbeApp.swift; sourceTree = "<group>"; };
 		C60000000000000000000004 /* ProbeRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbeRun.swift; sourceTree = "<group>"; };
 		C60000000000000000000006 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
@@ -52,6 +56,8 @@
 				C60000000000000000000002 /* ClassifierProbeApp.swift */,
 				C60000000000000000000004 /* ProbeRun.swift */,
 				C60000000000000000000006 /* Memory.swift */,
+				C6000000000000000000000F02 /* KernelProbe.swift */,
+				C6000000000000000000000F04 /* int8-kernels.json */,
 				C6000000000000000000000F /* ClassifierProbe.entitlements */,
 			);
 			path = ClassifierProbe;
@@ -132,6 +138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C60000000000000000000009 /* fixtures in Resources */,
+				C6000000000000000000000F03 /* int8-kernels.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +152,7 @@
 				C60000000000000000000001 /* ClassifierProbeApp.swift in Sources */,
 				C60000000000000000000003 /* ProbeRun.swift in Sources */,
 				C60000000000000000000005 /* Memory.swift in Sources */,
+				C6000000000000000000000F01 /* KernelProbe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 ---
 type: epic
-status: pending
+status: in-progress
 title: INT8 kernels and MoE on A19
 epic: 5
 owner: maddie
@@ -14,7 +14,7 @@ Feasibility first: do the golden W8A8 and W4A8 kernels (MPP `matmul2d` cooperati
 ## Stories
 | id | title | status |
 |---|---|---|
-| 5.1 | Compile the golden INT8 kernels on A19 and measure | pending |
+| 5.1 | Compile the golden INT8 kernels on A19 and measure | in-progress |
 
 ## Related
 - [PRD](../product/prd-swift-port.md), [recon](../research/swift-port-recon-2026-10.md), ADR-0004
