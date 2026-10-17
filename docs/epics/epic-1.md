@@ -1,6 +1,6 @@
 ---
 type: epic
-status: in-progress
+status: completed
 title: Schema, prompt compilation and label binding
 epic: 1
 owner: maddie
@@ -15,7 +15,7 @@ The wire types, the golden fixtures loaded as typed cases, and prompt compilatio
 | id | title | status |
 |---|---|---|
 | 1.1 | Scaffold — package, docloom, vendored schema and fixtures | completed |
-| 1.2 | Tokenizer and chat-template parity with the fixture token ids | pending |
+| 1.2 | Tokenizer and chat-template parity with the fixture token ids | completed |
 
 ## Related
 - [PRD](../product/prd-swift-port.md), [recon](../research/swift-port-recon-2026-10.md), ADR-0001, ADR-0002

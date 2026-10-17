@@ -3,7 +3,7 @@
 epics:
   - epic: 1
     title: Schema, prompt compilation and label binding
-    status: in-progress
+    status: completed
     story_home: docs/stories/
     stories_count: 2
     stories:
@@ -12,7 +12,7 @@ epics:
         status: completed
       - id: "1.2"
         title: Tokenizer and chat-template parity with the fixture token ids
-        status: pending
+        status: completed
   - epic: 2
     title: Runner — split prefill, readout and calibration
     status: pending
