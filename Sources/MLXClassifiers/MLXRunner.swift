@@ -85,8 +85,7 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         } else if let h = env["HF_HOME"] {
             hub = URL(fileURLWithPath: h).appendingPathComponent("hub")
         } else {
-            hub = FileManager.default.homeDirectoryForCurrentUser
-                .appendingPathComponent(".cache/huggingface/hub")
+            hub = homeDirectory().appendingPathComponent(".cache/huggingface/hub")
         }
         let repoDir = hub.appendingPathComponent("models--" + repo.replacingOccurrences(of: "/", with: "--"))
         let snapshots = repoDir.appendingPathComponent("snapshots")
@@ -107,15 +106,19 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
     /// per-layer quantisation from `config.json`, and the safetensors weights
     /// (audio tensors are dropped by `sanitize`; the vision tower loads with the rest),
     /// plus the tokenizer, chat template and image placeholder convention. With
-    /// `expectedTokenizerSha256`, `tokenizer.json` must match it.
+    /// `expectedTokenizerSha256`, `tokenizer.json` must match it. `includeVision: false`
+    /// builds the text model alone: the vision tower's weights are dropped by `sanitize`
+    /// like the audio tower's, and the runner has no vision path (story 6.1, phone memory).
     public static func load(directory: URL, modelId: String = defaultModel,
-                            expectedTokenizerSha256: String? = nil) async throws -> MLXRunner {
+                            expectedTokenizerSha256: String? = nil,
+                            includeVision: Bool = true) async throws -> MLXRunner {
         let configURL = directory.appendingPathComponent("config.json")
         guard let data = try? Data(contentsOf: configURL) else {
             throw RunnerError.load("no config.json in \(directory.path)")
         }
         let decoder = JSONDecoder()
-        let config = try decoder.decode(Gemma4Configuration.self, from: data)
+        var config = try decoder.decode(Gemma4Configuration.self, from: data)
+        if !includeVision { config.visionConfig = nil }
         let base = try decoder.decode(BaseConfiguration.self, from: data)
         if case .string("vision") = try JSONValue.parse(data)["text_config"]?["use_bidirectional_attention"] {
             throw RunnerError.notImplemented("bidirectional image-block attention (Gemma 4 26B-A4B) is not ported")
@@ -316,4 +319,14 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         let h = concatenated(parts, axis: 1)
         return backbone(MLXArray(plIds)[.newAxis, 0...], cache: cache, inputEmbeddings: h)
     }
+}
+
+/// The user's home directory (macOS), or the app container's home on iOS, where
+/// `homeDirectoryForCurrentUser` is unavailable (story 6.1).
+func homeDirectory() -> URL {
+    #if os(macOS)
+    FileManager.default.homeDirectoryForCurrentUser
+    #else
+    URL(fileURLWithPath: NSHomeDirectory())
+    #endif
 }

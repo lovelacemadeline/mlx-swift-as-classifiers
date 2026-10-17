@@ -51,6 +51,19 @@ final class EndToEndFixtureTests: XCTestCase {
         ])
     }
 
+    /// Story 6.1: `includeVision: false` (the phone's text-only fallback) builds no vision
+    /// path and still reproduces a text fixture.
+    func testTextOnlyLoad() async throws {
+        let shared = try await GPU.runner()
+        let r = try await MLXRunner.load(directory: shared.modelDirectory, includeVision: false)
+        r.promptCache = nil
+        XCTAssertNil(r.vision)
+        XCTAssertNil(r.imageTokens)
+        let fx = try FixtureRun.load("noul-first-token")
+        let rep = compareCase(expected: fx.expected, result: try runCase(fx, runner: r), caseId: fx.id)
+        XCTAssertTrue(rep.ok, rep.failures.joined(separator: "; "))
+    }
+
     /// The tokenizer stub is gone: the runner tokenizes like golden `MLXRunner.tokenize`.
     func testRunnerTokenizes() async throws {
         let runner = try await GPU.runner()

@@ -57,10 +57,10 @@ epics:
         status: pending
   - epic: 6
     title: EV3 demo app
-    status: pending
+    status: in-progress
     story_home: docs/stories/
     stories_count: 1
     stories:
       - id: "6.1"
         title: On-device load, memory budget and one decision from a camera frame
-        status: pending
+        status: blocked

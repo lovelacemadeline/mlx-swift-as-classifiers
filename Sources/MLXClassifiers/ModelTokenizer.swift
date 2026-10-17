@@ -45,7 +45,7 @@ public struct ModelTokenizer: @unchecked Sendable {
         } else if let h = env["HF_HOME"] {
             hub = URL(fileURLWithPath: h).appendingPathComponent("hub")
         } else {
-            hub = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent(".cache/huggingface/hub")
+            hub = homeDirectory().appendingPathComponent(".cache/huggingface/hub")
         }
         let dir = hub.appendingPathComponent("models--" + repo.replacingOccurrences(of: "/", with: "--"))
             .appendingPathComponent("snapshots").appendingPathComponent(revision)

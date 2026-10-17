@@ -1,0 +1,282 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C60000000000000000000001 /* ClassifierProbeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60000000000000000000002 /* ClassifierProbeApp.swift */; };
+		C60000000000000000000003 /* ProbeRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60000000000000000000004 /* ProbeRun.swift */; };
+		C60000000000000000000005 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60000000000000000000006 /* Memory.swift */; };
+		C60000000000000000000009 /* fixtures in Resources */ = {isa = PBXBuildFile; fileRef = C6000000000000000000000A /* fixtures */; };
+		C6000000000000000000000B /* MLXClassifiers in Frameworks */ = {isa = PBXBuildFile; productRef = C6000000000000000000000C /* MLXClassifiers */; };
+		C6000000000000000000000D /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = C6000000000000000000000E /* MLX */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		C60000000000000000000002 /* ClassifierProbeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassifierProbeApp.swift; sourceTree = "<group>"; };
+		C60000000000000000000004 /* ProbeRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProbeRun.swift; sourceTree = "<group>"; };
+		C60000000000000000000006 /* Memory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
+		C6000000000000000000000F /* ClassifierProbe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClassifierProbe.entitlements; sourceTree = "<group>"; };
+		C6000000000000000000000A /* fixtures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fixtures; path = ../../fixtures; sourceTree = SOURCE_ROOT; };
+		C60000000000000000000010 /* ClassifierProbe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClassifierProbe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C60000000000000000000011 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C6000000000000000000000B /* MLXClassifiers in Frameworks */,
+				C6000000000000000000000D /* MLX in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C60000000000000000000012 = {
+			isa = PBXGroup;
+			children = (
+				C60000000000000000000013 /* ClassifierProbe */,
+				C6000000000000000000000A /* fixtures */,
+				C60000000000000000000014 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C60000000000000000000013 /* ClassifierProbe */ = {
+			isa = PBXGroup;
+			children = (
+				C60000000000000000000002 /* ClassifierProbeApp.swift */,
+				C60000000000000000000004 /* ProbeRun.swift */,
+				C60000000000000000000006 /* Memory.swift */,
+				C6000000000000000000000F /* ClassifierProbe.entitlements */,
+			);
+			path = ClassifierProbe;
+			sourceTree = "<group>";
+		};
+		C60000000000000000000014 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C60000000000000000000010 /* ClassifierProbe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C60000000000000000000015 /* ClassifierProbe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C60000000000000000000016 /* Build configuration list for PBXNativeTarget "ClassifierProbe" */;
+			buildPhases = (
+				C60000000000000000000017 /* Sources */,
+				C60000000000000000000011 /* Frameworks */,
+				C60000000000000000000018 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ClassifierProbe;
+			packageProductDependencies = (
+				C6000000000000000000000C /* MLXClassifiers */,
+				C6000000000000000000000E /* MLX */,
+			);
+			productName = ClassifierProbe;
+			productReference = C60000000000000000000010 /* ClassifierProbe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C60000000000000000000019 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					C60000000000000000000015 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = C6000000000000000000001A /* Build configuration list for PBXProject "ClassifierProbe" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C60000000000000000000012;
+			packageReferences = (
+				C6000000000000000000001B /* XCLocalSwiftPackageReference "../.." */,
+				C6000000000000000000001C /* XCRemoteSwiftPackageReference "mlx-swift" */,
+			);
+			productRefGroup = C60000000000000000000014 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C60000000000000000000015 /* ClassifierProbe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C60000000000000000000018 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C60000000000000000000009 /* fixtures in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C60000000000000000000017 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C60000000000000000000001 /* ClassifierProbeApp.swift in Sources */,
+				C60000000000000000000003 /* ProbeRun.swift in Sources */,
+				C60000000000000000000005 /* Memory.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		C6000000000000000000001D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C6000000000000000000001E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C6000000000000000000001F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ClassifierProbe/ClassifierProbe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ClassifierProbe;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maddie.classifierprobe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C60000000000000000000020 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ClassifierProbe/ClassifierProbe.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ClassifierProbe;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIFileSharingEnabled = YES;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.maddie.classifierprobe;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C60000000000000000000016 /* Build configuration list for PBXNativeTarget "ClassifierProbe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6000000000000000000001F /* Debug */,
+				C60000000000000000000020 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C6000000000000000000001A /* Build configuration list for PBXProject "ClassifierProbe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6000000000000000000001D /* Debug */,
+				C6000000000000000000001E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		C6000000000000000000001B /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C6000000000000000000001C /* XCRemoteSwiftPackageReference "mlx-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 0.32.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C6000000000000000000000C /* MLXClassifiers */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MLXClassifiers;
+		};
+		C6000000000000000000000E /* MLX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C6000000000000000000001C /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLX;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = C60000000000000000000019 /* Project object */;
+}

@@ -1,6 +1,6 @@
 ---
 type: epic
-status: pending
+status: in-progress
 title: EV3 demo app
 epic: 6
 owner: maddie
@@ -14,7 +14,8 @@ The first consumer: an iPhone 17 app that links `MLXClassifiers`, loads Gemma 4 
 ## Stories
 | id | title | status |
 |---|---|---|
-| 6.1 | On-device load, memory budget and one decision from a camera frame | pending |
+| 6.1 | On-device load, memory budget and one decision from a camera frame | blocked |
 
 ## Related
+- [iPhone deploy runbook](../runbooks/iphone-deploy.md)
 - [PRD](../product/prd-swift-port.md), [recon](../research/swift-port-recon-2026-10.md), ADR-0002

@@ -12,3 +12,5 @@ DerivedData/
 # local
 .claude/worktrees/
 .DS_Store
+# local device deploy (scripts/deploy.sh): team id, never committed
+scripts/deploy.env
