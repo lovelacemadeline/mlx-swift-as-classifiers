@@ -9,9 +9,11 @@
 // `temperature` is the fitted calibration temperature, applied when
 // `options.calibrated` (default true); without one calibrated equals raw.
 //
-// Delta prefix caching (golden story 3.4, here epic 3) is not ported: no runner has
-// a prompt-cache store yet, so `options.delta_cache` changes nothing, as golden's
-// `without_delta` is a no-op on a runner without a store. Sequence mode
+// Delta prefix caching (golden story 3.4, here story 3.1) is on whenever the runner
+// has a `promptCache` store: each prefill reuses the longest cached token prefix of
+// its prompt (from this request's earlier prompts or from earlier requests), so
+// `cached_tokens` can exceed the declared prefix. `options.delta_cache = false`
+// runs the request through `withoutDelta` (no lookup, no insert). Sequence mode
 // (Sequence.swift): each prompt caches itself and scores every option with one
 // small pass.
 
@@ -87,6 +89,7 @@ public func decide(_ request: SystemOneRequest, runner: Runner, temperature: Dou
     let t0 = DispatchTime.now().uptimeNanoseconds
     func ms(since t: UInt64) -> Double { Double(DispatchTime.now().uptimeNanoseconds - t) / 1e6 }
     let opts = request.options ?? RequestOptions()
+    let runner = opts.resolvedDeltaCache ? runner : withoutDelta(runner)
     let readout = opts.resolvedReadout
     let applied = opts.resolvedCalibrated ? (temperature ?? 1.0) : 1.0
 

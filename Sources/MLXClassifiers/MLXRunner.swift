@@ -14,7 +14,15 @@
 //
 // First-token mode is therefore the cache-only prefill plus one L=1 pass.
 // The text front end (tokenizer, chat template) is story 1.2's `ModelTokenizer`.
-// Not yet ported: delta prefix cache (epic 3), images (epic 4), INT8/MoE (epic 5).
+//
+// Delta prefix caching (story 3.1, golden story 3.4): `promptCache` (a
+// `PromptCacheStore`, on by default; nil turns it off) keeps the KV state after
+// step 1 of every prefill, keyed by `tokens[..<p0]`. The next `prefill` looks up
+// the stored sequence sharing the longest common token prefix with its own tokens
+// (capped at p0), rewinds a copy to that length (`rewindCache`), and runs step 1
+// over the delta only. `cachedTokens` reports the hit length. A declared prefix
+// cache still works and is used when it is the longer hit.
+// Not yet ported: images (epic 4), INT8/MoE (epic 5).
 
 import Foundation
 import MLX
@@ -22,7 +30,7 @@ import MLXLMCommon
 import MLXNN
 
 /// Not thread-safe: one decision at a time (the call records below are plain arrays).
-public final class MLXRunner: Runner, @unchecked Sendable {
+public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
     public static let defaultModel = "mlx-community/gemma-4-E2B-it-qat-4bit"
 
     public let model: Gemma4Model
@@ -35,7 +43,9 @@ public final class MLXRunner: Runner, @unchecked Sendable {
     /// Shapes seen by the vocab projection `[rows..., hidden]`, for tests (golden `head_calls`).
     public private(set) var headCalls: [[Int]] = []
     /// Each prefill as `(cachedTokens, computedTokens)` (golden `prefill_calls`).
-    public private(set) var prefillCalls: [(cached: Int, computed: Int)] = []
+    public internal(set) var prefillCalls: [(cached: Int, computed: Int)] = []
+    /// Delta prefix cache (golden story 3.4); nil turns it off.
+    public var promptCache: PromptCacheStore? = PromptCacheStore()
 
     var text: Gemma4TextModel { model.languageModel }
     var backbone: Gemma4TextModelInner { model.languageModel.model }
@@ -109,27 +119,33 @@ public final class MLXRunner: Runner, @unchecked Sendable {
     public var imageTokens: ImageTokens? { nil }
 
     public func cachePrefix(_ tokens: [Int]) throws -> PrefixCache {
-        let cache = try newCache()
-        cacheOnly(tokens[...], cache: cache)
-        return PrefixCache(tokens: tokens, state: cache)
+        try cachePrefix(tokens, delta: true)
     }
 
     public func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout {
-        let (nCached, positions) = try checkPrefillArgs(
+        try prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, delta: true)
+    }
+
+    /// Golden `cache_prefix(tokens, delta=)`: the delta store may serve part of
+    /// `tokens`, and the result is stored when this call added rows.
+    public func cachePrefix(_ tokens: [Int], delta: Bool) throws -> PrefixCache {
+        let (nCached, cache) = try start(tokens, maxLen: tokens.count, prefixCache: nil, delta: delta)
+        cacheOnly(tokens[nCached...], cache: cache)
+        store(tokens, cache: cache, nCached: nCached, delta: delta)
+        return PrefixCache(tokens: tokens, state: cache)
+    }
+
+    /// Golden `prefill(..., delta=)`.
+    public func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?,
+                        delta: Bool) throws -> PrefillReadout {
+        let (_, positions) = try checkPrefillArgs(
             tokens, prefixCache: prefixCache, readoutPositions: readoutPositions)
         let p0 = positions.min()!, p1 = positions.max()!
-        let cache: [KVCache]
-        if let prefixCache {
-            guard let shared = prefixCache.state as? [KVCache] else {
-                throw RunnerError.invalidArgument("prefix cache was not made by MLXRunner")
-            }
-            cache = shared.map { $0.copy() }  // a shared prefix is never mutated
-        } else {
-            cache = try newCache()
-        }
+        let (nCached, cache) = try start(tokens, maxLen: p0, prefixCache: prefixCache, delta: delta)
         prefillCalls.append((nCached, p1 + 1 - nCached))
 
         cacheOnly(tokens[nCached ..< p0], cache: cache)
+        store(Array(tokens[..<p0]), cache: cache, nCached: nCached, delta: delta)
         let hidden = backbone(ids(tokens[p0 ... p1]), cache: cache)
         let rows = MLXArray(positions.map { Int32($0 - p0) })
         let picked = hidden[0..., rows, 0...]
@@ -153,6 +169,32 @@ public final class MLXRunner: Runner, @unchecked Sendable {
 
     func newCache() throws -> [KVCache] {
         try model.newCache(parameters: nil)
+    }
+
+    /// Golden `_start`: `(nCached, working cache)`, the longer of the declared prefix
+    /// and the delta store's hit (both copies), else an empty cache.
+    func start(_ key: [Int], maxLen: Int, prefixCache: PrefixCache?, delta: Bool) throws -> (Int, [KVCache]) {
+        let have = prefixCache?.count ?? 0
+        if delta, let store = promptCache {
+            let (hit, state) = store.lookup(key, rewind: { state, stored, hit in
+                rewindCache(state as! [KVCache], storedLen: stored, hitLen: hit)
+            }, maxLen: maxLen, minLen: have)
+            if let state = state as? [KVCache] { return (hit, state) }
+        }
+        if let prefixCache {
+            guard let shared = prefixCache.state as? [KVCache] else {
+                throw RunnerError.invalidArgument("prefix cache was not made by MLXRunner")
+            }
+            return (have, shared.map { $0.copy() })  // a shared prefix is never mutated
+        }
+        return (0, try newCache())
+    }
+
+    /// Golden `_store`: keep a copy of `cache` (covering `key`) when this call added rows.
+    func store(_ key: [Int], cache: [KVCache], nCached: Int, delta: Bool) {
+        guard delta, let store = promptCache, key.count > nCached else { return }
+        let snapshot = cache.map { $0.copy() }
+        store.insert(key, state: snapshot, nbytes: cacheNbytes(snapshot))
     }
 
     private func ids(_ tokens: ArraySlice<Int>) -> MLXArray {

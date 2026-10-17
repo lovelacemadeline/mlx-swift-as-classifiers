@@ -3,7 +3,7 @@
 // checker's comparison semantics). This is the reference a port mirrors:
 // compile, bind in context, prefill (from the system-turn cache when
 // `prefix_cached`), gather, raw softmax. Delta prefix caching is off, as golden
-// runs cases (`without_delta`); no Swift runner has a store yet anyway.
+// runs cases (`without_delta`): a case pins its cache path.
 
 import Foundation
 
@@ -22,6 +22,7 @@ public func withLabelStyle(_ request: SystemOneRequest, _ labelStyle: LabelStyle
 /// result block. A first-token binding error is a result (`error`, with the
 /// per-label in-context ids, empty where a label merges), not a throw.
 public func runCase(_ fx: GoldenFixture, runner: Runner) throws -> GoldenFixture.Expected {
+    let runner = withoutDelta(runner)
     let req = withLabelStyle(fx.request, fx.labelStyle)
     guard req.questions.count == 1, let name = req.questions.keys.first else {
         throw FixtureError(file: fx.id, message: "a fixture request holds exactly one question")
