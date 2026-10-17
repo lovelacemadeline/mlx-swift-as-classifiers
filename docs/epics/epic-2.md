@@ -1,6 +1,6 @@
 ---
 type: epic
-status: pending
+status: in-progress
 title: Runner — split prefill, readout and calibration
 epic: 2
 owner: maddie
@@ -14,7 +14,7 @@ The Runner seam (golden ADR-0002 §4) over the vendored Gemma 4 text model (ADR-
 ## Stories
 | id | title | status |
 |---|---|---|
-| 2.1 | Vendored Gemma 4 text backbone and the first green text fixture | pending |
+| 2.1 | Vendored Gemma 4 text backbone and the first green text fixture | completed |
 
 ## Related
 - [PRD](../product/prd-swift-port.md), [recon](../research/swift-port-recon-2026-10.md), ADR-0002, ADR-0003, ADR-0004

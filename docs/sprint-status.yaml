@@ -15,13 +15,13 @@ epics:
         status: pending
   - epic: 2
     title: Runner — split prefill, readout and calibration
-    status: pending
+    status: in-progress
     story_home: docs/stories/
     stories_count: 1
     stories:
       - id: "2.1"
         title: Vendored Gemma 4 text backbone and the first green text fixture
-        status: pending
+        status: completed
   - epic: 3
     title: Delta prefix cache
     status: pending

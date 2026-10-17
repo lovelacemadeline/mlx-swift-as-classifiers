@@ -27,7 +27,7 @@ uint8. mlx-swift-examples no longer ships these libraries at all (2.29.1).
 ## Decision
 1. **Vendor** `Libraries/MLXLLM/Models/Gemma4Text.swift` and the Gemma 4 parts
    of `Libraries/MLXVLM/Models/Gemma4.swift` from mlx-swift-lm **3.32.3**
-   (`3b339ad`, MIT, © 2024 ml-explore) into `Sources/MLXClassifiers/Gemma4/`,
+   (`3b339ad`, MIT, © 2024 ml-explore) into `Sources/MLXClassifiers/Models/`,
    each file with a provenance header (upstream path, tag, commit, licence, list
    of local changes), and the upstream licence beside them. Local changes are
    the minimum the runner needs: public embeddings-in / hidden-out entry
