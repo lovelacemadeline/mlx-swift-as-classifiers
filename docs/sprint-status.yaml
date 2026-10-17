@@ -30,13 +30,13 @@ epics:
         status: completed
   - epic: 3
     title: Delta prefix cache
-    status: pending
+    status: completed
     story_home: docs/stories/
     stories_count: 1
     stories:
       - id: "3.1"
         title: Exact KV rewind and the longest-prefix store
-        status: pending
+        status: completed
   - epic: 4
     title: Vision path
     status: pending

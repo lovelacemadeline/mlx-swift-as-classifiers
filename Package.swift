@@ -46,8 +46,8 @@ let package = Package(
         .testTarget(
             name: "MLXClassifiersTests",
             dependencies: ["MLXClassifiers"],
-            // Golden decide responses, read by path (scripts/golden_decide_reference.py writes them).
-            exclude: ["GoldenDecide"]
+            // Golden decide and delta references, read by path (scripts/golden_*_reference.py write them).
+            exclude: ["GoldenDecide", "GoldenDelta"]
         ),
     ]
 )

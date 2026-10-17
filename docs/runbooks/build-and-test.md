@@ -40,10 +40,14 @@ xcodebuild test -scheme MLXClassifiers -destination 'platform=macOS' \
 - `TextFixtureTests` prints one `FIXTURE <id>: max|dp| = ...` line per case,
   `EndToEndFixtureTests` one `E2E <id>: ...` line, `DecideTests` `DECIDE` and
   `REPLAY` lines; grep for them.
+- `PromptCacheTests` prints one `DELTA <scenario>[step]` line per delta-store
+  step and a `TIMING` line (full vs delta prefill).
 - The golden decide reference (`Tests/MLXClassifiersTests/GoldenDecide/`) is
   regenerated with the golden venv:
   `../mlx-lm-as-classifiers/.venv/bin/python scripts/golden_decide_reference.py`
-  (loads the model from the local HF cache; set `HF_HUB_OFFLINE=1`).
+  (loads the model from the local HF cache; set `HF_HUB_OFFLINE=1`). The golden
+  delta reference (`Tests/MLXClassifiersTests/GoldenDelta/`) the same way with
+  `scripts/golden_delta_reference.py`.
 
 ## Without a GPU (CI, Linux-less sandboxes, quick loops)
 
