@@ -69,10 +69,13 @@ epics:
         status: in-progress
   - epic: 7
     title: 26B on Swift
-    status: in-progress
+    status: completed
     story_home: docs/stories/
-    stories_count: 1
+    stories_count: 2
     stories:
       - id: "7.1"
         title: 26B through MLXRunner — bidirectional image blocks, the five 26B fixtures pass
+        status: completed
+      - id: "7.2"
+        title: HTTP shim and a gridworld comparison — Swift against Python on the 26B
         status: completed

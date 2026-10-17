@@ -31,7 +31,7 @@ under `xcodebuild`:
 
 ```bash
 # everything, GPU fixtures included (needs the E2B snapshot in the HF cache)
-xcodebuild test -scheme MLXClassifiers -destination 'platform=macOS' \
+xcodebuild test -scheme MLXClassifiers-Package -destination 'platform=macOS' \
   -derivedDataPath .build/xcode -skipMacroValidation -skipPackagePluginValidation
 
 # no GPU: the model tests skip themselves (or set MLXCLASSIFIERS_SKIP_GPU=1)

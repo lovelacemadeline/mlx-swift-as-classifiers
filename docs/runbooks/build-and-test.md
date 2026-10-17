@@ -31,10 +31,13 @@ Xcode 26.6 (17F113), Swift 6.3.3, Metal toolchain 17.6.109.
 ## Full suite, GPU included (the definition-of-done run)
 
 ```bash
-xcodebuild test -scheme MLXClassifiers -destination 'platform=macOS' \
+xcodebuild test -scheme MLXClassifiers-Package -destination 'platform=macOS' \
   -derivedDataPath .build/xcode -skipMacroValidation -skipPackagePluginValidation
 ```
 
+- `MLXClassifiers-Package` is the scheme with the test action since the package gained the
+  `mlx-classifiers-serve` executable (story 7.2); build the shim with
+  `-scheme mlx-classifiers-serve -configuration Release`.
 - `-derivedDataPath .build/xcode` keeps the build inside the (gitignored) `.build/`.
 - `-skipMacroValidation -skipPackagePluginValidation`: swift-syntax macros from
   the dependency graph otherwise need an interactive trust prompt.

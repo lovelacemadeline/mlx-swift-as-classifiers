@@ -60,7 +60,7 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
     /// Delta prefix cache (golden story 3.4); nil turns it off.
     public var promptCache: PromptCacheStore? = PromptCacheStore()
     /// The image placeholder convention from the snapshot's JSON (nil: no vision path).
-    public let imageTokens: ImageTokens?
+    public var imageTokens: ImageTokens?
     /// The vision tower's encoder with its soft-token memo (nil: no vision path).
     public let vision: VisionEncoder?
     /// Image blocks attend bidirectionally (text config `use_bidirectional_attention: "vision"`, the 26B).
@@ -138,6 +138,12 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         return MLXRunner(model: model, modelId: modelId, modelDirectory: directory, tokenizer: tokenizer,
                          imageTokens: try ImageTokens.fromConfig(modelDirectory: directory),
                          visionBidirectional: bidirectional)
+    }
+
+    /// Drop the `headCalls` / `prefillCalls` records (a long-lived server, story 7.2).
+    public func clearCallRecords() {
+        headCalls.removeAll()
+        prefillCalls.removeAll()
     }
 
     // MARK: - Runner

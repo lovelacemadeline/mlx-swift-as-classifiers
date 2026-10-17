@@ -22,7 +22,9 @@ let package = Package(
         .iOS(.v17),
     ],
     products: [
-        .library(name: "MLXClassifiers", targets: ["MLXClassifiers"])
+        .library(name: "MLXClassifiers", targets: ["MLXClassifiers"]),
+        // Story 7.2: localhost POST /v1/systemone over one MLXRunner (Network.framework, no new dependency).
+        .executable(name: "mlx-classifiers-serve", targets: ["mlx-classifiers-serve"]),
     ],
     dependencies: [
         .package(url: "https://github.com/ml-explore/mlx-swift", exact: "0.32.3"),
@@ -42,6 +44,10 @@ let package = Package(
             ],
             // Models/ holds the vendored Gemma 4 text model (ADR-0004); its upstream licence ships beside it.
             exclude: ["Models/LICENSE-mlx-swift-lm", "Models/LICENSE-mlx-vlm"]
+        ),
+        .executableTarget(
+            name: "mlx-classifiers-serve",
+            dependencies: ["MLXClassifiers"]
         ),
         .testTarget(
             name: "MLXClassifiersTests",

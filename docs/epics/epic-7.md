@@ -1,6 +1,6 @@
 ---
 type: epic
-status: in-progress
+status: completed
 title: 26B on Swift
 epic: 7
 owner: maddie
@@ -18,6 +18,7 @@ it beside the Python server.
 | id | title | status |
 |---|---|---|
 | 7.1 | 26B through MLXRunner — bidirectional image blocks, the five 26B fixtures pass | completed |
+| 7.2 | HTTP shim and a gridworld comparison — Swift against Python on the 26B | completed |
 
 ## Related
 - [Epic 4 — Vision path](epic-4.md)
