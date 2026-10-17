@@ -1,6 +1,6 @@
 ---
 type: epic
-status: in-progress
+status: completed
 title: Vision path
 epic: 4
 owner: maddie
@@ -9,12 +9,13 @@ updated: 2026-10-17
 
 # Epic 4 — Vision path
 
-Image blocks in a list state: PIL-exact bicubic resize and normalise, the vendored Gemma 4 vision tower, pooler, `embed_vision` projector and soft-token merge, PLE pad id 0 at image rows, soft-token budgets 70/140/280. Done when the five image fixtures reproduce.
+Image blocks in a list state: PIL-exact bicubic resize and normalise, the vendored Gemma 4 vision tower, pooler, `embed_vision` projector and soft-token merge, PLE pad id 0 at image rows, soft-token budgets 70/140/280. Done when the image fixtures reproduce under their gates (story 4.2: golden's per-fixture gate, eight image fixtures).
 
 ## Stories
 | id | title | status |
 |---|---|---|
-| 4.1 | Vendored vision tower, PIL-exact preprocessing and the image fixtures | in-progress |
+| 4.1 | Vendored vision tower, PIL-exact preprocessing and the image fixtures | completed |
+| 4.2 | Per-fixture gate from golden — gridworld action cases on answer and ids, clear-winner image fixtures pass | completed |
 
 ## Related
 - [PRD](../product/prd-swift-port.md), [recon](../research/swift-port-recon-2026-10.md), ADR-0004

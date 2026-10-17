@@ -295,7 +295,7 @@ final class PromptCacheTests: XCTestCase {
         for _ in 0 ..< 2 {
             let n0 = runner.prefillCalls.count
             let got = try runCase(fx, runner: runner)
-            XCTAssertTrue(compareCase(expected: fx.expected, result: got, caseId: fx.id).ok)
+            XCTAssertTrue(compareCase(fx, result: got).ok)
             let calls = runner.prefillCalls[n0...].map { [$0.cached, $0.computed] }
             XCTAssertEqual(calls, [[fx.expected.prefixLen, fx.expected.tokens.count - fx.expected.prefixLen]])
         }

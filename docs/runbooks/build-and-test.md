@@ -40,7 +40,7 @@ xcodebuild test -scheme MLXClassifiers -destination 'platform=macOS' \
 - `TextFixtureTests` prints one `FIXTURE <id>: max|dp| = ...` line per case,
   `EndToEndFixtureTests` one `E2E <id>: ...` line, `DecideTests` `DECIDE` and
   `REPLAY` lines; grep for them.
-- `ImageFixtureTests` prints `IMAGE <id>` (the five image fixtures), `TOWER`
+- `ImageFixtureTests` prints `IMAGE <id> [gate ...]` (the eight image fixtures), `TOWER`
   (soft-token parity with golden) and `ENCODE` (per-image encode time) lines;
   `ImagePreprocessTests` `PREPROCESS` lines. The golden vision reference
   (`Tests/MLXClassifiersTests/GoldenVision/`) is regenerated with

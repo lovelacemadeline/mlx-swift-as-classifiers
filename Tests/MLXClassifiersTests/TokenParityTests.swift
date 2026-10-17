@@ -46,7 +46,7 @@ final class TokenParityTests: XCTestCase {
     func testFixtureTokensMatch() async throws {
         let tok = try await loadTokenizer()
         let fixtures = try Fixtures.load(directory: fixturesDir)
-        XCTAssertEqual(fixtures.count, 13)
+        XCTAssertEqual(fixtures.count, 16)
         for fx in fixtures {
             XCTAssertEqual(fx.model.repo, Self.repo, fx.id)
             XCTAssertEqual(fx.model.tokenizerSha256, tok.tokenizerSha256, fx.id)
@@ -97,7 +97,7 @@ final class TokenParityTests: XCTestCase {
                 XCTAssertEqual(r.tokens[run.start + run.length], Gemma4ImageTokens.endOfImage, fx.id)
             }
         }
-        XCTAssertEqual(seen, 5, "five image fixtures at golden 9b64a14")
+        XCTAssertEqual(seen, 8, "eight image fixtures at golden 4968020")
     }
 
     /// The option-text case with a two-token label fails first-token binding

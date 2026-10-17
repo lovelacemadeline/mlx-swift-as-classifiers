@@ -13,7 +13,7 @@ let schemaDir = repoRoot.appendingPathComponent("schema")
 final class FixtureDecodingTests: XCTestCase {
     func testEveryGoldenFixtureDecodesAndValidates() throws {
         let fixtures = try Fixtures.load(directory: fixturesDir)
-        XCTAssertEqual(fixtures.count, 13, "golden 9b64a14 ships 13 cases")
+        XCTAssertEqual(fixtures.count, 16, "golden story 4.3 ships 16 cases")
         // Sorted by file name, as golden load_fixtures does ("-vt70.json" < ".json").
         let names = fixtures.map { $0.id + ".json" }
         XCTAssertEqual(names, names.sorted())
@@ -92,7 +92,7 @@ final class FixtureDecodingTests: XCTestCase {
                 if let budget = img.maxSoftTokens { XCTAssertLessThanOrEqual(img.length, budget, fx.id) }
             }
         }
-        XCTAssertEqual(imageCases, 5)
+        XCTAssertEqual(imageCases, 8)
     }
 
     /// Decode then encode reproduces each fixture file's JSON tree exactly,
@@ -100,7 +100,7 @@ final class FixtureDecodingTests: XCTestCase {
     func testFixtureFilesRoundTripInKeyOrder() throws {
         let files = try FileManager.default.contentsOfDirectory(at: fixturesDir, includingPropertiesForKeys: nil)
             .filter { $0.pathExtension == "json" }
-        XCTAssertEqual(files.count, 13)
+        XCTAssertEqual(files.count, 16)
         for f in files {
             let raw = try JSONValue.parse(try Data(contentsOf: f))
             let fx = try SystemOneJSON.decode(GoldenFixture.self, from: raw)
@@ -110,5 +110,55 @@ final class FixtureDecodingTests: XCTestCase {
             // and through bytes
             XCTAssertEqual(try SystemOneJSON.decode(GoldenFixture.self, from: try SystemOneJSON.encode(fx)), fx)
         }
+    }
+
+    /// Golden story 4.3: only the three near-tied gridworld cases carry a gate; the rest are full.
+    func testGateField() throws {
+        let fixtures = try Fixtures.load(directory: fixturesDir)
+        let gated = fixtures.filter { $0.gate != nil }
+        XCTAssertEqual(Set(gated.map(\.id)), ["choice-first-token-image-gridworld",
+                                               "choice-first-token-image-gridworld-vt140",
+                                               "choice-first-token-image-gridworld-vt70"])
+        XCTAssertTrue(gated.allSatisfy { $0.resolvedGate == FixtureGate.answerAndIds })
+        XCTAssertEqual(fixtures.first { $0.gate == nil }?.resolvedGate, FixtureGate.full)
+    }
+}
+
+/// Golden `compare` under a gate (golden story 4.3), on a fixture's own expected block. No GPU.
+final class FixtureGateTests: XCTestCase {
+    func near() throws -> GoldenFixture {
+        try Fixtures.load(file: fixturesDir.appendingPathComponent("choice-first-token-image-gridworld.json"))
+    }
+
+    func testAnswerAndIdsReportsDistanceWithoutGatingIt() throws {
+        let fx = try near()
+        var got = fx.expected
+        let other = got.options.first { $0 != got.answer }!
+        got.rawProbabilities![other]! += 0.05
+        got.rawLogits![other]! += 0.4
+        let rep = compareCase(fx, result: got, logitTol: 0.1)
+        XCTAssertTrue(rep.ok, rep.failures.joined(separator: "; "))
+        XCTAssertEqual(rep.gate, FixtureGate.answerAndIds)
+        XCTAssertEqual(rep.maxProbDistance!, 0.05, accuracy: 1e-12)
+        XCTAssertFalse(compareCase(expected: fx.expected, result: got, caseId: fx.id).ok, "full gate fails it")
+    }
+
+    func testAnswerAndIdsStillGatesIdsImagesAndAnswer() throws {
+        let fx = try near()
+        var a = fx.expected; a.tokens[3] += 1
+        var b = fx.expected; b.images![0].sha256 = String(repeating: "0", count: 64)
+        var c = fx.expected; c.answer = c.options.first { $0 != c.answer }
+        for (got, prefix) in [(a, "tokens[3]"), (b, "images:"), (c, "answer:")] {
+            let rep = compareCase(fx, result: got)
+            XCTAssertFalse(rep.ok, prefix)
+            XCTAssertTrue(rep.failures.contains { $0.hasPrefix(prefix) }, "\(prefix): \(rep.failures)")
+        }
+    }
+
+    func testUnknownGateFailsTheCase() throws {
+        var fx = try near()
+        fx.gate = "loose"
+        XCTAssertEqual(compareCase(fx, result: fx.expected).failures,
+                       ["gate: unknown gate 'loose', expected one of [\"full\", \"answer-and-ids\"]"])
     }
 }

@@ -1,6 +1,6 @@
 ---
 type: story
-status: in-progress
+status: completed
 title: Vendored vision tower, PIL-exact preprocessing and the image fixtures
 owner: maddie
 updated: 2026-10-17
@@ -24,11 +24,14 @@ Swift anchors: `Sources/MLXClassifiers/Vision/ImagePreprocess.swift::resizedUInt
 `Tests/MLXClassifiersTests/ImageFixtureTests.swift::testResizedUInt8MatchesPIL`,
 `Tests/MLXClassifiersTests/ImageFixtureTests.swift::testSoftTokensMatchGolden`.
 
-**Status: in-progress.** Preprocessing is byte-identical to PIL and two of the
-five image fixtures pass. The three gridworld fixtures miss the 1e-3 gate
-(below). The tolerance is unchanged; the three misses are strict expected
-failures in `testImageFixtures`, so that test fails as soon as one of them
-passes.
+**Status: completed.** Preprocessing is byte-identical to PIL and two of the
+five image fixtures passed at 1e-3; the three gridworld fixtures missed it
+(below). Resolved in [story 4.2](4-2-fixture-gate-and-clear-winner-image-fixtures.md):
+golden (its story 4.3) marked the three near-tied gridworld cases
+`gate: "answer-and-ids"` and added three clear-winner gridworld fixtures at
+280 / 140 / 70, which pass here within 1e-3. The tolerance is unchanged and
+the expected-failure handling is gone. The results below are as measured
+before that change.
 
 ## As built
 
@@ -147,7 +150,8 @@ intermediates on all four fixture image/budget dumps:
 5. **What would close it.** The same MLX core as golden (0.32.0 in Swift, or
    golden on 0.32.2 with the fixtures regenerated); that is a pin decision for
    ADR-0004 or golden ADR-0002, not taken here. Alternatively, fixtures whose
-   answers are not near-tied. The tolerance stays 1e-3.
+   answers are not near-tied. The tolerance stays 1e-3. Maddie took the
+   second option ([story 4.2](4-2-fixture-gate-and-clear-winner-image-fixtures.md)).
 6. **Cross-check (2026-10-18, low-power mode on).** The golden checker was run
    in a scratch venv of the golden package with `mlx==0.32.2` (same core as
    mlx-swift 0.32.3) via `mlx-classifiers fixtures check fixtures --runner mlx`:
@@ -170,6 +174,6 @@ decode and resize, unoptimised Debug code):
 | gridworld 160x192 | 70 | 63 | 309.7 | 161.4 |
 
 ## Acceptance Criteria
-- **Given** the five image fixtures **when** run **then** the image token runs match exactly and `raw_probabilities` are within 1e-3. Partly met: runs, ids and answers are exact in all five; probabilities pass for colour (1.99e-4) and noul-sequence-image (0), and miss for the three gridworld cases (7.8e-3, 3.5e-2, 3.9e-2; above).
+- **Given** the five image fixtures **when** run **then** the image token runs match exactly and `raw_probabilities` are within 1e-3. Met under the per-fixture gate of story 4.2: runs, ids and answers are exact in all five; probabilities pass for colour (1.99e-4) and noul-sequence-image (0); the three near-tied gridworld cases (7.8e-3, 3.5e-2, 3.9e-2; above) are answer-and-ids checks, and the three clear-winner gridworld fixtures that replace their probability coverage pass within 1e-3.
 - **Given** `vision_soft_tokens` 70 and 140 **when** run **then** `max_soft_tokens` and the run lengths match the -vt70 and -vt140 fixtures. Met: 63 and 120 tokens, `max_soft_tokens` 70 and 140.
 - **Given** a fixture PNG at 280, 140 or 70 **when** preprocessed **then** the uint8 image equals PIL's byte for byte. Met: 6 of 6.
