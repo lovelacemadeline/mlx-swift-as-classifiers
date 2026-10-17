@@ -153,8 +153,9 @@ public final class PromptCacheStore: @unchecked Sendable {
 /// keyword of `prefill` / `cache_prefix`).
 public protocol DeltaCachingRunner: Runner {
     var promptCache: PromptCacheStore? { get }
-    func cachePrefix(_ tokens: [Int], delta: Bool) throws -> PrefixCache
-    func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?, delta: Bool) throws -> PrefillReadout
+    func cachePrefix(_ tokens: [Int], images: [ImageSlot], delta: Bool) throws -> PrefixCache
+    func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?, images: [ImageSlot],
+                 delta: Bool) throws -> PrefillReadout
 }
 
 /// Golden `_NoDelta`: a runner proxy calling `prefill` / `cachePrefix` with `delta: false`.
@@ -167,11 +168,21 @@ struct NoDeltaRunner: Runner {
     var modelId: String { runner.modelId }
 
     func cachePrefix(_ tokens: [Int]) throws -> PrefixCache {
-        try runner.cachePrefix(tokens, delta: false)
+        try runner.cachePrefix(tokens, images: [], delta: false)
     }
 
     func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout {
-        try runner.prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, delta: false)
+        try runner.prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, images: [], delta: false)
+    }
+
+    func cachePrefix(_ tokens: [Int], images: [ImageSlot]) throws -> PrefixCache {
+        try runner.cachePrefix(tokens, images: images, delta: false)
+    }
+
+    func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?,
+                 images: [ImageSlot]) throws -> PrefillReadout {
+        try runner.prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, images: images,
+                           delta: false)
     }
 }
 

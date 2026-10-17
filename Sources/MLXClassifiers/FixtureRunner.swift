@@ -53,7 +53,8 @@ public func runCase(_ fx: GoldenFixture, runner: Runner) throws -> GoldenFixture
             return out
         }
         let cache = fx.prefixCached ? try runner.cachePrefix(prompt.prefixTokens) : nil
-        let r = try runner.prefill(prompt.tokens, prefixCache: cache, readoutPositions: [prompt.readoutPosition])
+        let r = try runner.prefill(prompt.tokens, prefixCache: cache, readoutPositions: [prompt.readoutPosition],
+                                   images: prompt.images)
         out.optionTokenIds = binding.optionTokenIds
         logits = gather(try r.at(prompt.readoutPosition), binding.tokenIds)
     }

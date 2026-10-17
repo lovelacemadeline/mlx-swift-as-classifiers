@@ -29,12 +29,12 @@ public func scoreSequences(_ prompt: CompiledPrompt, runner: Runner, tokenize: T
     let tokens = prompt.tokens
     let n = tokens.count
     let conts = try sequenceOptionTokenIds(prompt, tokenize: tokenize).values  // identical texts are an error
-    let cache = try runner.cachePrefix(Array(tokens[..<(n - 1)]))
+    let cache = try runner.cachePrefix(Array(tokens[..<(n - 1)]), images: prompt.images)
     var lls: [Double] = [], scores: [Double] = []
     var inputTokens = 0, cachedTokens = 0
     for ids in conts {
         let positions = Array((n - 1) ..< (n - 1 + ids.count))  // position p predicts token p + 1
-        let r = try runner.prefill(tokens + ids, prefixCache: cache, readoutPositions: positions)
+        let r = try runner.prefill(tokens + ids, prefixCache: cache, readoutPositions: positions, images: prompt.images)
         let ll = exactSum(try zip(positions, ids).map { p, t in tokenLogprob(try r.at(p), t) })
         lls.append(ll)
         scores.append(ll / Double(ids.count))

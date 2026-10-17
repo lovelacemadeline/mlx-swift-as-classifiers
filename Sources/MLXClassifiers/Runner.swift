@@ -1,8 +1,7 @@
 // The Runner seam (golden ADR-0002 §4), mirroring golden `runner.py` one-to-one:
 // `tokenize`, `chatTemplate`, `cachePrefix`, `prefill` with logits only at the
-// readout positions. The image extension is epic 4 (`imageTokens` is nil until
-// then); delta prefix caching is epic 3. Nothing here samples: the same tokens give
-// the same logits.
+// readout positions; `images` (golden story 6.3) carries the image slots a
+// compiled prompt recorded. Nothing here samples: the same tokens give the same logits.
 
 import Foundation
 
@@ -39,10 +38,13 @@ public struct LogitRow: Sendable {
 public struct PrefixCache {
     public let tokens: [Int]
     public let state: Any?
+    /// The image slots inside `tokens` (golden `PrefixCache.images`).
+    public let images: [ImageSlot]
 
-    public init(tokens: [Int], state: Any?) {
+    public init(tokens: [Int], state: Any?, images: [ImageSlot] = []) {
         self.tokens = tokens
         self.state = state
+        self.images = images
     }
 
     public var count: Int { tokens.count }
@@ -94,6 +96,8 @@ public enum RunnerError: Error, CustomStringConvertible, Equatable {
 ///   (only the suffix after `prefixCache.tokens` is computed); logits only at
 ///   `readoutPositions` (absolute, default the last one), the hidden state sliced
 ///   before the vocab projection.
+/// - The `images:` forms (golden's `images=` keyword) take the image slots inside
+///   `tokens`; a runner without a vision path keeps the default, which refuses any.
 public protocol Runner {
     func tokenize(_ text: String) -> [Int]
     var chatTemplate: ChatTemplate { get }
@@ -101,28 +105,57 @@ public protocol Runner {
     var modelId: String { get }
     func cachePrefix(_ tokens: [Int]) throws -> PrefixCache
     func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout
+    func cachePrefix(_ tokens: [Int], images: [ImageSlot]) throws -> PrefixCache
+    func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?, images: [ImageSlot]) throws -> PrefillReadout
 }
 
 extension Runner {
     public var imageTokens: ImageTokens? { nil }
     public var modelId: String { "default" }
 
+    public func cachePrefix(_ tokens: [Int], images: [ImageSlot]) throws -> PrefixCache {
+        guard images.isEmpty else { throw RunnerError.invalidArgument("\(modelId) has no vision path") }
+        return try cachePrefix(tokens)
+    }
+
+    public func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?,
+                        images: [ImageSlot]) throws -> PrefillReadout {
+        guard images.isEmpty else { throw RunnerError.invalidArgument("\(modelId) has no vision path") }
+        return try prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions)
+    }
+
     public func prefill(_ tokens: [Int], prefixCache: PrefixCache? = nil) throws -> PrefillReadout {
         try prefill(tokens, prefixCache: prefixCache, readoutPositions: nil)
     }
 }
 
+/// Golden `check_images`: image slots sorted by position, non-overlapping and inside `tokens`.
+public func checkImages(_ tokens: [Int], _ images: [ImageSlot]) throws -> [ImageSlot] {
+    let slots = images.sorted { $0.start < $1.start }
+    var end = 0
+    for s in slots {
+        if s.length < 1 || s.start < end || s.end > tokens.count {
+            throw RunnerError.invalidArgument("image run [\(s.start), \(s.end)) overlaps or is outside the tokens")
+        }
+        end = s.end
+    }
+    return slots
+}
+
 /// Validate a `prefill` call; return `(cachedLen, positions)` (golden
-/// `check_prefill_args`, images not yet ported). Shared so every Runner enforces
-/// the same contract.
+/// `check_prefill_args`). Shared so every Runner enforces the same contract.
 public func checkPrefillArgs(
-    _ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?
+    _ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?, images: [ImageSlot] = []
 ) throws -> (cached: Int, positions: [Int]) {
     var nCached = 0
     if let prefixCache {
         nCached = prefixCache.count
         guard tokens.count >= nCached, Array(tokens[..<nCached]) == prefixCache.tokens else {
             throw RunnerError.invalidArgument("tokens do not start with the prefix cache's tokens")
+        }
+        let inside = try checkImages(tokens, images).filter { $0.start < nCached }
+        if inside != prefixCache.images || inside.contains(where: { $0.end > nCached }) {
+            throw RunnerError.invalidArgument("the prefix cache holds different images than these tokens")
         }
         if tokens.count == nCached {
             throw RunnerError.invalidArgument("nothing to prefill: tokens equal the cached prefix")

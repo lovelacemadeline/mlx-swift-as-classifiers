@@ -49,7 +49,8 @@ func scorePrompt(_ prompt: CompiledPrompt, runner: Runner, cache: PrefixCache?, 
                       inputTokens: s.inputTokens, cachedTokens: s.cachedTokens)
     }
     let binding = try bindOptions(prompt, tokenize: runner.tokenize)
-    let r = try runner.prefill(prompt.tokens, prefixCache: cache, readoutPositions: [prompt.readoutPosition])
+    let r = try runner.prefill(prompt.tokens, prefixCache: cache, readoutPositions: [prompt.readoutPosition],
+                               images: prompt.images)
     let logits = gather(try r.at(prompt.readoutPosition), binding.tokenIds)
     return Scored(prompt: prompt, logits: logits, tokenIds: binding.optionTokenIds,
                   inputTokens: r.inputTokens, cachedTokens: r.cachedTokens)

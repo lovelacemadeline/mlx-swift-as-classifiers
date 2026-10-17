@@ -22,7 +22,17 @@
 // (capped at p0), rewinds a copy to that length (`rewindCache`), and runs step 1
 // over the delta only. `cachedTokens` reports the hit length. A declared prefix
 // cache still works and is used when it is the longer hit.
-// Not yet ported: images (epic 4), INT8/MoE (epic 5).
+//
+// Images (story 4.1, golden story 6.3): `prefill(..., images:)` / `cachePrefix(...,
+// images:)` take the `ImageSlot` runs compilation recorded. A row range that
+// overlaps an image runs on input embeddings: `embedTokens(ids) * embedScale` with
+// the image's projected soft tokens in its rows (`VisionEncoder`, memoised per PNG
+// sha256 and budget), per-layer inputs from the ids with image rows set to the pad
+// id 0, then the same decoder layers, so the cache-only / readout split is
+// unchanged. Rows without an image take the token-id path. The delta store keys on
+// `keyedTokens` (image rows carry the image's hash and budget), and a hit is never
+// left inside an image run.
+// Not yet ported: INT8/MoE (epic 5), the bidirectional image-block mask (26B only).
 
 import Foundation
 import MLX
@@ -46,15 +56,22 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
     public internal(set) var prefillCalls: [(cached: Int, computed: Int)] = []
     /// Delta prefix cache (golden story 3.4); nil turns it off.
     public var promptCache: PromptCacheStore? = PromptCacheStore()
+    /// The image placeholder convention from the snapshot's JSON (nil: no vision path).
+    public let imageTokens: ImageTokens?
+    /// The vision tower's encoder with its soft-token memo (nil: no vision path).
+    public let vision: VisionEncoder?
 
     var text: Gemma4TextModel { model.languageModel }
     var backbone: Gemma4TextModelInner { model.languageModel.model }
 
-    public init(model: Gemma4Model, modelId: String, modelDirectory: URL, tokenizer: ModelTokenizer) {
+    public init(model: Gemma4Model, modelId: String, modelDirectory: URL, tokenizer: ModelTokenizer,
+                imageTokens: ImageTokens? = nil) {
         self.model = model
         self.modelId = modelId
         self.modelDirectory = modelDirectory
         self.tokenizer = tokenizer
+        self.imageTokens = model.visionTower == nil ? nil : imageTokens
+        self.vision = model.visionTower == nil ? nil : VisionEncoder(model: model)
     }
 
     /// The snapshot directory of `repo` in the local Hugging Face cache
@@ -88,8 +105,9 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
 
     /// Load a Gemma 4 checkpoint from a local snapshot directory: config, the
     /// per-layer quantisation from `config.json`, and the safetensors weights
-    /// (audio and vision tensors are dropped by `sanitize`), plus the tokenizer and
-    /// chat template. With `expectedTokenizerSha256`, `tokenizer.json` must match it.
+    /// (audio tensors are dropped by `sanitize`; the vision tower loads with the rest),
+    /// plus the tokenizer, chat template and image placeholder convention. With
+    /// `expectedTokenizerSha256`, `tokenizer.json` must match it.
     public static func load(directory: URL, modelId: String = defaultModel,
                             expectedTokenizerSha256: String? = nil) async throws -> MLXRunner {
         let configURL = directory.appendingPathComponent("config.json")
@@ -99,12 +117,16 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
         let decoder = JSONDecoder()
         let config = try decoder.decode(Gemma4Configuration.self, from: data)
         let base = try decoder.decode(BaseConfiguration.self, from: data)
+        if case .string("vision") = try JSONValue.parse(data)["text_config"]?["use_bidirectional_attention"] {
+            throw RunnerError.notImplemented("bidirectional image-block attention (Gemma 4 26B-A4B) is not ported")
+        }
         let model = Gemma4Model(config)
         try await loadWeights(
             modelDirectory: directory, model: model,
             perLayerQuantization: base.perLayerQuantization)
         let tokenizer = try await ModelTokenizer.load(directory: directory, expectedTokenizerSha256: expectedTokenizerSha256)
-        return MLXRunner(model: model, modelId: modelId, modelDirectory: directory, tokenizer: tokenizer)
+        return MLXRunner(model: model, modelId: modelId, modelDirectory: directory, tokenizer: tokenizer,
+                         imageTokens: try ImageTokens.fromConfig(modelDirectory: directory))
     }
 
     // MARK: - Runner
@@ -114,39 +136,51 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
 
     public var chatTemplate: ChatTemplate { tokenizer.chatTemplate }
 
-    /// nil until the vision path lands (epic 4): a request with image blocks then
-    /// fails to compile with golden's "no vision path" `PromptError`.
-    public var imageTokens: ImageTokens? { nil }
-
     public func cachePrefix(_ tokens: [Int]) throws -> PrefixCache {
-        try cachePrefix(tokens, delta: true)
+        try cachePrefix(tokens, images: [], delta: true)
     }
 
     public func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?) throws -> PrefillReadout {
-        try prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, delta: true)
+        try prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, images: [], delta: true)
     }
 
-    /// Golden `cache_prefix(tokens, delta=)`: the delta store may serve part of
-    /// `tokens`, and the result is stored when this call added rows.
-    public func cachePrefix(_ tokens: [Int], delta: Bool) throws -> PrefixCache {
-        let (nCached, cache) = try start(tokens, maxLen: tokens.count, prefixCache: nil, delta: delta)
-        cacheOnly(tokens[nCached...], cache: cache)
-        store(tokens, cache: cache, nCached: nCached, delta: delta)
-        return PrefixCache(tokens: tokens, state: cache)
+    public func cachePrefix(_ tokens: [Int], images: [ImageSlot]) throws -> PrefixCache {
+        try cachePrefix(tokens, images: images, delta: true)
     }
 
-    /// Golden `prefill(..., delta=)`.
     public func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?,
+                        images: [ImageSlot]) throws -> PrefillReadout {
+        try prefill(tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, images: images, delta: true)
+    }
+
+    /// Golden `cache_prefix(tokens, delta=, images=)`: the delta store may serve part
+    /// of `tokens`, and the result is stored when this call added rows.
+    public func cachePrefix(_ tokens: [Int], images: [ImageSlot], delta: Bool) throws -> PrefixCache {
+        let slots = try checkSlots(tokens, images)
+        let key = try keyedTokens(tokens, slots)
+        let (nCached, cache) = try start(key, maxLen: tokens.count, prefixCache: nil, delta: delta, slots: slots)
+        try cacheOnly(tokens[nCached...], cache: cache, slots: slots, base: nCached)
+        store(key, cache: cache, nCached: nCached, delta: delta)
+        return PrefixCache(tokens: tokens, state: cache, images: slots)
+    }
+
+    /// Golden `prefill(..., delta=, images=)`.
+    public func prefill(_ tokens: [Int], prefixCache: PrefixCache?, readoutPositions: [Int]?, images: [ImageSlot],
                         delta: Bool) throws -> PrefillReadout {
         let (_, positions) = try checkPrefillArgs(
-            tokens, prefixCache: prefixCache, readoutPositions: readoutPositions)
+            tokens, prefixCache: prefixCache, readoutPositions: readoutPositions, images: images)
+        let slots = try checkSlots(tokens, images)
         let p0 = positions.min()!, p1 = positions.max()!
-        let (nCached, cache) = try start(tokens, maxLen: p0, prefixCache: prefixCache, delta: delta)
+        if slots.contains(where: { ($0.start < p0 && p0 < $0.end) || (p0 <= $0.start && $0.start <= p1) }) {
+            throw RunnerError.invalidArgument("readout positions must not fall inside or before an image run")
+        }
+        let key = try keyedTokens(tokens, slots)
+        let (nCached, cache) = try start(key, maxLen: p0, prefixCache: prefixCache, delta: delta, slots: slots)
         prefillCalls.append((nCached, p1 + 1 - nCached))
 
-        cacheOnly(tokens[nCached ..< p0], cache: cache)
-        store(Array(tokens[..<p0]), cache: cache, nCached: nCached, delta: delta)
-        let hidden = backbone(ids(tokens[p0 ... p1]), cache: cache)
+        try cacheOnly(tokens[nCached ..< p0], cache: cache, slots: slots, base: nCached)
+        store(Array(key[..<p0]), cache: cache, nCached: nCached, delta: delta)
+        let hidden = try rows(tokens, p0, p1 + 1, cache: cache, slots: slots)
         let rows = MLXArray(positions.map { Int32($0 - p0) })
         let picked = hidden[0..., rows, 0...]
         headCalls.append(picked.shape)
@@ -173,12 +207,17 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
 
     /// Golden `_start`: `(nCached, working cache)`, the longer of the declared prefix
     /// and the delta store's hit (both copies), else an empty cache.
-    func start(_ key: [Int], maxLen: Int, prefixCache: PrefixCache?, delta: Bool) throws -> (Int, [KVCache]) {
+    func start(_ key: [Int], maxLen: Int, prefixCache: PrefixCache?, delta: Bool,
+               slots: [ImageSlot] = []) throws -> (Int, [KVCache]) {
         let have = prefixCache?.count ?? 0
         if delta, let store = promptCache {
-            let (hit, state) = store.lookup(key, rewind: { state, stored, hit in
+            let rewind: PromptCacheStore.Rewind = { state, stored, hit in
                 rewindCache(state as! [KVCache], storedLen: stored, hitLen: hit)
-            }, maxLen: maxLen, minLen: have)
+            }
+            var (hit, state) = store.lookup(key, rewind: rewind, maxLen: maxLen, minLen: have)
+            if state != nil, let inside = slots.first(where: { $0.start < hit && hit < $0.end }) {
+                (hit, state) = store.lookup(key, rewind: rewind, maxLen: inside.start, minLen: have)
+            }
             if let state = state as? [KVCache] { return (hit, state) }
         }
         if let prefixCache {
@@ -203,17 +242,78 @@ public final class MLXRunner: DeltaCachingRunner, @unchecked Sendable {
 
     /// Advance `cache` over `tokens` evaluating only the KV state (golden `_cache_only`):
     /// chunks of `prefillStep`, the remainder first, so the last chunk is a full one.
-    func cacheOnly(_ tokens: ArraySlice<Int>, cache: [KVCache]) {
+    /// `slots` are image runs in absolute positions; `base` is the absolute position
+    /// of `tokens.first` (the slice's own indices are absolute too).
+    func cacheOnly(_ tokens: ArraySlice<Int>, cache: [KVCache], slots: [ImageSlot] = [], base: Int = 0) throws {
         let n = tokens.count, step = prefillStep
         guard n > 0 else { return }
         let first = n % step == 0 ? step : n % step
         var bounds = [0]
         bounds.append(contentsOf: stride(from: first, to: n, by: step))
         bounds.append(n)
-        let base = tokens.startIndex
+        let all = Array(tokens), lo = tokens.startIndex
+        let local = slots.filter { $0.end > base && $0.start < base + n }
         for (start, end) in zip(bounds, bounds.dropFirst()) {
-            _ = backbone(ids(tokens[(base + start) ..< (base + end)]), cache: cache)  // output never evaluated
+            if local.isEmpty {
+                _ = backbone(ids(tokens[(lo + start) ..< (lo + end)]), cache: cache)  // output never evaluated
+            } else {
+                _ = try rows(all, start, end, cache: cache, slots: local, base: base)
+            }
             eval(cache.flatMap { $0.state })
         }
+    }
+
+    /// Golden `_check_images`: the slots sorted, and each a run of image-token ids with PNG bytes.
+    func checkSlots(_ tokens: [Int], _ images: [ImageSlot]) throws -> [ImageSlot] {
+        let slots = try checkImages(tokens, images)
+        if slots.isEmpty { return slots }
+        guard let spec = imageTokens else { throw RunnerError.invalidArgument("\(modelId) has no vision path") }
+        for s in slots {
+            if s.data.isEmpty { throw RunnerError.invalidArgument("image slot at \(s.start) carries no PNG bytes") }
+            if tokens[s.start ..< s.end].contains(where: { $0 != spec.imageTokenId }) {
+                throw RunnerError.invalidArgument("image run at \(s.start) is not all image-token ids")
+            }
+        }
+        return slots
+    }
+
+    /// Golden `_image_features`: `[length, hidden]` soft tokens of `slot` (encoded once per sha256 and budget).
+    func imageFeatures(_ slot: ImageSlot) throws -> MLXArray {
+        guard let vision else { throw RunnerError.invalidArgument("\(modelId) has no vision path") }
+        let budget = slot.maxSoftTokens ?? imageTokens?.maxSoftTokens ?? SoftTokenBudget.defaultBudget
+        let feats = try vision.encodePNG(slot.data, sha256: slot.sha256, maxSoftTokens: budget)
+        guard feats.dim(0) == slot.length else {
+            throw RunnerError.invalidArgument("image encodes to \(feats.dim(0)) soft tokens, run has \(slot.length)")
+        }
+        return feats
+    }
+
+    /// Golden `_rows`: the backbone over `tokens[start ..< end]` (prompt rows `base + start ..`),
+    /// token ids when no image overlaps, else merged input embeddings (golden `vision/merge.py`):
+    /// text rows `embedTokens(ids) * embedScale`, image rows the soft tokens cast to that dtype,
+    /// and the per-layer inputs from the ids with every image row set to the pad id 0.
+    func rows(_ tokens: [Int], _ start: Int, _ end: Int, cache: [KVCache], slots: [ImageSlot],
+              base: Int = 0) throws -> MLXArray {
+        let segment = tokens[start ..< end]
+        let lo = base + start, hi = base + end
+        var pieces: [(off: Int, n: Int, feats: MLXArray)] = []
+        for s in slots {
+            let a = max(s.start, lo), b = min(s.end, hi)
+            if a < b { pieces.append((a - lo, b - a, try imageFeatures(s)[(a - s.start) ..< (b - s.start)])) }
+        }
+        if pieces.isEmpty { return backbone(ids(segment), cache: cache) }
+        pieces.sort { $0.off < $1.off }
+        let text = backbone.embedTokens(ids(segment)) * backbone.embedScale
+        var parts: [MLXArray] = [], at = 0
+        var plIds = segment.map { Int32($0) }
+        for p in pieces {
+            if p.off > at { parts.append(text[0..., at ..< p.off]) }
+            parts.append(p.feats.asType(text.dtype)[.newAxis])
+            at = p.off + p.n
+            for i in p.off ..< at { plIds[i] = 0 }
+        }
+        if at < text.dim(1) { parts.append(text[0..., at...]) }
+        let h = concatenated(parts, axis: 1)
+        return backbone(MLXArray(plIds)[.newAxis, 0...], cache: cache, inputEmbeddings: h)
     }
 }

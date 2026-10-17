@@ -1,8 +1,8 @@
 // The text side of image blocks, ported from golden `images.py`: the placeholder
 // run `boi + image * N + eoi` a block expands to, N from Gemma 4's
 // aspect-preserving resize arithmetic, and the runs' positions in the token ids.
-// Pixels (decode, resize, the tower) are Epic 4; this file needs only the PNG
-// IHDR size.
+// The pixels (decode, resize, the tower) are Vision/ and Models/Gemma4Vision.swift
+// (story 4.1); this file needs only the PNG IHDR size.
 
 import CryptoKit
 import Foundation
@@ -127,7 +127,8 @@ public struct ImageTokens: Sendable, Equatable {
     }
 }
 
-/// Golden `ImageSlot`: one image's run of soft tokens in the prompt.
+/// Golden `ImageSlot`: one image's run of soft tokens in the prompt. The PNG bytes
+/// ride along in `data` (not part of equality, as golden's `compare=False`).
 public struct ImageSlot: Sendable, Equatable {
     public var start: Int
     public var length: Int
@@ -135,12 +136,18 @@ public struct ImageSlot: Sendable, Equatable {
     public var sha256: String
     /// The budget the run was compiled at; nil means the runner's own.
     public var maxSoftTokens: Int?
+    public var data: Data
 
     public init(start: Int, length: Int, png: Data, maxSoftTokens: Int? = nil) {
         self.start = start
         self.length = length
-        sha256 = SHA256.hash(data: png).map { String(format: "%02x", $0) }.joined()
+        sha256 = sha256Hex(png)
         self.maxSoftTokens = maxSoftTokens
+        data = png
+    }
+
+    public static func == (a: ImageSlot, b: ImageSlot) -> Bool {
+        a.start == b.start && a.length == b.length && a.sha256 == b.sha256 && a.maxSoftTokens == b.maxSoftTokens
     }
 
     public var end: Int { start + length }
@@ -150,6 +157,31 @@ public struct ImageSlot: Sendable, Equatable {
         GoldenFixture.Image(start: start, length: length, sha256: sha256,
                             maxSoftTokens: maxSoftTokens.flatMap { $0 == SoftTokenBudget.defaultBudget ? nil : $0 })
     }
+}
+
+func sha256Hex(_ data: Data) -> String {
+    SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+}
+
+/// Golden `image_key_id`: the negative stand-in id for an image's soft tokens in a
+/// delta-cache key; with a budget it also depends on it (the same PNG at 140 and 280
+/// is different soft tokens and must not share a cached prefix).
+public func imageKeyId(sha256: String, maxSoftTokens: Int?) -> Int {
+    let digest = maxSoftTokens.map { sha256Hex(Data("\(sha256):\($0)".utf8)) } ?? sha256
+    return -1 - Int(digest.prefix(15), radix: 16)!
+}
+
+/// Golden `keyed_tokens`: `tokens` with each image run's ids replaced by `imageKeyId`.
+public func keyedTokens(_ tokens: [Int], _ images: [ImageSlot]) throws -> [Int] {
+    var key = tokens
+    for s in images {
+        guard s.end <= key.count else {
+            throw RunnerError.invalidArgument("image run [\(s.start), \(s.end)) beyond \(key.count) tokens")
+        }
+        let id = imageKeyId(sha256: s.sha256, maxSoftTokens: s.maxSoftTokens)
+        for i in s.start ..< s.end { key[i] = id }
+    }
+    return key
 }
 
 /// Golden `find_image_runs`: `(start, length)` of each maximal run of `imageTokenId`.
