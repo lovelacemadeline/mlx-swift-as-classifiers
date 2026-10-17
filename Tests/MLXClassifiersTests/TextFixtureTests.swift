@@ -59,6 +59,8 @@ enum GPU {
             let sha = try FixtureRun.load("noul-first-token").model.tokenizerSha256
             let r = try await MLXRunner.load(directory: dir, expectedTokenizerSha256: sha)
             print("MLXRunner.load: \(String(format: "%.2f", Date().timeIntervalSince(t0))) s from \(dir.path)")
+            // Cold everywhere (golden runs fixtures `without_delta`); PromptCacheTests sets its own stores.
+            r.promptCache = nil
             shared = r
             return r
         } catch {

@@ -1,0 +1,2953 @@
+{
+  "format": "mlx-classifiers-swift-delta-reference/1",
+  "generator": {
+    "mlx_classifiers": "0.0.1",
+    "golden_commit": "9b64a14",
+    "script": "scripts/golden_delta_reference.py"
+  },
+  "scenarios": [
+    {
+      "id": "tail-change-1024",
+      "max_entries": 8,
+      "steps": [
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989277879366477,
+                  "technical": 0.0010321897244544456,
+                  "sales": 4.002233889776455e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989277879366477,
+                  "technical": 0.0010321897244544456,
+                  "sales": 4.002233889776455e-05
+                },
+                "confidence": 0.9989277879366477,
+                "debug": {
+                  "readout_position": 1143,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.0,
+                    "sales": 16.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1078,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              1078
+            ]
+          ],
+          "store": {
+            "entries": 2,
+            "hits": 0,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 24698880
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989277879366477,
+                  "technical": 0.0010321897244544456,
+                  "sales": 4.002233889776455e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989277879366477,
+                  "technical": 0.0010321897244544456,
+                  "sales": 4.002233889776455e-05
+                },
+                "confidence": 0.9989277879366477,
+                "debug": {
+                  "readout_position": 1143,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.0,
+                    "sales": 16.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1078,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "confidence": 0.9989224647662265,
+                "debug": {
+                  "readout_position": 1143,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 27.0,
+                    "technical": 20.125,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 98,
+              "output_tokens": 0,
+              "cached_tokens": 1046
+            }
+          },
+          "prefill_calls": [
+            [
+              1046,
+              98
+            ]
+          ],
+          "store": {
+            "entries": 3,
+            "hits": 2,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 40439808
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989324856651823,
+                  "technical": 0.0010321945786062475,
+                  "sales": 3.531975621140884e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989324856651823,
+                  "technical": 0.0010321945786062475,
+                  "sales": 3.531975621140884e-05
+                },
+                "confidence": 0.9989324856651823,
+                "debug": {
+                  "readout_position": 1143,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 27.0,
+                    "technical": 20.125,
+                    "sales": 16.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1078,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "ticks-8",
+      "max_entries": 8,
+      "steps": [
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not The agent is at row one.",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "confidence": 0.9987851979882911,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.125,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              861
+            ]
+          ],
+          "store": {
+            "entries": 2,
+            "hits": 0,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 20459520
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "confidence": 0.9987851979882911,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.125,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that pending dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not The agent is at row two.",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9984475298579097,
+                  "technical": 0.0015011051485200265,
+                  "sales": 5.1364993570309284e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9984475298579097,
+                  "technical": 0.0015011051485200265,
+                  "sales": 5.1364993570309284e-05
+                },
+                "confidence": 0.9984475298579097,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.375,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 76,
+              "output_tokens": 0,
+              "cached_tokens": 851
+            }
+          },
+          "prefill_calls": [
+            [
+              851,
+              76
+            ]
+          ],
+          "store": {
+            "entries": 3,
+            "hits": 2,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 34357248
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9982334499179883,
+                  "technical": 0.0017006102661125822,
+                  "sales": 6.593981589900934e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9982334499179883,
+                  "technical": 0.0017006102661125822,
+                  "sales": 6.593981589900934e-05
+                },
+                "confidence": 0.9982334499179883,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.375,
+                    "sales": 17.125
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as blocked while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not The agent is at row three.",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "raw_probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "confidence": 0.9970907852600901,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 21.0,
+                    "sales": 17.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 118,
+              "output_tokens": 0,
+              "cached_tokens": 809
+            }
+          },
+          "prefill_calls": [
+            [
+              809,
+              118
+            ]
+          ],
+          "store": {
+            "entries": 4,
+            "hits": 4,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 48771072
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "raw_probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "confidence": 0.9970907852600901,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 21.0,
+                    "sales": 17.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "ticks-1",
+      "max_entries": 1,
+      "steps": [
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not The agent is at row one.",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "confidence": 0.9987851979882911,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.125,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              861
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 0,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 18075648
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987851979882911,
+                  "technical": 0.0011694572338723684,
+                  "sales": 4.5344777836477945e-05
+                },
+                "confidence": 0.9987851979882911,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.125,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that pending dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not The agent is at row two.",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9984475298579097,
+                  "technical": 0.0015011051485200265,
+                  "sales": 5.1364993570309284e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9984475298579097,
+                  "technical": 0.0015011051485200265,
+                  "sales": 5.1364993570309284e-05
+                },
+                "confidence": 0.9984475298579097,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.375,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 76,
+              "output_tokens": 0,
+              "cached_tokens": 851
+            }
+          },
+          "prefill_calls": [
+            [
+              851,
+              76
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 2,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 13897728
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9982334499179883,
+                  "technical": 0.0017006102661125822,
+                  "sales": 6.593981589900934e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9982334499179883,
+                  "technical": 0.0017006102661125822,
+                  "sales": 6.593981589900934e-05
+                },
+                "confidence": 0.9982334499179883,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.375,
+                    "sales": 17.125
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as blocked while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not The agent is at row three.",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "raw_probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "confidence": 0.9970907852600901,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 21.0,
+                    "sales": 17.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              861
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 2,
+            "misses": 4,
+            "unrepresentable": 1,
+            "nbytes": 18075648
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "raw_probabilities": {
+                  "billing": 0.9970907852600901,
+                  "technical": 0.002800622809053426,
+                  "sales": 0.00010859193085649864
+                },
+                "confidence": 0.9970907852600901,
+                "debug": {
+                  "readout_position": 926,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 21.0,
+                    "sales": 17.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 861,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edits-1k-8",
+      "max_entries": 8,
+      "steps": [
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "confidence": 0.9987723347300578,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              1054
+            ]
+          ],
+          "store": {
+            "entries": 2,
+            "hits": 0,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 24403968
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "confidence": 0.9987723347300578,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard pending the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "confidence": 0.9987723347300578,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 51,
+              "output_tokens": 0,
+              "cached_tokens": 1069
+            }
+          },
+          "prefill_calls": [
+            [
+              1069,
+              51
+            ]
+          ],
+          "store": {
+            "entries": 3,
+            "hits": 2,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 39567360
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987791677721485,
+                  "technical": 0.001169450173215178,
+                  "sales": 5.138205463643758e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987791677721485,
+                  "technical": 0.001169450173215178,
+                  "sales": 5.138205463643758e-05
+                },
+                "confidence": 0.9987791677721485,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that blocked payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989164328924645,
+                  "technical": 0.0010321779913141044,
+                  "sales": 5.138911622135979e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989164328924645,
+                  "technical": 0.0010321779913141044,
+                  "sales": 5.138911622135979e-05
+                },
+                "confidence": 0.9989164328924645,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 19.875,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 204,
+              "output_tokens": 0,
+              "cached_tokens": 916
+            }
+          },
+          "prefill_calls": [
+            [
+              916,
+              204
+            ]
+          ],
+          "store": {
+            "entries": 4,
+            "hits": 4,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 56610816
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "confidence": 0.9989224647662265,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 19.875,
+                    "sales": 16.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not refunded and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9974429846769122,
+                  "technical": 0.0024724139693684853,
+                  "sales": 8.460135371926667e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9974429846769122,
+                  "technical": 0.0024724139693684853,
+                  "sales": 8.460135371926667e-05
+                },
+                "confidence": 0.9974429846769122,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.875,
+                    "sales": 17.5
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 944,
+              "output_tokens": 0,
+              "cached_tokens": 176
+            }
+          },
+          "prefill_calls": [
+            [
+              176,
+              944
+            ]
+          ],
+          "store": {
+            "entries": 5,
+            "hits": 6,
+            "misses": 2,
+            "unrepresentable": 2,
+            "nbytes": 78630912
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9974529002775023,
+                  "technical": 0.002472438547685031,
+                  "sales": 7.466117481256519e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9974529002775023,
+                  "technical": 0.002472438547685031,
+                  "sales": 7.466117481256519e-05
+                },
+                "confidence": 0.9974529002775023,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 27.0,
+                    "technical": 21.0,
+                    "sales": 17.5
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edits-1k-1",
+      "max_entries": 1,
+      "steps": [
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "confidence": 0.9987723347300578,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              1054
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 0,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 22020096
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "confidence": 0.9987723347300578,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard pending the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987723347300578,
+                  "technical": 0.001169442172545446,
+                  "sales": 5.822309739678346e-05
+                },
+                "confidence": 0.9987723347300578,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 51,
+              "output_tokens": 0,
+              "cached_tokens": 1069
+            }
+          },
+          "prefill_calls": [
+            [
+              1069,
+              51
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 2,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 15163392
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9987791677721485,
+                  "technical": 0.001169450173215178,
+                  "sales": 5.138205463643758e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9987791677721485,
+                  "technical": 0.001169450173215178,
+                  "sales": 5.138205463643758e-05
+                },
+                "confidence": 0.9987791677721485,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 20.0,
+                    "sales": 16.875
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that blocked payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "confidence": 0.9989224647662265,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 19.875,
+                    "sales": 16.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          },
+          "prefill_calls": [
+            [
+              66,
+              1054
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 2,
+            "misses": 4,
+            "unrepresentable": 1,
+            "nbytes": 22020096
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9989224647662265,
+                  "technical": 0.0010321842240350193,
+                  "sales": 4.535100973855493e-05
+                },
+                "confidence": 0.9989224647662265,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.75,
+                    "technical": 19.875,
+                    "sales": 16.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        },
+        {
+          "request": {
+            "prefix": "You are the support triage router for a payments company. Read the ticket and answer the question about it. Route billing problems (payments, refunds, invoices, payouts) to billing, product defects and outages to technical, and pricing or new contracts to sales. Be precise; answer with a single option.",
+            "state": "The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not refunded and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers as pending while their bank sees nothing. The merchant reports that scheduled payouts did not arrive and that the dashboard shows the transfers",
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, payouts",
+                  "technical": "Bugs, outages",
+                  "sales": null
+                }
+              }
+            },
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9974429846769122,
+                  "technical": 0.0024724139693684853,
+                  "sales": 8.460135371926667e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9974429846769122,
+                  "technical": 0.0024724139693684853,
+                  "sales": 8.460135371926667e-05
+                },
+                "confidence": 0.9974429846769122,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 26.875,
+                    "technical": 20.875,
+                    "sales": 17.5
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 944,
+              "output_tokens": 0,
+              "cached_tokens": 176
+            }
+          },
+          "prefill_calls": [
+            [
+              176,
+              944
+            ]
+          ],
+          "store": {
+            "entries": 1,
+            "hits": 4,
+            "misses": 4,
+            "unrepresentable": 1,
+            "nbytes": 22020096
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "billing",
+                "probabilities": {
+                  "billing": 0.9974529002775023,
+                  "technical": 0.002472438547685031,
+                  "sales": 7.466117481256519e-05
+                },
+                "raw_probabilities": {
+                  "billing": 0.9974529002775023,
+                  "technical": 0.002472438547685031,
+                  "sales": 7.466117481256519e-05
+                },
+                "confidence": 0.9974529002775023,
+                "debug": {
+                  "readout_position": 1119,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 27.0,
+                    "technical": 21.0,
+                    "sales": 17.5
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1054,
+              "output_tokens": 0,
+              "cached_tokens": 66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "fixture-requests",
+      "max_entries": 8,
+      "steps": [
+        {
+          "request": {
+            "state": [
+              "Customer: the app crashes every time I open the payouts tab.",
+              "Agent: which version are you on?",
+              "Customer: the latest one, and it started after the update yesterday."
+            ],
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, refunds, invoices, payouts",
+                  "technical": "Bugs, crashes, outages",
+                  "sales": "Pricing questions and new contracts"
+                }
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "raw_probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "confidence": 0.9986513814020481,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 18.875,
+                    "technical": 25.625,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 112,
+              "output_tokens": 0,
+              "cached_tokens": 20
+            }
+          },
+          "prefill_calls": [
+            [
+              20,
+              112
+            ]
+          ],
+          "store": {
+            "entries": 2,
+            "hits": 0,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 5001216
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "raw_probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "confidence": 0.9986513814020481,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 18.875,
+                    "technical": 25.625,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 112,
+              "output_tokens": 0,
+              "cached_tokens": 20
+            }
+          }
+        },
+        {
+          "request": {
+            "state": [
+              "Customer: the app crashes every time I open the payouts tab.",
+              "Agent: which version are you on?",
+              "Customer: the latest one, and it started after the update yesterday."
+            ],
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, refunds, invoices, payouts",
+                  "technical": "Bugs, crashes, outages",
+                  "sales": "Pricing questions and new contracts"
+                }
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "raw_probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "confidence": 0.9986513814020481,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 18.875,
+                    "technical": 25.625,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 1,
+              "output_tokens": 0,
+              "cached_tokens": 131
+            }
+          },
+          "prefill_calls": [
+            [
+              131,
+              1
+            ]
+          ],
+          "store": {
+            "entries": 2,
+            "hits": 2,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 5001216
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "raw_probabilities": {
+                  "billing": 0.0011693005507586126,
+                  "technical": 0.9986513814020481,
+                  "sales": 0.00017931804719334361
+                },
+                "confidence": 0.9986513814020481,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776
+                    ],
+                    "technical": [
+                      236799
+                    ],
+                    "sales": [
+                      236780
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 18.875,
+                    "technical": 25.625,
+                    "sales": 17.0
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 112,
+              "output_tokens": 0,
+              "cached_tokens": 20
+            }
+          }
+        },
+        {
+          "request": {
+            "state": [
+              "Customer: the app crashes every time I open the payouts tab.",
+              "Agent: which version are you on?",
+              "Customer: the latest one, and it started after the update yesterday."
+            ],
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, refunds, invoices, payouts",
+                  "technical": "Bugs, crashes, outages",
+                  "sales": "Pricing questions and new contracts"
+                }
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "debug": true,
+              "permutations": 3
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.09817635074400476,
+                  "technical": 0.9004072596761525,
+                  "sales": 0.0014163895798427048
+                },
+                "raw_probabilities": {
+                  "billing": 0.09817635074400476,
+                  "technical": 0.9004072596761525,
+                  "sales": 0.0014163895798427048
+                },
+                "confidence": 0.9004072596761525,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776,
+                      236780,
+                      236799
+                    ],
+                    "technical": [
+                      236799,
+                      236776,
+                      236780
+                    ],
+                    "sales": [
+                      236780,
+                      236799,
+                      236776
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 20.958333333333332,
+                    "technical": 26.291666666666668,
+                    "sales": 19.041666666666668
+                  },
+                  "temperature": 1.0,
+                  "permutation_spread": {
+                    "billing": 0.2928989133748748,
+                    "technical": 0.29620897014912595,
+                    "sales": 0.003510635686099677
+                  }
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 89,
+              "output_tokens": 0,
+              "cached_tokens": 307
+            }
+          },
+          "prefill_calls": [
+            [
+              131,
+              1
+            ],
+            [
+              88,
+              44
+            ],
+            [
+              88,
+              44
+            ]
+          ],
+          "store": {
+            "entries": 4,
+            "hits": 6,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 11366400
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.1769890321263309,
+                  "technical": 0.8217390384334616,
+                  "sales": 0.0012719294402074727
+                },
+                "raw_probabilities": {
+                  "billing": 0.1769890321263309,
+                  "technical": 0.8217390384334616,
+                  "sales": 0.0012719294402074727
+                },
+                "confidence": 0.8217390384334616,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776,
+                      236780,
+                      236799
+                    ],
+                    "technical": [
+                      236799,
+                      236776,
+                      236780
+                    ],
+                    "sales": [
+                      236780,
+                      236799,
+                      236776
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 21.208333333333332,
+                    "technical": 26.166666666666668,
+                    "sales": 19.083333333333332
+                  },
+                  "temperature": 1.0,
+                  "permutation_spread": {
+                    "billing": 0.5292756699706267,
+                    "technical": 0.5319366807213097,
+                    "sales": 0.002969422464862776
+                  }
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 336,
+              "output_tokens": 0,
+              "cached_tokens": 60
+            }
+          }
+        },
+        {
+          "request": {
+            "state": [
+              "Customer: the app crashes every time I open the payouts tab.",
+              "Agent: which version are you on?",
+              "Customer: the latest one, and it started after the update yesterday."
+            ],
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "Which team should handle this ticket?",
+                "criteria": {
+                  "billing": "Payments, refunds, invoices, payouts",
+                  "technical": "Bugs, crashes, outages",
+                  "sales": "Pricing questions and new contracts"
+                }
+              },
+              "escalate": {
+                "type": "noul",
+                "instructions": "Should this ticket be escalated to a human agent?"
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "debug": true,
+              "permutations": 2
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.1471493165394119,
+                  "technical": 0.850916047570345,
+                  "sales": 0.0019346358902431822
+                },
+                "raw_probabilities": {
+                  "billing": 0.1471493165394119,
+                  "technical": 0.850916047570345,
+                  "sales": 0.0019346358902431822
+                },
+                "confidence": 0.850916047570345,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776,
+                      236780
+                    ],
+                    "technical": [
+                      236799,
+                      236776
+                    ],
+                    "sales": [
+                      236780,
+                      236799
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 22.5,
+                    "technical": 26.3125,
+                    "sales": 19.375
+                  },
+                  "temperature": 1.0,
+                  "permutation_spread": {
+                    "billing": 0.29196003197730663,
+                    "technical": 0.29547066766340635,
+                    "sales": 0.003510635686099677
+                  }
+                }
+              },
+              "escalate": {
+                "type": "noul",
+                "noul": 0.10669059394565118,
+                "raw_noul": 0.10669059394565118,
+                "debug": {
+                  "readout_position": 96,
+                  "option_token_ids": {
+                    "yes": [
+                      10784
+                    ],
+                    "no": [
+                      3771
+                    ]
+                  },
+                  "raw_logits": {
+                    "yes": 24.5,
+                    "no": 26.625
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 24,
+              "output_tokens": 0,
+              "cached_tokens": 337
+            }
+          },
+          "prefill_calls": [
+            [
+              131,
+              1
+            ],
+            [
+              131,
+              1
+            ],
+            [
+              75,
+              22
+            ]
+          ],
+          "store": {
+            "entries": 5,
+            "hits": 10,
+            "misses": 2,
+            "unrepresentable": 0,
+            "nbytes": 14118912
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "technical",
+                "probabilities": {
+                  "billing": 0.2653530167250945,
+                  "technical": 0.7329829539952808,
+                  "sales": 0.0016640292796247318
+                },
+                "raw_probabilities": {
+                  "billing": 0.2653530167250945,
+                  "technical": 0.7329829539952808,
+                  "sales": 0.0016640292796247318
+                },
+                "confidence": 0.7329829539952808,
+                "debug": {
+                  "readout_position": 131,
+                  "option_token_ids": {
+                    "billing": [
+                      236776,
+                      236780
+                    ],
+                    "technical": [
+                      236799,
+                      236776
+                    ],
+                    "sales": [
+                      236780,
+                      236799
+                    ]
+                  },
+                  "raw_logits": {
+                    "billing": 22.75,
+                    "technical": 26.0625,
+                    "sales": 19.25
+                  },
+                  "temperature": 1.0,
+                  "permutation_spread": {
+                    "billing": 0.5283674323486718,
+                    "technical": 0.5313368548135347,
+                    "sales": 0.002969422464862776
+                  }
+                }
+              },
+              "escalate": {
+                "type": "noul",
+                "noul": 0.10669059394565118,
+                "raw_noul": 0.10669059394565118,
+                "debug": {
+                  "readout_position": 96,
+                  "option_token_ids": {
+                    "yes": [
+                      10784
+                    ],
+                    "no": [
+                      3771
+                    ]
+                  },
+                  "raw_logits": {
+                    "yes": 24.625,
+                    "no": 26.75
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 301,
+              "output_tokens": 0,
+              "cached_tokens": 60
+            }
+          }
+        },
+        {
+          "request": {
+            "state": "The office plants need watering on Fridays.",
+            "questions": {
+              "q": {
+                "type": "noul",
+                "instructions": "Is the ticket about payments?"
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "readout": "sequence",
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "noul",
+                "noul": 0.002800926967120973,
+                "raw_noul": 0.002800926967120973,
+                "debug": {
+                  "readout_position": 54,
+                  "option_token_ids": {
+                    "yes": [
+                      10784
+                    ],
+                    "no": [
+                      3771
+                    ]
+                  },
+                  "raw_logits": {
+                    "yes": -5.878780364990234,
+                    "no": -0.003780364990234375
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 2,
+              "output_tokens": 0,
+              "cached_tokens": 108
+            }
+          },
+          "prefill_calls": [
+            [
+              54,
+              1
+            ],
+            [
+              54,
+              1
+            ]
+          ],
+          "store": {
+            "entries": 6,
+            "hits": 11,
+            "misses": 4,
+            "unrepresentable": 0,
+            "nbytes": 16355328
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "noul",
+                "noul": 0.0031726828424851893,
+                "raw_noul": 0.0031726828424851893,
+                "debug": {
+                  "readout_position": 54,
+                  "option_token_ids": {
+                    "yes": [
+                      10784
+                    ],
+                    "no": [
+                      3771
+                    ]
+                  },
+                  "raw_logits": {
+                    "yes": -5.754186630249023,
+                    "no": -0.0041866302490234375
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 2,
+              "output_tokens": 0,
+              "cached_tokens": 108
+            }
+          }
+        },
+        {
+          "request": {
+            "state": "The office plants need watering on Fridays.",
+            "questions": {
+              "q": {
+                "type": "noul",
+                "instructions": "Is the ticket about payments?"
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "readout": "sequence",
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "noul",
+                "noul": 0.002800926967120973,
+                "raw_noul": 0.002800926967120973,
+                "debug": {
+                  "readout_position": 54,
+                  "option_token_ids": {
+                    "yes": [
+                      10784
+                    ],
+                    "no": [
+                      3771
+                    ]
+                  },
+                  "raw_logits": {
+                    "yes": -5.878780364990234,
+                    "no": -0.003780364990234375
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 2,
+              "output_tokens": 0,
+              "cached_tokens": 108
+            }
+          },
+          "prefill_calls": [
+            [
+              54,
+              1
+            ],
+            [
+              54,
+              1
+            ]
+          ],
+          "store": {
+            "entries": 6,
+            "hits": 12,
+            "misses": 6,
+            "unrepresentable": 0,
+            "nbytes": 16355328
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "noul",
+                "noul": 0.0031726828424851893,
+                "raw_noul": 0.0031726828424851893,
+                "debug": {
+                  "readout_position": 54,
+                  "option_token_ids": {
+                    "yes": [
+                      10784
+                    ],
+                    "no": [
+                      3771
+                    ]
+                  },
+                  "raw_logits": {
+                    "yes": -5.754186630249023,
+                    "no": -0.0041866302490234375
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 2,
+              "output_tokens": 0,
+              "cached_tokens": 108
+            }
+          }
+        },
+        {
+          "request": {
+            "state": {
+              "channel": "email",
+              "customer": "Acme Ltd",
+              "plan": "enterprise",
+              "body": "Our invoice for March charged us twice. Please refund the duplicate charge."
+            },
+            "questions": {
+              "q": {
+                "type": "choice",
+                "instructions": "What kind of payment issue is this?",
+                "criteria": {
+                  "refund": null,
+                  "chargeback": null,
+                  "fraud": null
+                }
+              }
+            },
+            "prefix": "You are the support triage router for a payments company. Answer precisely.",
+            "options": {
+              "readout": "sequence",
+              "debug": true
+            }
+          },
+          "response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "refund",
+                "probabilities": {
+                  "refund": 0.960333041194404,
+                  "chargeback": 0.039659382426291634,
+                  "fraud": 7.576379304275706e-06
+                },
+                "raw_probabilities": {
+                  "refund": 0.960333041194404,
+                  "chargeback": 0.039659382426291634,
+                  "fraud": 7.576379304275706e-06
+                },
+                "confidence": 0.960333041194404,
+                "debug": {
+                  "readout_position": 112,
+                  "option_token_ids": {
+                    "refund": [
+                      91315
+                    ],
+                    "chargeback": [
+                      10690,
+                      1942
+                    ],
+                    "fraud": [
+                      209421
+                    ]
+                  },
+                  "raw_logits": {
+                    "refund": -0.003040313720703125,
+                    "chargeback": -3.189992904663086,
+                    "fraud": -11.753040313720703
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 4,
+              "output_tokens": 0,
+              "cached_tokens": 336
+            }
+          },
+          "prefill_calls": [
+            [
+              112,
+              1
+            ],
+            [
+              112,
+              2
+            ],
+            [
+              112,
+              1
+            ]
+          ],
+          "store": {
+            "entries": 7,
+            "hits": 13,
+            "misses": 9,
+            "unrepresentable": 0,
+            "nbytes": 19304448
+          },
+          "cold_response": {
+            "model": "mlx-community/gemma-4-E2B-it-qat-4bit",
+            "answers": {
+              "q": {
+                "type": "choice",
+                "choice": "refund",
+                "probabilities": {
+                  "refund": 0.9668872790867195,
+                  "chargeback": 0.0331059891494102,
+                  "fraud": 6.731763870265875e-06
+                },
+                "raw_probabilities": {
+                  "refund": 0.9668872790867195,
+                  "chargeback": 0.0331059891494102,
+                  "fraud": 6.731763870265875e-06
+                },
+                "confidence": 0.9668872790867195,
+                "debug": {
+                  "readout_position": 112,
+                  "option_token_ids": {
+                    "refund": [
+                      91315
+                    ],
+                    "chargeback": [
+                      10690,
+                      1942
+                    ],
+                    "fraud": [
+                      209421
+                    ]
+                  },
+                  "raw_logits": {
+                    "refund": -0.0026073455810546875,
+                    "chargeback": -3.3769750595092773,
+                    "fraud": -11.877607345581055
+                  },
+                  "temperature": 1.0
+                }
+              }
+            },
+            "usage": {
+              "input_tokens": 4,
+              "output_tokens": 0,
+              "cached_tokens": 336
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
